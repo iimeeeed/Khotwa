@@ -117,6 +117,7 @@ class _SignupState extends State<Signup> {
                           child: Text(
                             "Company",
                             style: TextStyle(
+                              
                               fontFamily: "Khmer MN",
                               color: !isJobSeeker
                                   ? const Color(0xFF77AA98)

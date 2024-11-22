@@ -87,9 +87,15 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                           fontFamily: "DM Sans",
                           color: Colors.grey,
                           fontSize: 15),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )),
+                      border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                       borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    )),
                 ),
               ),
               const SizedBox(
@@ -122,9 +128,15 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                               fontFamily: "DM Sans",
                               color: Colors.grey,
                               fontSize: 15),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          )),
+                          border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                       borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    )),
                     ),
                     Transform.translate(
                       child: Image.asset("assets/eye.png"),
