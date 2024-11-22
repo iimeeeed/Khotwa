@@ -9,7 +9,7 @@ class LoginJobSeeker extends StatefulWidget {
 
 class _LoginJobSeekerState extends State<LoginJobSeeker> {
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
 
@@ -77,6 +77,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 width: 317,
                 height: 50,
                 child: TextFormField(
+                  controller: _emailController,
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
@@ -110,6 +111,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 child: Stack(
                   children: [
                     TextFormField(
+                      controller: _passwordController,
                       obscureText: true,
                       textAlign: TextAlign.left,
                       decoration: InputDecoration(

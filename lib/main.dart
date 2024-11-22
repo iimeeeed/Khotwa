@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/jobSeeker/loginJobSeeker.dart';
 import 'screens/welcome.dart';
+import 'screens/Signup.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,14 +16,22 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   bool isLanding = true;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(milliseconds: 2500), () {
       setState(() {
-        isLanding = !isLanding;  
+        isLanding = false;
+        isLoading = true;
+      });
+
+      Future.delayed(const Duration(milliseconds: 1000), () {
+        setState(() {
+          isLoading = false; 
+        });
       });
     });
   }
@@ -31,7 +40,16 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: isLanding ? Landing() : LoginJobSeeker(),
+        backgroundColor: Color(0xFFEFF3F2),
+        body: isLanding
+            ? const Landing() 
+            : isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF1B4174))
+                    ), 
+                  )
+                : const Signup(), 
       ),
     );
   }

@@ -17,21 +17,21 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
 
     _logoSlideAnimation = Tween<double>(begin: -300, end: 0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+        curve: const Interval(0.0, 1.0, curve: Curves.easeOut),
       ),
     );
 
     _textFadeAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.2, 1.0, curve: Curves.easeIn),
+        curve: const Interval(0.0, 1.0, curve: Curves.easeIn),
       ),
     );
 
