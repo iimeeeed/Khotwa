@@ -17,3 +17,21 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+  
+  fonts:
+    - family: Khmer MN
+      fonts:
+        - asset: assets/fonts/khmer-mn.ttf
+        
+    - family: DM Sans
+      fonts:
+        - asset: assets/fonts/DMSans-Regular.ttf
+    
+
+    - family: DM Sans Italic
+      fonts:
+        - asset: assets/fonts/DMSans-Italic.ttf
+
