@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'job_seeker_form.dart';
 import 'company_form.dart';
+import 'widgets/khotwa_logo.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -36,13 +37,29 @@ class _SignupState extends State<Signup> {
       backgroundColor: const Color(0xFFEFF3F2),
       body: Stack(
         children: [
-          Positioned.fill(
+          Positioned(
             top: 0,
+            left: 0,
+            right: 0,
+            child: PreferredSize(
+              preferredSize: Size.fromHeight(80),
+              child: AppBar(
+                automaticallyImplyLeading: true,
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                actions: const [
+                  KhotwaLogo(), 
+                ],
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 80, 
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 20),
                   Center(child: Image.asset("assets/asset2.png")),
                   const Text(
                     "Create an Account",
@@ -117,7 +134,6 @@ class _SignupState extends State<Signup> {
                           child: Text(
                             "Company",
                             style: TextStyle(
-                              
                               fontFamily: "Khmer MN",
                               color: !isJobSeeker
                                   ? const Color(0xFF77AA98)
@@ -132,7 +148,7 @@ class _SignupState extends State<Signup> {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height,
+                    height: MediaQuery.of(context).size.height - 160,
                     child: PageView(
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
@@ -143,16 +159,6 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Image.asset("assets/Khotwa.png"),
               ),
             ),
           ),

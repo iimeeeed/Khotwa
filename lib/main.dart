@@ -51,6 +51,7 @@ class _MainAppState extends State<MainApp> {
                   )
                 : const Signup(), 
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

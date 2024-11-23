@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'flowSignUp/flow.dart' as flow_screen;
 
 class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});
@@ -187,19 +188,24 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
           width: 266,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
-            child: const Text(
-              'SIGN UP',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            onPressed: () {
+               Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const flow_screen.Flow()),
+            );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1B4174),
               padding:
                   const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'SIGN UP',
+              style: TextStyle(
+                color: Colors.white,
               ),
             ),
           ),
