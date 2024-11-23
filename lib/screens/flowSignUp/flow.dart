@@ -148,23 +148,18 @@ class _FlowState extends State<Flow> {
               }),
             ),
           ),
-            currentPage < myList.length - 1
-                ? 
-          Positioned(
-            bottom: 40,
-            left: 0,
-            right: 70,
-            child: 
-                Row(
+          currentPage < myList.length - 1
+              ? Positioned(
+                  bottom: 40,
+                  left: 0,
+                  right: 70,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       GestureDetector(
                         onTap: () {
                           if (currentPage < myMap.length - 1) {
-                            _pageController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
+                            _pageController.jumpToPage(4);
                           }
                         },
                         child: const Text(
@@ -176,38 +171,37 @@ class _FlowState extends State<Flow> {
                         ),
                       )
                     ],
-                  )
-          )
-                : Positioned(
+                  ))
+              : Positioned(
                   bottom: 30,
                   right: 30,
                   left: 0,
                   child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(),
-                          width: 110,
-                          height: 40,
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                  const Color(0xFF2C557D)),
-                              shape: WidgetStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(),
+                        width: 110,
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                                const Color(0xFF2C557D)),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
                               ),
                             ),
-                            onPressed: () {},
-                            child: const Text(
-                              "Explore",
-                              style: TextStyle(color: Colors.white),
-                            ),
+                          ),
+                          onPressed: () {},
+                          child: const Text(
+                            "Explore",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                 ),
         ],
       ),
