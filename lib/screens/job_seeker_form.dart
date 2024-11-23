@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'flowSignUp/flow.dart' as flow_screen;
+import 'forgotPassword/forgot_password_page.dart';
 
 class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});
@@ -177,8 +178,27 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
               style: TextStyle(color: Colors.grey, fontSize: 12),
             ),
             const SizedBox(
-              width: 90,
+              width: 50,
             ),
+                           GestureDetector(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ForgotPasswordFlowScreen(),
+      ),
+    );
+  },
+  child: Text(
+    'Forgot password?',
+    style: TextStyle(
+      color: Color(0xFF0D0140), // Define your custom color
+      decoration: TextDecoration.underline, // Underline the text
+    ),
+  ),
+)
+
+
           ],
         ),
         const SizedBox(
