@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/jobSeeker/loginJobSeeker.dart';
 import 'flowSignUp/flow.dart' as flow_screen;
-import 'forgotPassword/forgot_password_page.dart';
 
 class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});
@@ -180,25 +180,6 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
             const SizedBox(
               width: 50,
             ),
-                           GestureDetector(
-  onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ForgotPasswordFlowScreen(),
-      ),
-    );
-  },
-  child: Text(
-    'Forgot password?',
-    style: TextStyle(
-      color: Color(0xFF0D0140), // Define your custom color
-      decoration: TextDecoration.underline, // Underline the text
-    ),
-  ),
-)
-
-
           ],
         ),
         const SizedBox(
@@ -209,10 +190,11 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
           height: 50,
           child: ElevatedButton(
             onPressed: () {
-               Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const flow_screen.Flow()),
-            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const flow_screen.Flow()),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1B4174),
@@ -255,27 +237,37 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
         const SizedBox(
           height: 20,
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Already have an account?",
               style: TextStyle(
                   fontFamily: "DM Sans italic",
                   color: Color(0xFF524B6B),
                   fontSize: 12),
             ),
-            SizedBox(
+            const SizedBox(
               width: 5,
             ),
-            Text(
-              "Sign in",
-              style: TextStyle(
-                fontFamily: "DM Sans italic",
-                color: Color(0xFFFF9228),
-                fontSize: 12,
-                decoration: TextDecoration.underline,
-                decorationColor: Color(0xFFFF9228),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginJobSeeker(),
+                  ),
+                );
+              },
+              child: Text(
+                "Sign in",
+                style: TextStyle(
+                  fontFamily: "DM Sans italic",
+                  color: Color(0xFFFF9228),
+                  fontSize: 12,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Color(0xFFFF9228),
+                ),
               ),
             ),
           ],
