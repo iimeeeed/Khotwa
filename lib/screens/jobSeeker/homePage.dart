@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khotwa/screens/jobSeeker/job_details.dart';
 
-void main() {
-  runApp(JobSearchApp());
-}
 
 class JobSearchApp extends StatelessWidget {
   @override
@@ -145,13 +141,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
       final job = featuredJobs[index];
       return GestureDetector(
         onTap: () {
-          // Navigate to JobDetailsScreen with the job data
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => JobDetailsScreen(job: job),
-            ),
-          );
+         
         },
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75, // Reduced width

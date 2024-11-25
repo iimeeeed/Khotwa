@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/jobSeeker/loginJobSeeker.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
+import 'screens/jobSeeker/homePage.dart';
 
 void main() {
   runApp(const MainApp());
@@ -36,7 +37,7 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-  @override
+/*  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -50,6 +51,18 @@ class _MainAppState extends State<MainApp> {
                     ), 
                   )
                 : const Signup(), 
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  } */
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Color(0xFFEFF3F2),
+        body: JobSearchApp()
       ),
       debugShowCheckedModeBanner: false,
     );
