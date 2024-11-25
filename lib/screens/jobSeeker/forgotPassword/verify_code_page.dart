@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/widgets/khotwa_logo.dart';
 import 'reset_password_page.dart';
 
 class VerifyCodePage extends StatelessWidget {
@@ -7,22 +8,22 @@ class VerifyCodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEFF3F2),
       resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFEFF3F2),
+        automaticallyImplyLeading: false,
+        actions: const [KhotwaLogo()],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/Khotwa.png', 
-                  width: 100,
-                ),
+              const SizedBox(
+                height: 50,
               ),
-              const SizedBox(height: 70),
               const Text(
                 'Verify Code',
                 style: TextStyle(
@@ -42,12 +43,12 @@ class VerifyCodePage extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: ((MediaQuery.of(context).size.height) / 5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(
                   4,
-                  (index) => SizedBox(
+                  (index) => const SizedBox(
                     width: 50,
                     child: TextField(
                       textAlign: TextAlign.center,
@@ -57,7 +58,7 @@ class VerifyCodePage extends StatelessWidget {
                         counterText: '',
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: const Color(0xFF1B4174),
+                            color: Color(0xFF1B4174),
                           ),
                         ),
                       ),
@@ -65,11 +66,15 @@ class VerifyCodePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: ((MediaQuery.of(context).size.height) / 6)),
               SizedBox(
-                width: double.infinity,
+                width: MediaQuery.of(context).size.width / 1.3,
+                height: MediaQuery.of(context).size.height / 17,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
                     backgroundColor: const Color(0xFF1B4174),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
@@ -81,7 +86,8 @@ class VerifyCodePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ResetPasswordPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const ResetPasswordPage()),
                     );
                   },
                   child: const Text(
@@ -94,19 +100,34 @@ class VerifyCodePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              TextButton(
-                onPressed: () {
-                  // Add functionality for resend
-                },
-                child: const Text(
-                  "Didn’t receive a code? Resend",
-                  style: TextStyle(
-                    color: Color(0xFF1B4174),
-                    fontFamily: 'DM Sans',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Didn’t receive a code?",
+                    style: TextStyle(
+                      color: Color(0xFF1B4174),
+                      fontFamily: 'DM Sans',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  Transform.translate(
+                    offset: const Offset(-8, 0), 
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Resend",
+                        style: TextStyle(
+                          color: Color(0xFFFF9228),
+                          fontFamily: 'DM Sans',
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

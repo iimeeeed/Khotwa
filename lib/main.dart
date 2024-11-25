@@ -37,7 +37,7 @@ class _MainAppState extends State<MainApp> {
     });
   }
 
-/*  @override
+ @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -54,10 +54,10 @@ class _MainAppState extends State<MainApp> {
       ),
       debugShowCheckedModeBanner: false,
     );
-  } */
+  }
 
 
-  @override
+/*  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -66,5 +66,5 @@ class _MainAppState extends State<MainApp> {
       ),
       debugShowCheckedModeBanner: false,
     );
-  }
+  }*/
 }

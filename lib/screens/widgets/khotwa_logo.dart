@@ -5,9 +5,14 @@ class KhotwaLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0),
-      child: Image.asset("assets/Khotwa.png"),
+    return const Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: Text("Khotwa",style: TextStyle(
+        fontFamily: "Khmer MN",
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF1B4174),
+      ),)
     );
   }
 }

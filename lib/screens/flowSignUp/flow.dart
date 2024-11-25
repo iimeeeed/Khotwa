@@ -158,8 +158,15 @@ class _FlowState extends State<Flow> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          // Jump to the last page
                           if (currentPage < myMap.length - 1) {
-                            _pageController.jumpToPage(4);
+                            _pageController.animateToPage(
+                              myMap.length - 1, // Navigate to the last page
+                              duration: const Duration(
+                                  milliseconds: 300), // Smooth transition
+                              curve: Curves
+                                  .easeInOut, // Optional curve for a smooth effect
+                            );
                           }
                         },
                         child: const Text(
@@ -185,9 +192,9 @@ class _FlowState extends State<Flow> {
                         height: 40,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
+                            backgroundColor: MaterialStateProperty.all(
                                 const Color(0xFF2C557D)),
-                            shape: WidgetStateProperty.all(
+                            shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),

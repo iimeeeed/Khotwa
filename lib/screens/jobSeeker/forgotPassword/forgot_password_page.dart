@@ -3,9 +3,14 @@ import 'package:khotwa/screens/jobSeeker/forgotPassword/verify_code_page.dart';
 import '../../widgets/khotwa_logo.dart';
 import '../../jobSeeker/loginJobSeeker.dart';
 
-class ForgotPasswordFlowScreen extends StatelessWidget {
+class ForgotPasswordFlowScreen extends StatefulWidget {
   const ForgotPasswordFlowScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ForgotPasswordFlowScreen> createState() => _ForgotPasswordFlowScreenState();
+}
+
+class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
