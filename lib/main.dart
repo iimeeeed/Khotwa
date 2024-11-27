@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/jobSeeker/loginJobSeeker.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
-import 'screens/jobSeeker/homePage.dart';
 
 void main() {
   runApp(const MainApp());

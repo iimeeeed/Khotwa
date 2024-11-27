@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'success_page.dart';
+import '../../../commons/constants.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({Key? key}) : super(key: key);
@@ -16,10 +17,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
         title: const Icon(Icons.arrow_back_ios),
-        backgroundColor: const Color(0xFFEFF3F2),
+        backgroundColor: AppColors.primaryBackgroundColor,
         automaticallyImplyLeading: false,
         actions: const [KhotwaLogo()],
       ),
@@ -33,10 +34,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               const Text(
                 'Reset Password',
                 style: TextStyle(
-                  fontFamily: 'Khmer MN',
+                  fontFamily: AppFonts.primaryFont,
                   fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF000000),
+                  color: AppColors.blackTextColor,
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 40),
@@ -44,9 +45,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 'Enter your new password and confirm the new password to reset your password.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'DM Sans',
+                  fontFamily: AppFonts.secondaryFont,
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: AppColors.greyTextColor,
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 14),
@@ -64,14 +65,16 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               Container(
                 width: MediaQuery.of(context).size.width / 1.2,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: TextField(
                   obscureText: _isPasswordVisible,
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
-                      child: Icon(!_isPasswordVisible ? Icons.visibility : Icons.visibility_off,),
+                      child: Icon(!_isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                       onTap: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;
@@ -79,54 +82,50 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       },
                     ),
                     labelText: 'New password',
-                    labelStyle: const TextStyle(color: Colors.grey),
+                    labelStyle: const TextStyle(color: AppColors.greyTextColor),
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 45,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 45),
               Container(
                 width: MediaQuery.of(context).size.width / 1.2,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: TextField(
                   obscureText: _isPasswordVisibleConfirm,
                   decoration: InputDecoration(
                     suffixIcon: GestureDetector(
-                      child: Icon(!_isPasswordVisibleConfirm ? Icons.visibility : Icons.visibility_off,),
+                      child: Icon(!_isPasswordVisibleConfirm
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                       onTap: () {
                         setState(() {
-                          _isPasswordVisibleConfirm = !_isPasswordVisibleConfirm;
+                          _isPasswordVisibleConfirm =
+                              !_isPasswordVisibleConfirm;
                         });
                       },
                     ),
                     labelText: 'Confirm new password',
-                    labelStyle: const TextStyle(color: Colors.grey),
+                    labelStyle: const TextStyle(color: AppColors.greyTextColor),
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 7,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 7),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.3,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: const Color(0xFF1B4174),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    backgroundColor: AppColors.blueButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
                       fontSize: 16,

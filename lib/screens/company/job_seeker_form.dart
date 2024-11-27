@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobSeeker/loginJobSeeker.dart';
 import '../jobSeeker/flowSignUp/flow.dart' as flow_screen;
+import '../../commons/constants.dart';
 
 class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});
@@ -10,162 +11,42 @@ class JobSeekerForm extends StatefulWidget {
 }
 
 class _JobSeekerFormState extends State<JobSeekerForm> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _fullnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _fullnameController = TextEditingController();
+  
   bool _rememberMe = false;
+  bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Full name",
-              style: TextStyle(
-                  fontFamily: "DM Sans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 317,
-              height: 50,
-              child: TextFormField(
-                controller: _fullnameController,
-                textAlign: TextAlign.left,
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: "Full name",
-                    hintStyle: const TextStyle(
-                        fontFamily: "DM Sans",
-                        color: Colors.grey,
-                        fontSize: 15),
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    )),
-              ),
-            ),
-          ],
+        _buildInputField(
+          label: "Full name",
+          controller: _fullnameController,
+          hintText: "Full name",
         ),
-        const SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        _buildInputField(
+          label: "Email",
+          controller: _emailController,
+          hintText: "johndoe@example.com",
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Email",
-              style: TextStyle(
-                  fontFamily: "DM Sans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 317,
-              height: 50,
-              child: TextFormField(
-                controller: _emailController,
-                textAlign: TextAlign.left,
-                decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: "johndoe@example.com",
-                    hintStyle: const TextStyle(
-                        fontFamily: "DM Sans",
-                        color: Colors.grey,
-                        fontSize: 15),
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    )),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Password",
-              style: TextStyle(
-                  fontFamily: "DM Sans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: 317,
-              height: 50,
-              child: Stack(
-                children: [
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Password",
-                        hintStyle: const TextStyle(
-                            fontFamily: "DM Sans",
-                            color: Colors.grey,
-                            fontSize: 15),
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(10.0),
-                        )),
-                  ),
-                  Transform.translate(
-                    child: Image.asset("assets/eye.png"),
-                    offset: const Offset(270, 14),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 10),
+        _buildPasswordField(),
+        const SizedBox(height: 10),
+        _buildConfirmPasswordField(), 
+        const SizedBox(height: 5),
         Row(
           children: [
-            const SizedBox(
-              width: 40,
-            ),
+            SizedBox(width: AppSizes.getScreenWidth(context)*0.13),
             Checkbox(
-              activeColor: const Color(0xFFFFEFCB),
-              checkColor: const Color.fromARGB(0, 255, 255, 255),
+              activeColor: AppColors.secondaryButtonColor,
+              checkColor: Colors.white,
               value: _rememberMe,
               onChanged: (bool? value) {
                 setState(() {
@@ -175,16 +56,11 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
             ),
             const Text(
               'Remember me',
-              style: TextStyle(color: Colors.grey, fontSize: 12),
-            ),
-            const SizedBox(
-              width: 50,
+              style: TextStyle(color: AppColors.greyTextColor, fontSize: 12),
             ),
           ],
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         SizedBox(
           width: 266,
           height: 50,
@@ -193,11 +69,12 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const flow_screen.Flow()),
+                  builder: (context) => const flow_screen.Flow(),
+                ),
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF1B4174),
+              backgroundColor: AppColors.blueButtonColor,
               padding:
                   const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               shape: RoundedRectangleBorder(
@@ -206,72 +83,189 @@ class _JobSeekerFormState extends State<JobSeekerForm> {
             ),
             child: const Text(
               'SIGN UP',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ),
-        const SizedBox(
-          height: 25,
+        const SizedBox(height: 25),
+        _buildSocialSignUpButton(),
+        const SizedBox(height: 20),
+        _buildSignInRow(context),
+      ],
+    );
+  }
+
+  Widget _buildInputField({
+    required String label,
+    required TextEditingController controller,
+    required String hintText,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+              fontFamily: AppFonts.secondaryFont,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
         ),
-        GestureDetector(
-          onTap: () {},
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        const SizedBox(height: 10),
+        SizedBox(
+          width: 317,
+          height: 50,
+          child: TextFormField(
+            controller: controller,
+            textAlign: TextAlign.left,
+            decoration: AppInputStyles.inputDecoration(hintText: hintText),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Password",
+          style: TextStyle(
+              fontFamily: AppFonts.secondaryFont,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: 317,
+          height: 50,
+          child: Stack(
             children: [
-              Image.asset("assets/google.png"),
-              const SizedBox(
-                width: 15,
+              TextFormField(
+                controller: _passwordController,
+                obscureText: !_passwordVisible, 
+                textAlign: TextAlign.left,
+                decoration: AppInputStyles.inputDecoration(hintText: "Password"),
               ),
-              const Text(
-                "SIGN UP WITH GOOGLE",
-                style: TextStyle(
-                    fontFamily: "DM Sans",
-                    color: Color(0xFF1B4174),
-                    fontWeight: FontWeight.bold),
+              Positioned(
+                right: 10,
+                top: 12,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                  child: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: AppColors.greyTextColor,
+                  ),
+                ),
               ),
             ],
           ),
         ),
-        const SizedBox(
-          height: 20,
+      ],
+    );
+  }
+
+  Widget _buildConfirmPasswordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Confirm Password",
+          style: TextStyle(
+              fontFamily: AppFonts.secondaryFont,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Already have an account?",
-              style: TextStyle(
-                  fontFamily: "DM Sans italic",
-                  color: Color(0xFF524B6B),
-                  fontSize: 12),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginJobSeeker(),
+        const SizedBox(height: 10),
+        SizedBox(
+          width: 317,
+          height: 50,
+          child: Stack(
+            children: [
+              TextFormField(
+                controller: _confirmPasswordController,
+                obscureText: !_confirmPasswordVisible,
+                textAlign: TextAlign.left,
+                decoration: AppInputStyles.inputDecoration(hintText: "Confirm Password"),
+              ),
+              Positioned(
+                right: 10,
+                top: 12,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _confirmPasswordVisible = !_confirmPasswordVisible;
+                    });
+                  },
+                  child: Icon(
+                    _confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: AppColors.greyTextColor,
                   ),
-                );
-              },
-              child: Text(
-                "Sign in",
-                style: TextStyle(
-                  fontFamily: "DM Sans italic",
-                  color: Color(0xFFFF9228),
-                  fontSize: 12,
-                  decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFFF9228),
                 ),
               ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialSignUpButton() {
+    return GestureDetector(
+      onTap: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/google.png"),
+          const SizedBox(width: 15),
+          const Text(
+            "SIGN UP WITH GOOGLE",
+            style: TextStyle(
+                fontFamily: AppFonts.secondaryFont,
+                color: AppColors.blueButtonColor,
+                fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSignInRow(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Already have an account?",
+          style: TextStyle(
+              fontFamily: AppFonts.secondaryFontItalic,
+              color: AppColors.greyTextColor,
+              fontSize: 12),
+        ),
+        const SizedBox(width: 5),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginJobSeeker(),
+              ),
+            );
+          },
+          child: const Text(
+            "Sign in",
+            style: TextStyle(
+              fontFamily: AppFonts.secondaryFontItalic,
+              color: AppColors.secondaryLinkColor,
+              fontSize: 12,
+              decoration: TextDecoration.underline,
+              decorationColor: Color(0xFFFF9228),
             ),
-          ],
-        )
+          ),
+        ),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'reset_password_page.dart';
+import '../../../commons/constants.dart';
 
 class VerifyCodePage extends StatelessWidget {
   const VerifyCodePage({Key? key}) : super(key: key);
@@ -8,10 +9,10 @@ class VerifyCodePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEFF3F2),
+        backgroundColor: AppColors.primaryBackgroundColor,
         automaticallyImplyLeading: false,
         actions: const [KhotwaLogo()],
       ),
@@ -27,10 +28,10 @@ class VerifyCodePage extends StatelessWidget {
               const Text(
                 'Verify Code',
                 style: TextStyle(
-                  fontFamily: 'DM Sans',
+                  fontFamily: AppFonts.secondaryFont,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1B4174),
+                  color: AppColors.blueButtonColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -38,9 +39,9 @@ class VerifyCodePage extends StatelessWidget {
                 'Enter your verification code from your email or phone number that we’ve sent.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'DM Sans',
+                  fontFamily: AppFonts.secondaryFont,
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: AppColors.greyTextColor,
                 ),
               ),
               SizedBox(height: ((MediaQuery.of(context).size.height) / 5)),
@@ -58,7 +59,7 @@ class VerifyCodePage extends StatelessWidget {
                         counterText: '',
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Color(0xFF1B4174),
+                            color: AppColors.blueButtonColor,
                           ),
                         ),
                       ),
@@ -75,7 +76,7 @@ class VerifyCodePage extends StatelessWidget {
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: const Color(0xFF1B4174),
+                    backgroundColor: AppColors.blueButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
                       fontSize: 16,
@@ -106,21 +107,21 @@ class VerifyCodePage extends StatelessWidget {
                   const Text(
                     "Didn’t receive a code?",
                     style: TextStyle(
-                      color: Color(0xFF1B4174),
-                      fontFamily: 'DM Sans',
+                      color: AppColors.blueButtonColor,
+                      fontFamily: AppFonts.secondaryFont,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Transform.translate(
-                    offset: const Offset(-8, 0), 
+                    offset: const Offset(-8, 0),
                     child: TextButton(
                       onPressed: () {},
                       child: const Text(
                         "Resend",
                         style: TextStyle(
-                          color: Color(0xFFFF9228),
-                          fontFamily: 'DM Sans',
+                          color: AppColors.secondaryLinkColor,
+                          fontFamily: AppFonts.secondaryFont,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),

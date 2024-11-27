@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../commons/constants.dart';
 
 class Landing extends StatefulWidget {
   const Landing({super.key});
@@ -47,7 +48,7 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -89,16 +90,14 @@ class _LandingState extends State<Landing> with SingleTickerProviderStateMixin {
             child: Text(
               "“Believe in the first step to make it true.”",
               style: TextStyle(
-                fontFamily: "Khmer MN",
+                fontFamily: AppFonts.primaryFont,
                 fontSize: 23,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF1B4174),
+                color: AppColors.blueButtonColor,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-
-        
         ],
       ),
     );

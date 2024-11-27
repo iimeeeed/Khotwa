@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'company/job_seeker_form.dart';
 import 'company_form.dart';
 import '../commons/khotwa_logo.dart';
+import '../commons/constants.dart'; 
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -34,7 +35,7 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       body: Stack(
         children: [
           Positioned(
@@ -42,19 +43,19 @@ class _SignupState extends State<Signup> {
             left: 0,
             right: 0,
             child: PreferredSize(
-              preferredSize: Size.fromHeight(80),
+              preferredSize: const Size.fromHeight(80),
               child: AppBar(
                 automaticallyImplyLeading: true,
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 actions: const [
-                  KhotwaLogo(), 
+                  KhotwaLogo(),
                 ],
               ),
             ),
           ),
           Positioned.fill(
-            top: 80, 
+            top: 80,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,9 +65,9 @@ class _SignupState extends State<Signup> {
                   const Text(
                     "Create an Account",
                     style: TextStyle(
-                      fontFamily: "Khmer MN",
+                      fontFamily: AppFonts.primaryFont,
                       fontSize: 40,
-                      color: Color(0xFF1B4174),
+                      color: AppColors.blueButtonColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -82,7 +83,7 @@ class _SignupState extends State<Signup> {
                             border: Border(
                               bottom: BorderSide(
                                 color: isJobSeeker
-                                    ? const Color(0xFF77AA98)
+                                    ? AppColors.lightGreenColor
                                     : Colors.transparent,
                                 width: 1.5,
                               ),
@@ -91,10 +92,10 @@ class _SignupState extends State<Signup> {
                           child: Text(
                             "Job Seeker",
                             style: TextStyle(
-                              fontFamily: "Khmer MN",
+                              fontFamily: AppFonts.primaryFont,
                               color: isJobSeeker
-                                  ? const Color(0xFF77AA98)
-                                  : const Color(0xFF1B4174),
+                                  ? AppColors.lightGreenColor
+                                  : AppColors.blueButtonColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 24,
                             ),
@@ -106,7 +107,7 @@ class _SignupState extends State<Signup> {
                         height: 35,
                         width: 1.5,
                         decoration: BoxDecoration(
-                          color: const Color(0xFF77AA98),
+                          color: AppColors.lightGreenColor,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.2),
@@ -125,7 +126,7 @@ class _SignupState extends State<Signup> {
                             border: Border(
                               bottom: BorderSide(
                                 color: !isJobSeeker
-                                    ? const Color(0xFF77AA98)
+                                    ? AppColors.lightGreenColor
                                     : Colors.transparent,
                                 width: 1.5,
                               ),
@@ -134,10 +135,10 @@ class _SignupState extends State<Signup> {
                           child: Text(
                             "Company",
                             style: TextStyle(
-                              fontFamily: "Khmer MN",
+                              fontFamily: AppFonts.primaryFont,
                               color: !isJobSeeker
-                                  ? const Color(0xFF77AA98)
-                                  : const Color(0xFF1B4174),
+                                  ? AppColors.lightGreenColor
+                                  : AppColors.blueButtonColor,
                               fontWeight: FontWeight.w600,
                               fontSize: 24,
                             ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../commons/constants.dart';
+import '../../../commons/khotwa_logo.dart';
 
 class SuccessPage extends StatelessWidget {
   const SuccessPage({Key? key}) : super(key: key);
@@ -6,22 +8,23 @@ class SuccessPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.primaryBackgroundColor,
       resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryBackgroundColor,
+        leading: null, 
+         automaticallyImplyLeading: false,
+        actions: [
+          KhotwaLogo(),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 50),
-              Align(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/Khotwa.png',
-                  width: 100,
-                ),
-              ),
-              const SizedBox(height: 70),
+              SizedBox(height: AppSizes.getScreenHeight(context) * 0.08),
               const Text(
                 'Successfully',
                 style: TextStyle(
@@ -48,12 +51,15 @@ class SuccessPage extends StatelessWidget {
                 height: 110,
                 fit: BoxFit.contain,
               ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
+              SizedBox(height: AppSizes.getScreenHeight(context)*0.08),
+             SizedBox(
+                width: 317,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1B4174),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    backgroundColor: AppColors.blueButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
                       fontSize: 16,
@@ -62,11 +68,40 @@ class SuccessPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+                   
                   },
                   child: const Text(
                     'CONTINUE',
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: 317,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    backgroundColor: AppColors.secondaryButtonColor,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  onPressed: () {
+                   
+                  },
+                  child: const Text(
+                    'BACK TO LOGIN',
+                    style: TextStyle(
+                      color: AppColors.blueButtonColor,
                       fontSize: 12,
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../commons/khotwa_logo.dart';
+import '../../../commons/constants.dart';
 
 class Flow extends StatefulWidget {
   const Flow({super.key});
@@ -13,14 +14,10 @@ class _FlowState extends State<Flow> {
   int currentPage = 0;
 
   Map<String, String> myMap = {
-    "assets/asset3.png":
-        "Figure out your top five priorities whether it is company culture, salary.",
-    "assets/asset4.png":
-        "Our job list includes several industries, so you can find the best job for you.",
-    "assets/asset5.png":
-        "You can apply to your desirable jobs very quickly and easily with ease.",
-    "assets/asset6.png":
-        "We help you find your dream job based on your skillset, location, demand.",
+    "assets/asset3.png": "Figure out your top five priorities whether it is company culture, salary.",
+    "assets/asset4.png": "Our job list includes several industries, so you can find the best job for you.",
+    "assets/asset5.png": "You can apply to your desirable jobs very quickly and easily with ease.",
+    "assets/asset6.png": "We help you find your dream job based on your skillset, location, demand.",
   };
 
   List<String> myList = [
@@ -49,9 +46,9 @@ class _FlowState extends State<Flow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEFF3F2),
+        backgroundColor: AppColors.primaryBackgroundColor,
         automaticallyImplyLeading: false,
         actions: const [KhotwaLogo()],
       ),
@@ -85,10 +82,10 @@ class _FlowState extends State<Flow> {
                           title,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontFamily: "Khmer MN",
+                            fontFamily: AppFonts.primaryFont,
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color: AppColors.blackTextColor,
                           ),
                         ),
                       ),
@@ -99,10 +96,10 @@ class _FlowState extends State<Flow> {
                           description,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontFamily: "DM Sans",
+                            fontFamily: AppFonts.secondaryFont,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF95969D),
+                            color: AppColors.greyTextColor,
                           ),
                         ),
                       ),
@@ -139,7 +136,7 @@ class _FlowState extends State<Flow> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         color: currentPage == index
-                            ? const Color(0xFF2B557C)
+                            ? AppColors.blueButtonColor
                             : const Color(0xFFE4E5E7),
                       ),
                     );
@@ -158,14 +155,11 @@ class _FlowState extends State<Flow> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Jump to the last page
                           if (currentPage < myMap.length - 1) {
                             _pageController.animateToPage(
-                              myMap.length - 1, // Navigate to the last page
-                              duration: const Duration(
-                                  milliseconds: 300), // Smooth transition
-                              curve: Curves
-                                  .easeInOut, // Optional curve for a smooth effect
+                              myMap.length - 1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
                             );
                           }
                         },
@@ -173,7 +167,7 @@ class _FlowState extends State<Flow> {
                           "Skip",
                           style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'DM Sans',
+                              fontFamily: AppFonts.secondaryFont,
                               color: Color.fromARGB(255, 137, 137, 141)),
                         ),
                       )
@@ -187,14 +181,13 @@ class _FlowState extends State<Flow> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        decoration: const BoxDecoration(),
                         width: 110,
                         height: 40,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xFF2C557D)),
-                            shape: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
+                                AppColors.blueButtonColor),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/screens/Signup.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
 import 'homePage.dart';
+import '../../commons/constants.dart';
 
 class LoginJobSeeker extends StatefulWidget {
   const LoginJobSeeker({super.key});
@@ -15,13 +16,14 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
   TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
+  bool _obscure = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEFF3F2),
+        backgroundColor: AppColors.primaryBackgroundColor,
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,18 +47,18 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
         const Text(
           "Welcome back",
           style: TextStyle(
-              fontFamily: "Khmer MN",
+              fontFamily: AppFonts.primaryFont,
               fontSize: 40,
-              color: Color(0xFF1B4174),
+              color: AppColors.blueButtonColor,
               fontWeight: FontWeight.w500),
         ),
         const Text(
           "We’re glad to see you again ! Log in to.",
-          style: TextStyle(fontFamily: "DM Sans"),
+          style: TextStyle(fontFamily: AppFonts.secondaryFont),
         ),
         const Text(
           " your account",
-          style: TextStyle(fontFamily: "DM Sans"),
+          style: TextStyle(fontFamily: AppFonts.secondaryFont),
         ),
         const SizedBox(
           height: 30,
@@ -67,7 +69,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
             const Text(
               "Email",
               style: TextStyle(
-                  fontFamily: "DM Sans",
+                  fontFamily: AppFonts.secondaryFont,
                   fontSize: 14,
                   fontWeight: FontWeight.bold),
             ),
@@ -85,7 +87,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                     filled: true,
                     hintText: "johndoe@example.com",
                     hintStyle: const TextStyle(
-                        fontFamily: "DM Sans",
+                        fontFamily: AppFonts.secondaryFont,
                         color: Colors.grey,
                         fontSize: 15),
                     border: InputBorder.none,
@@ -105,7 +107,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
             const Text(
               "Password",
               style: TextStyle(
-                  fontFamily: "DM Sans",
+                  fontFamily: AppFonts.secondaryFont,
                   fontSize: 14,
                   fontWeight: FontWeight.bold),
             ),
@@ -119,14 +121,14 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 children: [
                   TextFormField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: _obscure,
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
                         hintText: "Password",
                         hintStyle: const TextStyle(
-                            fontFamily: "DM Sans",
+                            fontFamily: AppFonts.secondaryFont,
                             color: Colors.grey,
                             fontSize: 15),
                         border: InputBorder.none,
@@ -139,9 +141,20 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                           borderRadius: BorderRadius.circular(10.0),
                         )),
                   ),
-                  Transform.translate(
-                    child: Image.asset("assets/eye.png"),
-                    offset: const Offset(270, 14),
+                  Positioned(
+                    right: 15,
+                    top: 14, 
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _obscure = !_obscure;
+                        });
+                      },
+                      child: Icon(
+                        _obscure ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -153,11 +166,9 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
         ),
         Row(
           children: [
-            const SizedBox(
-              width: 40,
-            ),
+            SizedBox(width: AppSizes.getScreenWidth(context) * 0.12),
             Checkbox(
-              activeColor: const Color(0xFFFFEFCB),
+              activeColor: AppColors.secondaryButtonColor,
               checkColor: const Color.fromARGB(0, 255, 255, 255),
               value: _rememberMe,
               onChanged: (bool? value) {
@@ -177,8 +188,8 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
               child: const Text(
                 'Forgot Password ?',
                 style: TextStyle(
-                    fontFamily: "DM Sans",
-                    color: Color(0xFF0D0140),
+                    fontFamily: AppFonts.secondaryFont,
+                    color: AppColors.blueButtonColor,
                     fontSize: 12,
                     fontWeight: FontWeight.w500),
               ),
@@ -202,11 +213,11 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
           child: ElevatedButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => JobSearchApp (),
-                  ),
-                );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => JobSearchApp(),
+                ),
+              );
             },
             child: const Text(
               'LOGIN',
@@ -215,7 +226,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
               ),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF1B4174),
+              backgroundColor: AppColors.blueButtonColor,
               padding:
                   const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               shape: RoundedRectangleBorder(
@@ -239,8 +250,8 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
               const Text(
                 "SIGN IN WITH GOOGLE",
                 style: TextStyle(
-                    fontFamily: "DM Sans",
-                    color: Color(0xFF1B4174),
+                    fontFamily: AppFonts.secondaryFont,
+                    color: AppColors.blueButtonColor,
                     fontWeight: FontWeight.bold),
               ),
             ],
@@ -255,7 +266,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
             const Text(
               "You don't have an account yet?",
               style: TextStyle(
-                  fontFamily: "DM Sans italic",
+                  fontFamily: AppFonts.secondaryFontItalic,
                   color: Color(0xFF524B6B),
                   fontSize: 12),
             ),
@@ -274,11 +285,11 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
               child: Text(
                 "Sign up",
                 style: TextStyle(
-                  fontFamily: "DM Sans italic",
-                  color: Color(0xFFFF9228),
+                  fontFamily: AppFonts.secondaryFontItalic,
+                  color: AppColors.secondaryLinkColor,
                   fontSize: 12,
                   decoration: TextDecoration.underline,
-                  decorationColor: Color(0xFFFF9228),
+                  decorationColor: AppColors.secondaryLinkColor,
                 ),
               ),
             ),

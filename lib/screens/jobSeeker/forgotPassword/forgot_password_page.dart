@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/verify_code_page.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../../jobSeeker/loginJobSeeker.dart';
+import '../../../commons/constants.dart';
 
 class ForgotPasswordFlowScreen extends StatefulWidget {
   const ForgotPasswordFlowScreen({Key? key}) : super(key: key);
@@ -14,9 +15,9 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEFF3F2),
+        backgroundColor: AppColors.primaryBackgroundColor,
         automaticallyImplyLeading: false,
         actions: const [KhotwaLogo()],
       ),
@@ -30,10 +31,10 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
               const Text(
                 'Forgot Password?',
                 style: TextStyle(
-                  fontFamily: 'Khmer MN',
+                  fontFamily: AppFonts.primaryFont,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF1B4174),
+                  color: AppColors.blueButtonColor,
                 ),
               ),
               const SizedBox(height: 10),
@@ -43,9 +44,9 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                   'To reset your password, you need your email or mobile number that can be authenticated.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: 'DM Sans',
+                    fontFamily: AppFonts.secondaryFont,
                     fontSize: 15,
-                    color: Color(0xFF9A9DA6),
+                    color: AppColors.greyTextColor,
                   ),
                 ),
               ),
@@ -68,7 +69,7 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                         "Email",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'DM Sans',
+                          fontFamily: AppFonts.secondaryFont,
                         ),
                       ),
                     ),
@@ -76,17 +77,12 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                     Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFFFFF),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'johndoe@example.com',
-                          labelStyle: TextStyle(color: Colors.grey),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                          ),
+                        decoration: AppInputStyles.inputDecoration(
+                          hintText: 'johndoe@example.com',
                         ),
                       ),
                     ),
@@ -97,11 +93,11 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
               SizedBox(
                 width: 317,
                 child: ElevatedButton(
-                  
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: const Color(0xFF1B4174),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    backgroundColor: AppColors.blueButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
                       fontSize: 16,
@@ -125,22 +121,20 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 25,),
-
+              const SizedBox(height: 25),
               SizedBox(
                 width: 317,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: const Color(0xFFFFEFCB),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    backgroundColor: AppColors.secondaryButtonColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     textStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.5,
-                      
                     ),
                   ),
                   onPressed: () {
@@ -153,8 +147,7 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                   child: const Text(
                     'BACK TO LOGIN',
                     style: TextStyle(
-                      color: Color(0xFF1B4174),
-
+                      color: AppColors.blueButtonColor,
                       fontSize: 12,
                     ),
                   ),
