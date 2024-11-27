@@ -24,7 +24,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
       'salary': '600,000 DA/y',
       'location': 'Algiers',
       'tags': ['Design', 'Full-Time', 'Junior'],
-      'logo': 'https://via.placeholder.com/50', // Placeholder logo
+      'logo': 'https://via.placeholder.com/50',
     },
     {
       'title': 'Frontend Developer',

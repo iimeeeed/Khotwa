@@ -17,7 +17,7 @@ class SuccessPage extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: Image.asset(
-                  'assets/Khotwa.png', 
+                  'assets/Khotwa.png',
                   width: 100,
                 ),
               ),
@@ -43,10 +43,10 @@ class SuccessPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Image.asset(
-                'assets/forgotpassword3.png', 
-                width: 160, 
-                height: 110, 
-                fit: BoxFit.contain, 
+                'assets/forgotpassword3.png',
+                width: 160,
+                height: 110,
+                fit: BoxFit.contain,
               ),
               const SizedBox(height: 20),
               SizedBox(
@@ -62,7 +62,6 @@ class SuccessPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    // Navigate to Home Page (Placeholder)
                   },
                   child: const Text(
                     'CONTINUE',

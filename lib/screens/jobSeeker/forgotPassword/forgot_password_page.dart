@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/verify_code_page.dart';
-import '../../widgets/khotwa_logo.dart';
+import '../../../commons/khotwa_logo.dart';
 import '../../jobSeeker/loginJobSeeker.dart';
 
 class ForgotPasswordFlowScreen extends StatefulWidget {

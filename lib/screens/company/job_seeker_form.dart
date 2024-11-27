@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobSeeker/loginJobSeeker.dart';
-import 'flowSignUp/flow.dart' as flow_screen;
+import '../jobSeeker/flowSignUp/flow.dart' as flow_screen;
 
 class JobSeekerForm extends StatefulWidget {
   const JobSeekerForm({super.key});

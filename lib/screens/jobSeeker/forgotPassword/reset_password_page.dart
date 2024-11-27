@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khotwa/screens/widgets/khotwa_logo.dart';
+import 'package:khotwa/commons/khotwa_logo.dart';
 import 'success_page.dart';
 
 class ResetPasswordPage extends StatefulWidget {

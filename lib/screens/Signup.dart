@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'job_seeker_form.dart';
+import 'company/job_seeker_form.dart';
 import 'company_form.dart';
-import 'widgets/khotwa_logo.dart';
+import '../commons/khotwa_logo.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});

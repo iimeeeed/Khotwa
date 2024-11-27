@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/Signup.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
+import 'homePage.dart';
 
 class LoginJobSeeker extends StatefulWidget {
   const LoginJobSeeker({super.key});
@@ -199,7 +200,14 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
           width: 266,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => JobSearchApp (),
+                  ),
+                );
+            },
             child: const Text(
               'LOGIN',
               style: TextStyle(

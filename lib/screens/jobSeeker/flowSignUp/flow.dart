@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/khotwa_logo.dart';
+import '../../../commons/khotwa_logo.dart';
 
 class Flow extends StatefulWidget {
   const Flow({super.key});
