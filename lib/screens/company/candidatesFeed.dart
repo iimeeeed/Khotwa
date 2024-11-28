@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
+import 'candidatesDetails.dart';
 
 class CandidatesFeed extends StatefulWidget {
   const CandidatesFeed({super.key});
@@ -53,7 +54,7 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
 
   // Function to create the candidate list tiles
   Widget buildCandidateTile(
-      String name, String jobTitle, String appliedDate, String imageUrl) {
+      String name, String jobTitle, String appliedDate, String imageUrl, int listIndex, int candidateIndex) {
     return Container(
       width: 326,
       height: 118,
@@ -167,23 +168,37 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
                 ),
                 Opacity(
                   opacity: 0.74,
-                  child: Container(
-                    width: 68,
-                    height: 21,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFF84BDA9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'View Application',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 7,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.07,
+                  child: GestureDetector(
+                    onTap: () {
+                      List<int> ID = [listIndex, candidateIndex];
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CandidatesDetails(
+                            candidateId: ID, 
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 68,
+                      height: 21,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF84BDA9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'View Application',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 7,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.07,
+                          ),
                         ),
                       ),
                     ),
@@ -368,7 +383,9 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
                       candidate['name']!,
                       candidate['jobTitle']!,
                       candidate['appliedDate']!,
-                      candidate['imageUrl']!);
+                      candidate['imageUrl']!,
+                      currentIndex, 
+                      index);
                 },
               ),
             )
