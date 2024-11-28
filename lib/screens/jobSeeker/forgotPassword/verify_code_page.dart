@@ -4,7 +4,7 @@ import 'reset_password_page.dart';
 import '../../../commons/constants.dart';
 
 class VerifyCodePage extends StatelessWidget {
-  const VerifyCodePage({Key? key}) : super(key: key);
+  const VerifyCodePage({super.key});
 
   @override
   Widget build(BuildContext context) {

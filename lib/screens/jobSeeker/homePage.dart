@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class JobSearchApp extends StatelessWidget {
+  const JobSearchApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,6 +14,8 @@ class JobSearchApp extends StatelessWidget {
 }
 
 class JobSearchPage extends StatefulWidget {
+  const JobSearchPage({super.key});
+
   @override
   _JobSearchPageState createState() => _JobSearchPageState();
 }
@@ -47,13 +51,13 @@ class _JobSearchPageState extends State<JobSearchPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
-            Align(
+            const SizedBox(height: 15),
+            const Align(
               alignment: Alignment.topRight,
               child: Text(
                 "Khotwa",
                 style: TextStyle(
-                  color: const Color(0xFF1B4174),
+                  color: Color(0xFF1B4174),
                   fontFamily: "Khmer MN",
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -62,7 +66,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
             ),
 
             // Welcome Header
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -92,7 +96,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Search Bar
             Row(
@@ -103,7 +107,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                       hintText: "Search a job or position",
                       filled: true,
                       fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.search),
+                      prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide.none,
@@ -111,25 +115,25 @@ class _JobSearchPageState extends State<JobSearchPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.filter_list, color: Colors.white),
+                  child: const Icon(Icons.filter_list, color: Colors.white),
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Featured Jobs Section
-            Text(
+            const Text(
               "Featured Jobs",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             // Job Cards
             SizedBox(
@@ -145,12 +149,12 @@ class _JobSearchPageState extends State<JobSearchPage> {
         },
         child: Container(
           width: MediaQuery.of(context).size.width * 0.75, // Reduced width
-          margin: EdgeInsets.only(right: 12), // Spacing between cards
-          padding: EdgeInsets.all(12),
+          margin: const EdgeInsets.only(right: 12), // Spacing between cards
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: const Color(0xFF356899), // Blue background
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6,
@@ -168,15 +172,15 @@ class _JobSearchPageState extends State<JobSearchPage> {
                   Row(
                     children: [
                       // Placeholder for Logo
-                      CircleAvatar(
-                        backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+                      const CircleAvatar(
+                        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
                         radius: 16,
                         child: Icon(Icons.business, color: Colors.blue),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         job['title'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white, // White text
@@ -185,20 +189,20 @@ class _JobSearchPageState extends State<JobSearchPage> {
                       ),
                     ],
                   ),
-                  Icon(
+                  const Icon(
                     Icons.favorite_border,
                     color: Colors.white, // White icon
                   ),
                 ],
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               // Company Name
               Text(
                 job['company'],
-                style: TextStyle(color: Colors.white70), // Lighter white text
+                style: const TextStyle(color: Colors.white70), // Lighter white text
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
 
               // Tags
               Wrap(
@@ -206,35 +210,35 @@ class _JobSearchPageState extends State<JobSearchPage> {
                 children: job['tags']
                     .map<Widget>(
                       (tag) => Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.white24, // Light blue background
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           tag,
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          style: const TextStyle(fontSize: 12, color: Colors.white),
                         ),
                       ),
                     )
                     .toList(),
               ),
             
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               // Salary and Location
               Row(
                 children: [
                   Text(
                     job['salary'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white, // White text
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                 job['location'],
-                style: TextStyle(color: Colors.white70), // Lighter white text
+                style: const TextStyle(color: Colors.white70), // Lighter white text
               ),
                 ],
               ),
@@ -246,7 +250,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
     },
   ),
 ),
-SizedBox(height: 16),
+const SizedBox(height: 16),
 
 // Navigation Dots
 Row(
@@ -254,7 +258,7 @@ Row(
   children: List.generate(
     4, // Always 4 dots
     (dotIndex) => Container(
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       width: 8,
       height: 8,
       decoration: BoxDecoration(

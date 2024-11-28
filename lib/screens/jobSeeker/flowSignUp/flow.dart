@@ -180,7 +180,7 @@ class _FlowState extends State<Flow> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 110,
                         height: 40,
                         child: ElevatedButton(

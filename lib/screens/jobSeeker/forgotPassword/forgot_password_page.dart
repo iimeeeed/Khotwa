@@ -5,7 +5,7 @@ import '../../jobSeeker/loginJobSeeker.dart';
 import '../../../commons/constants.dart';
 
 class ForgotPasswordFlowScreen extends StatefulWidget {
-  const ForgotPasswordFlowScreen({Key? key}) : super(key: key);
+  const ForgotPasswordFlowScreen({super.key});
 
   @override
   State<ForgotPasswordFlowScreen> createState() => _ForgotPasswordFlowScreenState();

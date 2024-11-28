@@ -12,7 +12,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   bool isJobSeeker = true;
 
   void switchPage(bool toJobSeeker) {
@@ -153,7 +153,7 @@ class _SignupState extends State<Signup> {
                     child: PageView(
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: [
+                      children: const [
                         JobSeekerForm(),
                         CompanyForm(),
                       ],
