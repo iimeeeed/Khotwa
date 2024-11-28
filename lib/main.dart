@@ -39,7 +39,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Color(0xFFEFF3F2),
+        backgroundColor: const Color(0xFFEFF3F2),
         body: isLanding
             ? const Landing() 
             : isLoading

@@ -3,7 +3,7 @@ import '../../../commons/constants.dart';
 import '../../../commons/khotwa_logo.dart';
 
 class SuccessPage extends StatelessWidget {
-  const SuccessPage({Key? key}) : super(key: key);
+  const SuccessPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SuccessPage extends StatelessWidget {
         backgroundColor: AppColors.primaryBackgroundColor,
         leading: null, 
          automaticallyImplyLeading: false,
-        actions: [
+        actions: const [
           KhotwaLogo(),
         ],
       ),

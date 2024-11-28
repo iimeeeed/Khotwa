@@ -12,8 +12,8 @@ class LoginJobSeeker extends StatefulWidget {
 }
 
 class _LoginJobSeekerState extends State<LoginJobSeeker> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _rememberMe = false;
   bool _obscure = true;
@@ -219,18 +219,18 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 ),
               );
             },
-            child: const Text(
-              'LOGIN',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.blueButtonColor,
               padding:
                   const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'LOGIN',
+              style: TextStyle(
+                color: Colors.white,
               ),
             ),
           ),
@@ -282,7 +282,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                   ),
                 );
               },
-              child: Text(
+              child: const Text(
                 "Sign up",
                 style: TextStyle(
                   fontFamily: AppFonts.secondaryFontItalic,
