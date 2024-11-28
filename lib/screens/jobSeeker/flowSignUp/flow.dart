@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../../../commons/constants.dart';
+import '../preferences/prefs.dart';
 
 class Flow extends StatefulWidget {
   const Flow({super.key});
@@ -14,10 +15,14 @@ class _FlowState extends State<Flow> {
   int currentPage = 0;
 
   Map<String, String> myMap = {
-    "assets/asset3.png": "Figure out your top five priorities whether it is company culture, salary.",
-    "assets/asset4.png": "Our job list includes several industries, so you can find the best job for you.",
-    "assets/asset5.png": "You can apply to your desirable jobs very quickly and easily with ease.",
-    "assets/asset6.png": "We help you find your dream job based on your skillset, location, demand.",
+    "assets/asset3.png":
+        "Figure out your top five priorities whether it is company culture, salary.",
+    "assets/asset4.png":
+        "Our job list includes several industries, so you can find the best job for you.",
+    "assets/asset5.png":
+        "You can apply to your desirable jobs very quickly and easily with ease.",
+    "assets/asset6.png":
+        "We help you find your dream job based on your skillset, location, demand.",
   };
 
   List<String> myList = [
@@ -193,7 +198,12 @@ class _FlowState extends State<Flow> {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Prefs()));
+                          },
                           child: const Text(
                             "Explore",
                             style: TextStyle(color: Colors.white),
