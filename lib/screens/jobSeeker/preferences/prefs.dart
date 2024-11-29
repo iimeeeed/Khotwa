@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../commons/constants.dart';
 import '../../../commons/khotwa_logo.dart';
+import '../homePage.dart';
 
 class Prefs extends StatefulWidget {
   const Prefs({super.key});
@@ -26,7 +27,14 @@ class _PrefsState extends State<Prefs> {
     {"name": "Graphics Designer", "selected": false},
     {"name": "Developer", "selected": false},
     {"name": "Engineer", "selected": false},
-    {"name": "Architect", "selected": false}, // Fixed duplicate
+    {"name": "Architect", "selected": false},
+    {"name": "Product Designer", "selected": false},
+    {"name": "Business Analyst", "selected": false},
+    {"name": "UX Designer", "selected": false},
+    {"name": "Graphics Designer", "selected": false},
+    {"name": "Developer", "selected": false},
+    {"name": "Engineer", "selected": false},
+    {"name": "Architect", "selected": false},
   ];
 
   final List<Map<String, dynamic>> _locations = [
@@ -308,7 +316,10 @@ class _PrefsState extends State<Prefs> {
               width: 266,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => JobSearchPage()));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.lightGreenColor,
                   padding:
@@ -323,7 +334,7 @@ class _PrefsState extends State<Prefs> {
                 ),
               ),
             ),
-             SizedBox(
+            SizedBox(
               height: AppSizes.getScreenHeight(context) * 0.08,
             ),
           ],
