@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
+import 'package:khotwa/screens/jobFlow/job_details.dart';
 
 class JobSearchPage extends StatefulWidget {
   const JobSearchPage({super.key});
@@ -87,8 +88,24 @@ class _JobSearchPageState extends State<JobSearchPage> {
   }
 
   Widget buildTile(
-      String str, String Job, String Employer, String Price, String Location) {
-    return Container(
+    String str, String job, String employer, String price, String location) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => JobDetailsPage(job: {
+            'title': job,
+            'company': employer,
+            'salary': price,
+            'location': location,
+            'tags': [], // Pass tags if available
+            'logo': str,
+          }),
+        ),
+      );
+    },
+    child: Container(
       margin: EdgeInsets.only(bottom: 20),
       height: AppSizes.getScreenHeight(context) * 0.08,
       width: AppSizes.getScreenWidth(context) * 0.9,
@@ -101,12 +118,13 @@ class _JobSearchPageState extends State<JobSearchPage> {
             width: 20,
           ),
           Container(
-              height: 70,
-              width: 70,
-              child: CircleAvatar(
-                child: Image.asset(str),
-                backgroundColor: Colors.transparent,
-              )),
+            height: 70,
+            width: 70,
+            child: CircleAvatar(
+              child: Image.asset(str),
+              backgroundColor: Colors.transparent,
+            ),
+          ),
           const SizedBox(
             width: 20,
           ),
@@ -115,7 +133,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                Job,
+                job,
                 style: TextStyle(
                     fontFamily: AppFonts.secondaryFont,
                     fontWeight: FontWeight.bold,
@@ -125,7 +143,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                 height: 5,
               ),
               Text(
-                Employer,
+                employer,
                 style: TextStyle(
                     color: Colors.grey,
                     fontFamily: AppFonts.secondaryFont,
@@ -141,14 +159,14 @@ class _JobSearchPageState extends State<JobSearchPage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                Price,
+                price,
                 style: TextStyle(
                     fontFamily: AppFonts.secondaryFont,
                     fontWeight: FontWeight.bold,
                     fontSize: 13),
               ),
               Text(
-                Location,
+                location,
                 style: TextStyle(
                     color: Colors.grey,
                     fontFamily: AppFonts.secondaryFont,
@@ -158,8 +176,10 @@ class _JobSearchPageState extends State<JobSearchPage> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   int currentIndex = 0;
 
@@ -261,7 +281,14 @@ class _JobSearchPageState extends State<JobSearchPage> {
                 itemCount: featuredJobs.length,
                 itemBuilder: (context, index) {
                   final job = featuredJobs[index];
-                  return Transform.scale(
+                  return GestureDetector (
+                    onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => JobDetailsPage(job: job)),
+  );
+},
+                    child: Transform.scale(
                     scale: index == currentIndex ? 1 : 0.85,
                     child: Container(
                       margin: const EdgeInsets.only(
@@ -360,7 +387,9 @@ class _JobSearchPageState extends State<JobSearchPage> {
                         ],
                       ),
                     ),
+                  )
                   );
+                  
                 },
               ),
             ),
