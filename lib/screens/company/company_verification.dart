@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../commons/constants.dart';
+import 'flowSignUp.dart';
 
 class CompanyVerificationPage extends StatefulWidget {
   const CompanyVerificationPage({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       child: Text(
         step,
         style: const TextStyle(
-          color: Color(0xFF84BDA9),
+          color: AppColors.lightGreenColor,
           fontSize: 10,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w600,
@@ -110,7 +112,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       child: Container(
         height: 7,
         decoration: ShapeDecoration(
-          color: isActive ? const Color(0xFF84BDA9) : const Color(0xFFEFF3F2),
+          color: isActive ?  AppColors.lightGreenColor : const Color(0xFFEFF3F2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -215,7 +217,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         ),
                         prefixText: label == "Website" ? "https://" : null,
                         prefixStyle: const TextStyle(
-                          color: Color(0xFF1B4174),
+                          color: AppColors.blueButtonColor,
                           fontSize: 13,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w400,
@@ -228,7 +230,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w400,
                       ),
-                      cursorColor: const Color(0xFF1B4174),
+                      cursorColor:  AppColors.blueButtonColor,
                     ),
             ),
             Positioned(
@@ -247,7 +249,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                   child: Text(
                     label,
                     style: const TextStyle(
-                      color: Color(0xFF1B4174),
+                      color: AppColors.blueButtonColor,
                       fontSize: 14,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w600,
@@ -278,7 +280,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                   child: Text(
                     "Khotwa",
                     style: TextStyle(
-                      color: Color(0xFF1B4174),
+                      color: AppColors.blueButtonColor,
                       fontFamily: "Khmer MN",
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -289,7 +291,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                   child: Text(
                     'Company Verification',
                     style: TextStyle(
-                      color: Color(0xFF1B4174),
+                      color: AppColors.blueButtonColor,
                       fontSize: 20,
                       fontFamily: 'poppins',
                       fontWeight: FontWeight.w500,
@@ -326,7 +328,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         child: Text(
                           'Fill your Company Details',
                           style: TextStyle(
-                            color: Color(0xFF1B4174),
+                            color: AppColors.blueButtonColor,
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
@@ -348,7 +350,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         child: Text(
                           'Enter your contact infos',
                           style: TextStyle(
-                            color: Color(0xFF1B4174),
+                            color: AppColors.blueButtonColor,
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
@@ -365,7 +367,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         child: Text(
                           'Enter your Profile infos',
                           style: TextStyle(
-                            color: Color(0xFF1B4174),
+                            color: AppColors.blueButtonColor,
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
@@ -388,7 +390,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         child: Text(
                           'Enter your Identification infos',
                           style: TextStyle(
-                            color: Color(0xFF1B4174),
+                            color: AppColors.blueButtonColor,
                             fontSize: 18,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
@@ -418,12 +420,12 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               height: 22,
                               decoration: ShapeDecoration(
                                 color: isSelected
-                                    ? const Color(0xFF84BDA9)
+                                    ?  AppColors.lightGreenColor
                                     : Colors.white,
                                 shape: const OvalBorder(
                                   side: BorderSide(
                                     width: 0.5,
-                                    color: Color(0xFF1B4174),
+                                    color: AppColors.blueButtonColor,
                                   ),
                                 ),
                               ),
@@ -502,18 +504,24 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               _pageController.animateToPage(currentStep,
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut);
-                            } else {}
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FlowCompany()),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF84BDA9),
+                            backgroundColor: (currentStep==3)? AppColors.blueButtonColor:AppColors.lightGreenColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                             minimumSize: const Size(83, 30),
                           ),
-                          child: const Text(
-                            'Next',
-                            style: TextStyle(
+                          child:  Text(
+                            (currentStep==3)? "Let's Go":'Next',
+                            style: const TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',
                               color: Colors.white,
