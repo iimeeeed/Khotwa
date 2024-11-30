@@ -215,7 +215,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const JobSearchApp(),
+                  builder: (context) => JobSearchPage(),
                 ),
               );
             },
