@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
+import 'notifications.dart';
+import '../../widgets/bottom_bar.dart';
+import '../../widgets/search_bar.dart';
 
-class CandidatesFeed extends StatefulWidget {
-  const CandidatesFeed({super.key});
+class CompanyHome extends StatefulWidget {
+  const CompanyHome({super.key});
 
   @override
-  _CandidatesFeedState createState() => _CandidatesFeedState();
+  _CompanyHomeState createState() => _CompanyHomeState();
 }
 
-class _CandidatesFeedState extends State<CandidatesFeed> {
-  int currentIndex = 0; // Track the active card index
+class _CompanyHomeState extends State<CompanyHome> {
+  int currentIndex = 0;
   AppColors colors = AppColors();
 
   List<List<Map<String, String>>> candidatesList = candidatesData;
@@ -53,8 +56,8 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
   }
 
   // Function to create the candidate list tiles
-  Widget buildCandidateTile(
-      String name, String jobTitle, String appliedDate, String imageUrl, int listIndex, int candidateIndex) {
+  Widget buildCandidateTile(String name, String jobTitle, String appliedDate,
+      String imageUrl, int listIndex, int candidateIndex) {
     return Container(
       width: 326,
       height: 118,
@@ -175,7 +178,7 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CandidatesDetails(
-                            candidateId: ID, 
+                            candidateId: ID,
                           ),
                         ),
                       );
@@ -216,6 +219,7 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEFF3F2),
+      bottomNavigationBar: BottomBar(isJobseeker: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -235,7 +239,6 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
               ),
             ),
 
-            // Welcome Header
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -270,42 +273,21 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
             const SizedBox(height: 16),
 
             // Search Bar
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 44,
-                    child: const TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        prefixIcon:
-                            Icon(Icons.search, color: Color(0xFF95969D)),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          borderSide: BorderSide.none,
-                        ),
+            (currentIndex > 0)
+                ? SearchFilterBar()
+                : Container(
+                    child: const Text(
+                      "Here's what's happening today in your hiring pipeline.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.greyTextColor,
+                        fontSize: 15,
+                        fontFamily: 'poppins',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: -0.15,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  height: 44,
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child:
-                      const Icon(Icons.filter_list, color: Color(0xFF95969D)),
-                ),
-              ],
-            ),
             const SizedBox(height: 30),
             const SizedBox(
               width: 254,
@@ -322,7 +304,6 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
               ),
             ),
             const SizedBox(height: 20),
-            // Card Slider (Horizontal Scrollable)
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -360,37 +341,231 @@ class _CandidatesFeedState extends State<CandidatesFeed> {
                         : const Color(0xFF1A3D6C),
                   ),
                   const SizedBox(width: 10),
-                  buildCard(
-                    'Shortlisted Candidates',
-                    3,
-                    backgroundColor: currentIndex == 3
-                        ? const Color(0xFF1A3D6C)
-                        : Colors.transparent,
-                    textColor: currentIndex == 3
-                        ? Colors.white
-                        : const Color(0xFF1A3D6C),
-                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: candidatesList[currentIndex].length,
-                itemBuilder: (context, index) {
-                  final candidate = candidatesList[currentIndex][index];
-                  return buildCandidateTile(
-                      candidate['name']!,
-                      candidate['jobTitle']!,
-                      candidate['appliedDate']!,
-                      candidate['imageUrl']!,
-                      currentIndex, 
-                      index);
-                },
+            SizedBox(height: (currentIndex > 0) ? 10 : 30),
+            (currentIndex > 0)
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: candidatesList[currentIndex-1].length,
+                      itemBuilder: (context, index) {
+                        final candidate = candidatesList[currentIndex-1][index];
+                        return buildCandidateTile(
+                            candidate['name']!,
+                            candidate['jobTitle']!,
+                            candidate['appliedDate']!,
+                            candidate['imageUrl']!,
+                            currentIndex,
+                            index);
+                      },
+                    ),
+                  )
+                : activeJobPostings(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget activeJobPostings() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 160,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: featuredJobs.length,
+            itemBuilder: (context, index) {
+              final job = featuredJobs[index];
+              return GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.75,
+                  margin: const EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF356899),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundColor:
+                                    Color.fromRGBO(255, 255, 255, 1),
+                                radius: 22,
+                                child: Image(
+                                  image:
+                                      AssetImage("assets/Sonatrach-Logo.png"),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    job['title'] ?? 'Job Title',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    job['company'] ?? 'Company Name',
+                                    style:
+                                        const TextStyle(color: Colors.white70),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Wrap(
+                          spacing: 20,
+                          children: (job['tags'] as List)
+                              .map<Widget>(
+                                (tag) => Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white24,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    tag ?? 'Tag',
+                                    style: const TextStyle(
+                                        fontSize: 12, color: Colors.white),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Text(
+                            job['salary'] ?? 'Salary',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            job['location'] ?? 'Location',
+                            style: const TextStyle(color: Colors.white70),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const Text(
+              'Notifications',
+              style: TextStyle(
+                color: AppColors.blueButtonColor,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Notifications(),
+                  ),
+                );
+              },
+              child: const Text(
+                'See all',
+                style: TextStyle(
+                  color: Color(0xFF94969D),
+                  fontSize: 13,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             )
           ],
         ),
+        const SizedBox(height: 10),
+        Column(
+          children: [
+            generateNotificationTile("New Job Application"),
+            generateNotificationTile("Scheduled Interview Reminder"),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget generateNotificationTile(String title) {
+    return Container(
+      width: 323,
+      height: 45,
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const Text("🔔"),
+          const SizedBox(
+            width: 8,
+          ),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                color: AppColors.blackTextColor,
+                fontSize: 14,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

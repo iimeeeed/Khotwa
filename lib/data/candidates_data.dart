@@ -1,87 +1,5 @@
 List<List<Map<String, String>>> candidatesData = [
   [
-    // Active Job Postings
-    {
-      "name": "Jemila Messaoudi",
-      "jobTitle": "UX/UI Designer",
-      "appliedDate": "March 20, 2024",
-      "imageUrl":
-          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
-      "email": "jemila.messaoudi@email.com",
-      "phone": "+213 567 890 123",
-      "address": "Algiers, Algeria",
-      "skills": "UX Design, UI Design, Figma, Adobe XD",
-      "experience":
-          "3 years in UX/UI design, worked with cross-functional teams to deliver high-quality designs.",
-      "resume": "https://example.com/resume/jemila_messaoudi_resume.pdf",
-      "certificates": "https://example.com/certificates/ux_ui_certificate.pdf"
-    },
-    {
-      "name": "Amine Yacine",
-      "jobTitle": "Frontend Developer",
-      "appliedDate": "March 10, 2024",
-      "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
-      "email": "amine.yacine@email.com",
-      "phone": "+213 555 123 456",
-      "address": "Oran, Algeria",
-      "skills": "HTML, CSS, JavaScript, React, Angular",
-      "experience":
-          "2 years in frontend development, building responsive websites.",
-      "resume": "https://example.com/resume/amine_yacine_resume.pdf",
-      "certificates":
-          "https://example.com/certificates/frontend_developer_certificate.pdf"
-    },
-    {
-      "name": "Sarah Hamza",
-      "jobTitle": "HR Specialist",
-      "appliedDate": "March 6, 2024",
-      "imageUrl":
-          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
-      "email": "sarah.hamza@email.com",
-      "phone": "+213 789 456 123",
-      "address": "Constantine, Algeria",
-      "skills": "Recruitment, Employee Relations, HR Policies",
-      "experience":
-          "4 years in HR management, successfully led recruitment campaigns.",
-      "resume": "https://example.com/resume/sarah_hamza_resume.pdf",
-      "certificates":
-          "https://example.com/certificates/hr_management_certificate.pdf"
-    },
-    {
-      "name": "Samiha Boudiaf",
-      "jobTitle": "Software Engineer",
-      "appliedDate": "March 15, 2024",
-      "imageUrl":
-          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
-      "email": "samiha.boudiaf@email.com",
-      "phone": "+213 555 789 321",
-      "address": "Blida, Algeria",
-      "skills": "Java, Python, C++, Software Development",
-      "experience":
-          "3 years in software engineering, specializing in backend development.",
-      "resume": "https://example.com/resume/samiha_boudiaf_resume.pdf",
-      "certificates":
-          "https://example.com/certificates/software_engineer_certificate.pdf"
-    },
-    {
-      "name": "Mounir Belaid",
-      "jobTitle": "Product Designer",
-      "appliedDate": "March 25, 2024",
-      "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
-      "email": "mounir.belaid@email.com",
-      "phone": "+213 598 123 456",
-      "address": "Tlemcen, Algeria",
-      "skills": "Product Design, Prototyping, User Research",
-      "experience":
-          "5 years in product design, experienced in designing consumer-focused products.",
-      "resume": "https://example.com/resume/mounir_belaid_resume.pdf",
-      "certificates":
-          "https://example.com/certificates/product_design_certificate.pdf"
-    },
-  ],
-  [
     // New Applicants
     {
       "name": "Nadia Belhimer",
@@ -239,7 +157,6 @@ List<List<Map<String, String>>> candidatesData = [
       "resume": "https://example.com/resume/hassan_benhamida.pdf",
       "certificates": "https://example.com/certificates/sales_certification"
     },
-    // Shortlisted Candidates
     {
       "name": "Omar Ali",
       "jobTitle": "Marketing Manager",
@@ -321,4 +238,21 @@ List<List<Map<String, String>>> candidatesData = [
           "https://example.com/certificates/operations_management_certification"
     }
   ]
+];
+
+final List<Map<String, dynamic>> featuredJobs = [
+  {
+    'title': 'Product Designer',
+    'company': 'SONATRACH',
+    'salary': '600,000 DA/y',
+    'location': 'Algiers',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
+  {
+    'title': 'Frontend Developer',
+    'company': 'SONATRACH',
+    'salary': '160,000/year',
+    'location': 'Oran',
+    'tags': ['Analyst', 'Full-Time', 'Junior'],
+  },
 ];

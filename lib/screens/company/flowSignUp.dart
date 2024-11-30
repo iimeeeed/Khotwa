@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../../../commons/constants.dart';
+import 'company_home.dart';
 
 class FlowCompany extends StatefulWidget {
   const FlowCompany({super.key});
@@ -194,7 +195,14 @@ class _FlowCompanyState extends State<FlowCompany> {
                               ),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CompanyHome(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             "Explore",
                             style: TextStyle(color: Colors.white),
