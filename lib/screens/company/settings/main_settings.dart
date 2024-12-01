@@ -225,43 +225,38 @@ class _SettingsPageState extends State<SettingsPage> {
           case 'Security':
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const SecuritySettings()),
+              MaterialPageRoute(builder: (context) => const SecuritySettings()),
             );
             break;
-            case 'Notifications Preferences':
+          case 'Notifications Preferences':
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const NotificationPreferences()),
             );
             break;
-            case 'Report a Problem':
+          case 'Report a Problem':
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const ReportProblem()),
+              MaterialPageRoute(builder: (context) => const ReportProblem()),
             );
             break;
-            case 'Terms and Policies':
+          case 'Terms and Policies':
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const TermsPolicies()),
+              MaterialPageRoute(builder: (context) => const TermsPolicies()),
             );
             break;
-            case 'About':
+          case 'About':
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const About()),
+              MaterialPageRoute(builder: (context) => const About()),
             );
             break;
-            case 'Help & Support':
+          case 'Help & Support':
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const HelpSupport()),
+              MaterialPageRoute(builder: (context) => const HelpSupport()),
             );
             break;
           default:

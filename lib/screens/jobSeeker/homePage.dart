@@ -341,6 +341,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                             ],
                           ),
                           const SizedBox(height: 8),
+                          
                           Text(
                             job['company'],
                             style: const TextStyle(color: Colors.white70),

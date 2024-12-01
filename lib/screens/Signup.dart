@@ -55,7 +55,7 @@ class _SignupState extends State<Signup> {
             ),
           ),
           Positioned.fill(
-            top: 80,
+            top: 30,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +152,7 @@ class _SignupState extends State<Signup> {
                     height: MediaQuery.of(context).size.height - 160,
                     child: PageView(
                       controller: _pageController,
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: NeverScrollableScrollPhysics(),
                       children: const [
                         JobSeekerForm(),
                         CompanyForm(),

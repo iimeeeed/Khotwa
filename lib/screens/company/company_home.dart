@@ -361,7 +361,15 @@ class _CompanyHomeState extends State<CompanyHome> {
                       },
                     ),
                   )
-                : activeJobPostings(),
+                : Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        activeJobPostings(),
+                      ],
+                    ),
+                  ),
+                ),
           ],
         ),
       ),
@@ -440,27 +448,31 @@ class _CompanyHomeState extends State<CompanyHome> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Center(
-                        child: Wrap(
-                          spacing: 20,
-                          children: (job['tags'] as List)
-                              .map<Widget>(
-                                (tag) => Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white24,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Text(
-                                    tag ?? 'Tag',
-                                    style: const TextStyle(
-                                        fontSize: 12, color: Colors.white),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
+                      Column(
+                        children: [
+                          Center(
+                            child: Wrap(
+                              spacing: 20,
+                              children: (job['tags'] as List)
+                                  .map<Widget>(
+                                    (tag) => Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white24,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(
+                                        tag ?? 'Tag',
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.white),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -525,6 +537,7 @@ class _CompanyHomeState extends State<CompanyHome> {
           children: [
             generateNotificationTile("New Job Application"),
             generateNotificationTile("Scheduled Interview Reminder"),
+             
           ],
         ),
       ],

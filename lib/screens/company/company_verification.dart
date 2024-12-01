@@ -311,6 +311,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
           Expanded(
             child: SingleChildScrollView(
               child: Container(
+                height: AppSizes.getScreenHeight(context),
                 decoration: const BoxDecoration(
                   color: Color(0xFFEFF3F2),
                   borderRadius: BorderRadius.only(
