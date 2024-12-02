@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   dotted_border: ^2.0.0
+  flutter_bloc: ^8.1.6 
+  flutter_svg: ^2.0.16 
+  smooth_page_indicator: ^1.2.0+3 
+  percent_indicator: ^4.2.4 
+  fl_chart: ^0.69.2
 
 dev_dependencies:
   flutter_test:

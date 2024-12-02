@@ -35,7 +35,8 @@ class _CompanyHomeState extends State<CompanyHome> {
         decoration: ShapeDecoration(
           color: backgroundColor,
           shape: RoundedRectangleBorder(
-            side: const BorderSide(width: 0.50, color: Color(0xFF1B4174)),
+            side:
+                const BorderSide(width: 0.50, color: AppColors.blueButtonColor),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
@@ -57,10 +58,10 @@ class _CompanyHomeState extends State<CompanyHome> {
 
   // Function to create the candidate list tiles
   Widget buildCandidateTile(String name, String jobTitle, String appliedDate,
-      String imageUrl, int listIndex, int candidateIndex) {
+      String imageUrl, bool isRecommended,
+      {listIndex = 0, int candidateIndex = 0}) {
     return Container(
-      width: 326,
-      height: 118,
+      width: AppSizes.getScreenWidth(context) * 0.95,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -127,11 +128,12 @@ class _CompanyHomeState extends State<CompanyHome> {
                       decoration: const ShapeDecoration(
                         color: Colors.white,
                         shape: OvalBorder(
-                          side: BorderSide(width: 1, color: Color(0xFF1B4174)),
+                          side: BorderSide(
+                              width: 1, color: AppColors.blueButtonColor),
                         ),
                       ),
                       child: const Icon(Icons.phone,
-                          size: 20, color: Color(0xFF1B4174)),
+                          size: 20, color: AppColors.blueButtonColor),
                     ),
                     const SizedBox(width: 10),
                     Container(
@@ -140,11 +142,12 @@ class _CompanyHomeState extends State<CompanyHome> {
                       decoration: const ShapeDecoration(
                         color: Colors.white,
                         shape: OvalBorder(
-                          side: BorderSide(width: 1, color: Color(0xFF1B4174)),
+                          side: BorderSide(
+                              width: 1, color: AppColors.blueButtonColor),
                         ),
                       ),
                       child: const Icon(Icons.email,
-                          size: 20, color: Color(0xFF1B4174)),
+                          size: 20, color: AppColors.blueButtonColor),
                     ),
                   ],
                 ),
@@ -154,62 +157,70 @@ class _CompanyHomeState extends State<CompanyHome> {
           const SizedBox(
             height: 10,
           ),
-          const Divider(color: Color(0xFFAAAFBB), height: 1, thickness: 1),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Applied: $appliedDate',
-                  style: const TextStyle(
-                    color: Color(0xFFAAAFBB),
-                    fontSize: 9,
-                    fontFamily: 'Poppins',
-                    letterSpacing: -0.09,
-                  ),
-                ),
-                Opacity(
-                  opacity: 0.74,
-                  child: GestureDetector(
-                    onTap: () {
-                      List<int> ID = [listIndex, candidateIndex];
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CandidatesDetails(
-                            candidateId: ID,
+          isRecommended
+              ? Container()
+              : Column(
+                  children: [
+                    const Divider(
+                        color: Color(0xFFAAAFBB), height: 1, thickness: 1),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Applied: $appliedDate',
+                            style: const TextStyle(
+                              color: Color(0xFFAAAFBB),
+                              fontSize: 9,
+                              fontFamily: 'Poppins',
+                              letterSpacing: -0.09,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      width: 68,
-                      height: 21,
-                      decoration: ShapeDecoration(
-                        color: const Color(0xFF84BDA9),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'View Application',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 7,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            letterSpacing: -0.07,
+                          Opacity(
+                            opacity: 0.74,
+                            child: GestureDetector(
+                              onTap: () {
+                                List<int> ID = [listIndex, candidateIndex];
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => CandidatesDetails(
+                                      candidateId: ID,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: 68,
+                                height: 21,
+                                decoration: ShapeDecoration(
+                                  color: AppColors.lightGreenColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'View Application',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 7,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.07,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -218,7 +229,7 @@ class _CompanyHomeState extends State<CompanyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF3F2),
+      backgroundColor: AppColors.primaryBackgroundColor,
       bottomNavigationBar: BottomBar(isJobseeker: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -231,7 +242,7 @@ class _CompanyHomeState extends State<CompanyHome> {
               child: Text(
                 "Khotwa",
                 style: TextStyle(
-                  color: Color(0xFF1B4174),
+                  color: AppColors.blueButtonColor,
                   fontFamily: "Khmer MN",
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -294,7 +305,7 @@ class _CompanyHomeState extends State<CompanyHome> {
               child: Text(
                 'Candidates',
                 style: TextStyle(
-                  color: Color(0xFF1B4174),
+                  color: AppColors.blueButtonColor,
                   fontSize: 18,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w600,
@@ -312,33 +323,33 @@ class _CompanyHomeState extends State<CompanyHome> {
                     'Active Job Postings',
                     0,
                     backgroundColor: currentIndex == 0
-                        ? const Color(0xFF1A3D6C)
-                        : const Color(0xFFEFF3F2),
-                    textColor: currentIndex == 0
+                        ? AppColors.blueButtonColor
+                        : AppColors.primaryBackgroundColor,
+                    textColor: (currentIndex == 0)
                         ? Colors.white
-                        : const Color(0xFF1B4174),
+                        : AppColors.blueButtonColor,
                   ),
                   const SizedBox(width: 10),
                   buildCard(
                     'New Applicants',
                     1,
                     backgroundColor: currentIndex == 1
-                        ? const Color(0xFF1A3D6C)
-                        : const Color(0xFFEFF3F2),
+                        ? AppColors.blueButtonColor
+                        : AppColors.primaryBackgroundColor,
                     textColor: currentIndex == 1
                         ? Colors.white
-                        : const Color(0xFF1B4174),
+                        : AppColors.blueButtonColor,
                   ),
                   const SizedBox(width: 10),
                   buildCard(
                     'Pending Interviews',
                     2,
                     backgroundColor: currentIndex == 2
-                        ? const Color(0xFF1A3D6C)
+                        ? AppColors.blueButtonColor
                         : Colors.transparent,
                     textColor: currentIndex == 2
                         ? Colors.white
-                        : const Color(0xFF1A3D6C),
+                        : AppColors.blueButtonColor,
                   ),
                   const SizedBox(width: 10),
                 ],
@@ -348,28 +359,30 @@ class _CompanyHomeState extends State<CompanyHome> {
             (currentIndex > 0)
                 ? Expanded(
                     child: ListView.builder(
-                      itemCount: candidatesList[currentIndex-1].length,
+                      itemCount: candidatesList[currentIndex - 1].length,
                       itemBuilder: (context, index) {
-                        final candidate = candidatesList[currentIndex-1][index];
+                        final candidate =
+                            candidatesList[currentIndex - 1][index];
                         return buildCandidateTile(
                             candidate['name']!,
                             candidate['jobTitle']!,
                             candidate['appliedDate']!,
                             candidate['imageUrl']!,
-                            currentIndex,
-                            index);
+                            false,
+                            listIndex: currentIndex,
+                            candidateIndex: index);
                       },
                     ),
                   )
                 : Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        activeJobPostings(),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          activeJobPostings(),
+                        ],
+                      ),
                     ),
                   ),
-                ),
           ],
         ),
       ),
@@ -537,7 +550,56 @@ class _CompanyHomeState extends State<CompanyHome> {
           children: [
             generateNotificationTile("New Job Application"),
             generateNotificationTile("Scheduled Interview Reminder"),
-             
+          ],
+        ),
+        const SizedBox(height: 30),
+        Row(
+          children: [
+            const Text(
+              'Recommended Candidates',
+              style: TextStyle(
+                color: AppColors.blueButtonColor,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {},
+              child: const Text(
+                'See all',
+                style: TextStyle(
+                  color: Color(0xFF94969D),
+                  fontSize: 13,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            )
+          ],
+        ),
+        const SizedBox(height: 10),
+        Column(
+          children: [
+            buildCandidateTile(
+                RecommendedCandidatesList[0]['name']!,
+                RecommendedCandidatesList[0]['jobTitle']!,
+                RecommendedCandidatesList[0]['appliedDate']!,
+                RecommendedCandidatesList[0]['imageUrl']!,
+                true),
+            buildCandidateTile(
+                RecommendedCandidatesList[1]['name']!,
+                RecommendedCandidatesList[1]['jobTitle']!,
+                RecommendedCandidatesList[1]['appliedDate']!,
+                RecommendedCandidatesList[1]['imageUrl']!,
+                true),
+            buildCandidateTile(
+                RecommendedCandidatesList[2]['name']!,
+                RecommendedCandidatesList[2]['jobTitle']!,
+                RecommendedCandidatesList[2]['appliedDate']!,
+                RecommendedCandidatesList[2]['imageUrl']!,
+                true),
           ],
         ),
       ],
@@ -546,7 +608,7 @@ class _CompanyHomeState extends State<CompanyHome> {
 
   Widget generateNotificationTile(String title) {
     return Container(
-      width: 323,
+      width: AppSizes.getScreenWidth(context) * 0.95,
       height: 45,
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.all(12),

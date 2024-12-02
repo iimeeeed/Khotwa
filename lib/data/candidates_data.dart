@@ -240,6 +240,55 @@ List<List<Map<String, String>>> candidatesData = [
   ]
 ];
 
+final List<Map<String, dynamic>> RecommendedCandidatesList = [
+  {
+      "name": "Hassan Benhamida",
+      "jobTitle": "Sales Representative",
+      "appliedDate": "March 11, 2024",
+      "imageUrl":
+          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+      "email": "hassan.benhamida@example.com",
+      "phone": "+213 668 098 765",
+      "address": "Tlemcen, Algeria",
+      "skills": "Sales, Negotiation, CRM, Lead Generation, Client Relations",
+      "experience": "5 years in Sales at JKL Enterprises",
+      "resume": "https://example.com/resume/hassan_benhamida.pdf",
+      "certificates": "https://example.com/certificates/sales_certification"
+    },
+    {
+      "name": "Omar Ali",
+      "jobTitle": "Marketing Manager",
+      "appliedDate": "March 5, 2024",
+      "imageUrl":
+          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+      "email": "omar.ali@example.com",
+      "phone": "+213 677 654 321",
+      "address": "Setif, Algeria",
+      "skills":
+          "Branding, Marketing Strategy, Social Media, Market Research, Advertising",
+      "experience": "6 years as a Marketing Manager at MNO Marketing",
+      "resume": "https://example.com/resume/omar_ali.pdf",
+      "certificates":
+          "https://example.com/certificates/marketing_manager_certification"
+    },
+    {
+      "name": "Yasmine Belkacem",
+      "jobTitle": "HR Manager",
+      "appliedDate": "March 1, 2024",
+      "imageUrl":
+          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
+      "email": "yasmine.belkacem@example.com",
+      "phone": "+213 678 345 876",
+      "address": "Algiers, Algeria",
+      "skills":
+          "Recruitment, Employee Relations, HR Policies, Training, Payroll",
+      "experience": "7 years as an HR Manager at PQR Solutions",
+      "resume": "https://example.com/resume/yasmine_belkacem.pdf",
+      "certificates":
+          "https://example.com/certificates/hr_manager_certification"
+    },
+];
+
 final List<Map<String, dynamic>> featuredJobs = [
   {
     'title': 'Product Designer',
@@ -249,10 +298,39 @@ final List<Map<String, dynamic>> featuredJobs = [
     'tags': ['Design', 'Full-Time', 'Junior'],
   },
   {
-    'title': 'Frontend Developer',
-    'company': 'SONATRACH',
-    'salary': '160,000/year',
-    'location': 'Oran',
-    'tags': ['Analyst', 'Full-Time', 'Junior'],
-  },
+      'title': 'Frontend Developer',
+      'company': 'Google',
+      'salary': '160,000/year',
+      'location': 'Remote',
+      'tags': ['Design', 'Full-Time', 'Junior'],
+    },
+    {
+      'title': 'Frontend Developer',
+      'company': 'Google',
+      'salary': '160,000/year',
+      'location': 'Remote',
+      'tags': ['Design', 'Full-Time', 'Junior'],
+    },
+    {
+      'title': 'Frontend Developer',
+      'company': 'Google',
+      'salary': '160,000/year',
+      'location': 'Remote',
+      'tags': ['Design', 'Full-Time', 'Junior'],
+    },
+    {
+      'title': 'Frontend Developer',
+      'company': 'Google',
+      'salary': '160,000/year',
+      'location': 'Remote',
+      'tags': ['Design', 'Full-Time', 'Junior'],
+    },
+    {
+      'title': 'Frontend Developer',
+      'company': 'Google',
+      'salary': '160,000/year',
+      'location': 'Remote',
+      'tags': ['Design', 'Full-Time', 'Junior'],
+    },
+  
 ];

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../commons/constants.dart';
+import 'bottom_sheet.dart';
+import '../screens/company/settings/main_settings.dart';
 
 class BottomBar extends StatefulWidget {
   final bool
@@ -73,6 +75,7 @@ class _BottomBarState extends State<BottomBar> {
       onTap: () {
         setState(() {
           selectedIndex = index;
+          BottomDialog.show(context, const SettingsPage()); //example
         });
       },
       child: Expanded(
