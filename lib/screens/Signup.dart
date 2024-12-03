@@ -151,7 +151,7 @@ class _SignupState extends State<Signup> {
                     height: MediaQuery.of(context).size.height - 160,
                     child: PageView(
                       controller: _pageController,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children:  const [
                         SignupForm(isCompany : false),
                         SignupForm(isCompany : true),

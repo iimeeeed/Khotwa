@@ -17,7 +17,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      bottomNavigationBar: BottomBar(isJobseeker: false),
+      bottomNavigationBar: const BottomBar(isJobseeker: false),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -61,7 +61,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                 ],
               ),
               const SizedBox(height: 16),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 32,
                 child: Row(
@@ -72,7 +72,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 32,
                         height: 32,
                         child: const Icon(
@@ -154,7 +154,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       SizedBox(
                         height: 200,
                         child: BarChartProgress(
@@ -168,7 +168,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       Row(
                         children: [
                           Text(
@@ -512,7 +512,7 @@ class _BarChartProgressState extends State<BarChartProgress>
                               final index = value.toInt();
                               return Text(
                                 widget.typeOfUse
-                                    ? '${daysList[index]}'
+                                    ? daysList[index]
                                     : index.toString(),
                                 style: const TextStyle(fontSize: 10),
                               );

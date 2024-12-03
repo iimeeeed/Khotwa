@@ -3,7 +3,7 @@ import '../../commons/constants.dart';
 import 'flowSignUp.dart';
 
 class CompanyVerificationPage extends StatefulWidget {
-  const CompanyVerificationPage({Key? key}) : super(key: key);
+  const CompanyVerificationPage({super.key});
 
   @override
   _CompanyVerificationPageState createState() =>
@@ -509,7 +509,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FlowCompany()),
+                                    builder: (context) => const FlowCompany()),
                               );
                             }
                           },

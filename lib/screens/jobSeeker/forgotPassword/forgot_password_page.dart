@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/verify_code_page.dart';
 import '../../../commons/khotwa_logo.dart';
-import '../../jobSeeker/loginJobSeeker.dart';
 import '../../../commons/constants.dart';
+import '../../../commons/forms/login_form.dart';
 
 class ForgotPasswordFlowScreen extends StatefulWidget {
   const ForgotPasswordFlowScreen({super.key});
@@ -141,7 +141,7 @@ class _ForgotPasswordFlowScreenState extends State<ForgotPasswordFlowScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginJobSeeker()),
+                          builder: (context) => const LoginForm(isCompany: false,)),
                     );
                   },
                   child: const Text(

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
-import 'package:khotwa/screens/Signup.dart';
+import 'package:khotwa/commons/forms/sigup_form.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
-import 'homePage.dart';
+import '../../screens/jobSeeker/homePage.dart';
 import '../../commons/constants.dart';
+import '../../screens/company/company_home.dart';
 
-class LoginJobSeeker extends StatefulWidget {
-  const LoginJobSeeker({super.key});
+class LoginForm extends StatefulWidget {
+  final bool isCompany;
+  const LoginForm({super.key, required this.isCompany});
 
   @override
-  State<LoginJobSeeker> createState() => _LoginJobSeekerState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _LoginJobSeekerState extends State<LoginJobSeeker> {
+class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,11 +27,10 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
       backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.primaryBackgroundColor,
-        actions: [KhotwaLogo()],
+        actions: const [KhotwaLogo()],
       ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        
           Center(child: Image.asset("assets/asset1.png")),
           const SizedBox(
             height: 20,
@@ -75,7 +76,9 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "johndoe@example.com",
+                      hintText: (widget.isCompany)
+                          ? "company@example.com"
+                          : "jobseeker@example.com",
                       hintStyle: const TextStyle(
                           fontFamily: AppFonts.secondaryFont,
                           color: Colors.grey,
@@ -206,7 +209,9 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => JobSearchPage(),
+                    builder: (context) => (widget.isCompany)
+                        ? const CompanyHome()
+                        : const JobseekerHome(),
                   ),
                 );
               },
@@ -269,7 +274,9 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const Signup(),
+                      builder: (context) => (widget.isCompany)
+                          ? const SignupForm(isCompany: true)
+                          : const SignupForm(isCompany: false),
                     ),
                   );
                 },

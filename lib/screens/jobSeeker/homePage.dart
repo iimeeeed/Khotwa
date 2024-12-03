@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../data/candidates_data.dart';
 import '../../widgets/search_bar.dart';
@@ -6,14 +5,14 @@ import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/screens/jobFlow/job_details.dart';
 
-class JobSearchPage extends StatefulWidget {
-  const JobSearchPage({super.key});
+class JobseekerHome extends StatefulWidget {
+  const JobseekerHome({super.key});
 
   @override
-  _JobSearchPageState createState() => _JobSearchPageState();
+  _JobseekerHomeState createState() => _JobseekerHomeState();
 }
 
-class _JobSearchPageState extends State<JobSearchPage> {
+class _JobseekerHomeState extends State<JobseekerHome> {
   List<String> categories = [
     "All jobs",
     "Design",
@@ -52,7 +51,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
               'company': employer,
               'salary': price,
               'location': location,
-              'tags': [],
+              'tags': const [],
               'logo': str,
             }),
           ),
@@ -72,8 +71,8 @@ class _JobSearchPageState extends State<JobSearchPage> {
               height: 50,
               width: 50,
               child: CircleAvatar(
-                child: Image.asset("assets/Sonatrach-Logo.png"),
                 backgroundColor: Colors.transparent,
+                child: Image.asset("assets/Sonatrach-Logo.png"),
               ),
             ),
             const SizedBox(width: 10),
@@ -273,6 +272,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                                   });
                                 },
                                 child: Container(
+                                  margin: const EdgeInsets.only(bottom: 30),
                                   child: Icon(
                                     (!isSaved)
                                         ? Icons.bookmark_add_outlined
@@ -280,7 +280,6 @@ class _JobSearchPageState extends State<JobSearchPage> {
                                     color: Colors.white,
                                     size: 30,
                                   ),
-                                  margin: EdgeInsets.only(bottom: 30),
                                 ),
                               )
                             ],

@@ -6,9 +6,11 @@ void main() {
 }
 
 class JobDetailsApp extends StatelessWidget {
+  const JobDetailsApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: JobDetailsPage(
         job: {
@@ -21,7 +23,7 @@ class JobDetailsApp extends StatelessWidget {
 
 class JobDetailsPage extends StatefulWidget {
   final Map<String, dynamic> job;
-  const JobDetailsPage({Key? key, required this.job}) : super(key: key);
+  const JobDetailsPage({super.key, required this.job});
 
   @override
   State<JobDetailsPage> createState() => _JobDetailsPageState();
@@ -39,8 +41,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           children: [
             // Blue background container
             Container(
-              color: Color(0xFF002D62),
-              padding: EdgeInsets.fromLTRB(16, 40, 16, 24),
+              color: const Color(0xFF002D62),
+              padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
               child: Column(
                 children: [
                   // Back and bookmark icons
@@ -48,28 +50,28 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.white),
+                        icon: const Icon(Icons.arrow_back, color: Colors.white),
                         onPressed: () {
                           Navigator.pop(context); // This will navigate back to the previous page
                         },
                       ),
-                      Icon(Icons.bookmark_border, color: Colors.white),
+                      const Icon(Icons.bookmark_border, color: Colors.white),
                     ],
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   // Logo, title, company
                   CircleAvatar(
   radius: 40,
   backgroundColor: Colors.white,
   child: widget.job['logo'] != null
       ? Image.asset(widget.job['logo'], fit: BoxFit.cover) // For local asset image
-      : Icon(Icons.business, size: 40), // Fallback icon if no logo is provided
+      : const Icon(Icons.business, size: 40), // Fallback icon if no logo is provided
 ),
 
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     widget.job['title'] ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -77,9 +79,9 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   ),
                   Text(
                     widget.job['company'] ?? '',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Tags
                   Wrap(
   spacing: 8,
@@ -87,7 +89,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     ...?widget.job['tags']?.map((tag) => Chip(
           label: Text(
             tag,
-            style: TextStyle(color: Colors.white), 
+            style: const TextStyle(color: Colors.white), 
           ),
           backgroundColor: const Color.fromARGB(255, 63, 72, 108), 
           shape: RoundedRectangleBorder(
@@ -96,27 +98,27 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         )),
   ],
 ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Text(
                     widget.job['salary'] ?? '',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
-                  ), Spacer(),
-                      Icon(Icons.location_on, color: Colors.white),
-                      SizedBox(width: 4),
+                  ), const Spacer(),
+                      const Icon(Icons.location_on, color: Colors.white),
+                      const SizedBox(width: 4),
                       Text(
                         widget.job['location'] ?? '',
-                        style: TextStyle(color: Colors.white),
-                      ),Spacer(),
+                        style: const TextStyle(color: Colors.white),
+                      ),const Spacer(),
                     ],
                   ),
                 ],
@@ -124,29 +126,29 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             ),
             // Tabs
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   _buildTab('Description', isDescriptionTab, () {
                     setState(() => isDescriptionTab = true);
-                  }),Spacer(),
-                  SizedBox(width: 32),
+                  }),const Spacer(),
+                  const SizedBox(width: 32),
                   _buildTab('Requirement', !isDescriptionTab, () {
                     setState(() => isDescriptionTab = false);
                   }),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
             ),
             // Content based on selected tab
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: isDescriptionTab ? _buildDescriptionContent() : _buildRequirementContent(),
             ),
             // Apply Now Button
             Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -159,10 +161,10 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF002D62),
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color(0xFF002D62),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Apply Now",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
@@ -183,17 +185,17 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           Text(
             title,
             style: TextStyle(
-              color: isActive ? Color(0xFF002D62) : Colors.grey,
+              color: isActive ? const Color(0xFF002D62) : Colors.grey,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
               fontSize: 16,
             ),
           ),
           if (isActive) ...[
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Container(
               width: 8,
               height: 8,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color(0xFF002D62),
                 shape: BoxShape.circle,
               ),
@@ -212,34 +214,34 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             style: TextStyle(color: Colors.grey[600])),
         TextButton(
           onPressed: () {},
-          child: Text("Read More.."),
+          child: const Text("Read More.."),
         ),
-        SizedBox(height: 24),
-        Text(
+        const SizedBox(height: 24),
+        const Text(
           "Responsibilities:",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         ...?widget.job['responsibilities']?.map((responsibility) => _buildListItem(responsibility)),
-        SizedBox(height: 24),
-        Text(
+        const SizedBox(height: 24),
+        const Text(
           "Location",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(widget.job['address'] ?? ''),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Container(
           height: 200,
           color: Colors.grey[200],
-          child: Center(child: Icon(Icons.map, size: 48, color: Colors.red)),
+          child: const Center(child: Icon(Icons.map, size: 48, color: Colors.red)),
         ),
-        SizedBox(height: 24),
-        Text(
+        const SizedBox(height: 24),
+        const Text(
           "Facilities and Others",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         ...?widget.job['facilities']?.map((facility) => _buildListItem(facility)),
       ],
     );
@@ -263,8 +265,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.check, color: Colors.green, size: 20),
-          SizedBox(width: 8),
+          const Icon(Icons.check, color: Colors.green, size: 20),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,

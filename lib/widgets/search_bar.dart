@@ -16,7 +16,7 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
     return Row(
       children: [
         Expanded(
-          child: Container(
+          child: SizedBox(
             height: AppSizes.getScreenHeight(context)*0.06,
             child: TextField(
               decoration: InputDecoration(

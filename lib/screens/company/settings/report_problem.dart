@@ -102,7 +102,7 @@ class _ReportProblemState extends State<ReportProblem> {
                   child: Column(
                     children: [
                       const SizedBox(height: 16),
-                      Container(
+                      SizedBox(
                         height: 120,
                         child: const Image(
                             image: AssetImage("assets/reportProblem.png")),
@@ -291,7 +291,7 @@ class _ReportProblemState extends State<ReportProblem> {
                         color: Colors.black.withOpacity(0.1),
                         spreadRadius: 2,
                         blurRadius: 5,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),

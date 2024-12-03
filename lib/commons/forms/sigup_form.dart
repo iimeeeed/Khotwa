@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:khotwa/screens/company/companyLogin.dart';
-import 'package:khotwa/screens/jobSeeker/loginJobSeeker.dart';
+import 'package:khotwa/commons/forms/login_form.dart';
+
 import '../../../commons/constants.dart';
 import '../../screens/company/company_verification.dart';
 import '../../screens/jobSeeker/flowSignUp/flow.dart' as flow_screen;
 
 class SignupForm extends StatefulWidget {
   final bool isCompany;
-  const SignupForm({super.key,  required this.isCompany});
+  const SignupForm({super.key, required this.isCompany});
 
   @override
   State<SignupForm> createState() => _SignupFormState();
@@ -30,15 +30,17 @@ class _SignupFormState extends State<SignupForm> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildInputField(
-          label: (widget.isCompany)? "Company name" : "Full name",
+          label: (widget.isCompany) ? "Company name" : "Full name",
           controller: _companyNameController,
-          hintText: (widget.isCompany)? "Company name" : "Full name",
+          hintText: (widget.isCompany) ? "Company name" : "Full name",
         ),
         const SizedBox(height: 10),
         _buildInputField(
           label: "Email",
           controller: _emailController,
-          hintText: (widget.isCompany)? "company@example.com" : "jobseeker@example.com",
+          hintText: (widget.isCompany)
+              ? "company@example.com"
+              : "jobseeker@example.com",
         ),
         const SizedBox(height: 10),
         _buildPasswordField(),
@@ -73,7 +75,9 @@ class _SignupFormState extends State<SignupForm> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  (widget.isCompany)? CompanyVerificationPage() : flow_screen.Flow(),
+                  builder: (context) => (widget.isCompany)
+                      ? const CompanyVerificationPage()
+                      : const flow_screen.Flow(),
                 ),
               );
             },
@@ -256,8 +260,16 @@ class _SignupFormState extends State<SignupForm> {
         const SizedBox(width: 5),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => (widget.isCompany)? LoginCompany() : LoginJobSeeker()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => (widget.isCompany)
+                        ? const LoginForm(
+                            isCompany: true,
+                          )
+                        : const LoginForm(
+                            isCompany: false,
+                          )));
           },
           child: const Text(
             "Sign in",

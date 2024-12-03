@@ -205,7 +205,7 @@ class _FlowState extends State<Flow> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Prefs()));
+                                    builder: (context) => const Prefs()));
                           },
                           child: const Text(
                             "Explore",

@@ -6,10 +6,10 @@ class SuccessDialog extends StatelessWidget {
   final VoidCallback onTrackApplication;
 
   const SuccessDialog({
-    Key? key,
+    super.key,
     required this.onClose,
     required this.onTrackApplication,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SuccessDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Container(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -27,8 +27,8 @@ class SuccessDialog extends StatelessWidget {
               height: 200,
               width: 200,
             ),
-            SizedBox(height: 24),
-            Text(
+            const SizedBox(height: 24),
+            const Text(
               'Apply Success',
               style: TextStyle(
                 fontSize: 24,
@@ -36,7 +36,7 @@ class SuccessDialog extends StatelessWidget {
                 color: Color(0xFF002D62),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Your job apply successfully applied, wait\nfor the company to accept and follow\nback to you',
               textAlign: TextAlign.center,
@@ -45,7 +45,7 @@ class SuccessDialog extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -53,19 +53,19 @@ class SuccessDialog extends StatelessWidget {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => JobSearchPage(),
+                      builder: (context) => const JobseekerHome(),
                     ),
                     (route) => false,
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF002D62),
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color(0xFF002D62),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Close',
                   style: TextStyle(
                     fontSize: 16,
@@ -74,19 +74,19 @@ class SuccessDialog extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: onTrackApplication,
                 style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  side: BorderSide(color: Color(0xFF002D62)),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  side: const BorderSide(color: Color(0xFF002D62)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Track Application',
                   style: TextStyle(
                     fontSize: 16,

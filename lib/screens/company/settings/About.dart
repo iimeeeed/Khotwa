@@ -98,7 +98,7 @@ class _AboutState extends State<About> {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 32,
                 child: Row(
@@ -109,7 +109,7 @@ class _AboutState extends State<About> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 32,
                         height: 32,
                         child: const Icon(

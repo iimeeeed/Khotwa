@@ -43,7 +43,7 @@ class _HelpSupportState extends State<HelpSupport> {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 32,
                 child: Row(
@@ -54,7 +54,7 @@ class _HelpSupportState extends State<HelpSupport> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 32,
                         height: 32,
                         child: const Icon(
@@ -278,12 +278,12 @@ class _HelpSupportState extends State<HelpSupport> {
         Row(
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 44,
                 child: const TextField(
                   decoration: InputDecoration(
                     hintText: "Type a keyword...",
-                    hintStyle: const TextStyle(
+                    hintStyle: TextStyle(
                       color: Color(0xFFAFB0B6),
                       fontSize: 14,
                       fontFamily: 'popppins',
@@ -352,10 +352,10 @@ class FAQWidget extends StatefulWidget {
   final String answer;
 
   const FAQWidget({
-    Key? key,
+    super.key,
     required this.question,
     required this.answer,
-  }) : super(key: key);
+  });
 
   @override
   _FAQWidgetState createState() => _FAQWidgetState();

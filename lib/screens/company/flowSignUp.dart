@@ -199,7 +199,7 @@ class _FlowCompanyState extends State<FlowCompany> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CompanyHome(),
+                                builder: (context) => const CompanyHome(),
                               ),
                             );
                           },

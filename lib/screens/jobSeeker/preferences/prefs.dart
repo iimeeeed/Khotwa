@@ -81,7 +81,7 @@ class _PrefsState extends State<Prefs> {
                 SizedBox(width: AppSizes.getScreenWidth(context) * 0.07),
                 icon,
                 SizedBox(width: AppSizes.getScreenWidth(context) * 0.04),
-                Text(str, style: TextStyle(
+                Text(str, style: const TextStyle(
                   fontWeight: FontWeight.bold
                 )),
               ],
@@ -232,7 +232,7 @@ class _PrefsState extends State<Prefs> {
                       side: const BorderSide(color: Colors.transparent),
                     ),
                   );
-                }).toList(),
+                }),
                 if (!_showAllTags)
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
@@ -303,7 +303,7 @@ class _PrefsState extends State<Prefs> {
                       side: const BorderSide(color: Colors.transparent),
                     ),
                   );
-                }).toList(),
+                }),
                 if (!_showAllLocations)
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
@@ -335,7 +335,7 @@ class _PrefsState extends State<Prefs> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const JobSearchPage()));
+                          builder: (context) => const JobseekerHome()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.lightGreenColor,

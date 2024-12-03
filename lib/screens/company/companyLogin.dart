@@ -25,7 +25,7 @@ class _LoginCompanyState extends State<LoginCompany> {
       backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.primaryBackgroundColor,
-        actions: [KhotwaLogo()],
+        actions: const [KhotwaLogo()],
       ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -205,7 +205,7 @@ class _LoginCompanyState extends State<LoginCompany> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CompanyHome(),
+                    builder: (context) => const CompanyHome(),
                   ),
                 );
               },

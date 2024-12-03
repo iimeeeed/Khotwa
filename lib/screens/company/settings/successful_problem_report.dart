@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../commons/constants.dart';
 
 class SubmissionPage extends StatelessWidget {
+  const SubmissionPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +61,7 @@ class SubmissionPage extends StatelessWidget {
               height: 50,
             ),
             Center(
-              child: Container(
+              child: SizedBox(
                 height: 120,
                 child: const Image(
                   image: AssetImage("assets/successfulSubmit.png"),

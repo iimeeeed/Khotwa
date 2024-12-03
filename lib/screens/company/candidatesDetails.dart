@@ -222,7 +222,7 @@ class _CandidatesDetailsState extends State<CandidatesDetails> {
               const SizedBox(height: 16),
 
               // Candidate Details
-              Container(
+              SizedBox(
                 width: 366,
                 height: 32,
                 child: Row(
@@ -233,7 +233,7 @@ class _CandidatesDetailsState extends State<CandidatesDetails> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 32,
                         height: 32,
                         child: const Icon(
@@ -309,9 +309,9 @@ class CandidateDetails extends StatelessWidget {
   final Map<String, dynamic> candidate;
 
   const CandidateDetails({
-    Key? key,
+    super.key,
     required this.candidate,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

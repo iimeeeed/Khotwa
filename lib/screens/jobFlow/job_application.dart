@@ -6,7 +6,7 @@ import 'package:khotwa/screens/jobFlow/track_application.dart';
 class JobApplicationPage extends StatefulWidget {
   final Map<String, dynamic> job;
 
-  const JobApplicationPage({Key? key, required this.job}) : super(key: key);
+  const JobApplicationPage({super.key, required this.job});
 
   @override
   State<JobApplicationPage> createState() => _JobApplicationPageState();
@@ -31,11 +31,11 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back, color: Color(0xFF002D62)),
+                    icon: const Icon(Icons.arrow_back, color: Color(0xFF002D62)),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  SizedBox(width: 16),
-                  Text(
+                  const SizedBox(width: 16),
+                  const Text(
                     'Apply Job',
                     style: TextStyle(
                       fontSize: 20,
@@ -44,20 +44,20 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Curriculum Vitae',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       // CV Upload Section
                       _buildUploadSection(
                         hint: 'Upload your CV Here',
@@ -75,16 +75,16 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
                           });
                         } : null,
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       
-                      Text(
+                      const Text(
                         'Motivation',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       // Motivation Upload Section
                       _buildUploadSection(
                         hint: 'Write here your motivation',
@@ -101,7 +101,7 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
                           });
                         } : null,
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       
                       Text(
                         'Portfolio (optional)',
@@ -111,17 +111,17 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
                           color: Colors.grey[600],
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       // Portfolio URL Input
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         decoration: BoxDecoration(
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
                           controller: portfolioController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: 'https://',
                             hintStyle: TextStyle(color: Colors.grey),
@@ -163,13 +163,13 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF002D62),
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: const Color(0xFF002D62),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Send Apply",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
@@ -194,20 +194,20 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
          DottedBorder(
         color: Colors.grey.shade300,  // Border color
         strokeWidth: 2,  // Width of the dotted lines
-        dashPattern: [6, 3],  // Pattern for the dots (6 pixels line, 3 pixels gap)
+        dashPattern: const [6, 3],  // Pattern for the dots (6 pixels line, 3 pixels gap)
         borderType: BorderType.RRect,  // Rounded rectangle border
-        radius: Radius.circular(8),  // Corner radius
+        radius: const Radius.circular(8),  // Corner radius
         child: InkWell(
           onTap: onUpload,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.upload_file, color: Colors.grey),
-                SizedBox(height: 8),
+                const Icon(Icons.upload_file, color: Colors.grey),
+                const SizedBox(height: 8),
                 Text(
                   hint,
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
@@ -219,19 +219,19 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
             padding: const EdgeInsets.only(top: 8.0),
             child: Row(
               children: [
-                Icon(Icons.description, color: Colors.green, size: 20),
-                SizedBox(width: 8),
+                const Icon(Icons.description, color: Colors.green, size: 20),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(fileName),
-                      Text(fileSize ?? '', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                      Text(fileSize ?? '', style: const TextStyle(color: Colors.grey, fontSize: 12)),
                     ],
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete_outline, color: Colors.red),
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
                   onPressed: onDelete,
                 ),
               ],

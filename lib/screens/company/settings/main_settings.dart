@@ -47,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ],
                 ),
               ),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 32,
                 child: Row(
@@ -58,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                         width: 32,
                         height: 32,
                         child: const Icon(

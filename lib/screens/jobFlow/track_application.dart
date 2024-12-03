@@ -35,6 +35,8 @@ class TrackApplicationPage extends StatelessWidget {
     },
   };
 
+  TrackApplicationPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +45,10 @@ class TrackApplicationPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
+        title: const Text(
           'Applied Job Details',
           style: TextStyle(color: Colors.black),
         ),
@@ -66,14 +68,14 @@ class TrackApplicationPage extends StatelessWidget {
                     color: Colors.orange,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: Icon(Icons.business, color: Colors.white),
+                  child: const Icon(Icons.business, color: Colors.white),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Product Designer',
                         style: TextStyle(
                           fontSize: 18,
@@ -91,7 +93,7 @@ class TrackApplicationPage extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       '\$88,000/y',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -107,15 +109,15 @@ class TrackApplicationPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 24),
-            Text(
+            const SizedBox(height: 24),
+            const Text(
               'Track Application',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             // Timeline
             Expanded(
               child: _buildTimeline(),
@@ -127,17 +129,17 @@ class TrackApplicationPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => JobSearchPage()),
+      MaterialPageRoute(builder: (context) => const JobseekerHome()),
     );
                 },
                 style: OutlinedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  side: BorderSide(color: Color(0xFF002D62)),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  side: const BorderSide(color: Color(0xFF002D62)),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Browse Jobs',
                   style: TextStyle(
                     color: Color(0xFF002D62),
@@ -146,7 +148,7 @@ class TrackApplicationPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -179,17 +181,17 @@ class TrackApplicationPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: stepData['isCompleted']
-                            ? Color(0xFF002D62)
+                            ? const Color(0xFF002D62)
                             : Colors.grey[300],
                         border: Border.all(
                           color: stepData['isCompleted']
-                              ? Color(0xFF002D62)
+                              ? const Color(0xFF002D62)
                               : Colors.grey[300]!,
                           width: 2,
                         ),
                       ),
                       child: stepData['isCompleted']
-                          ? Icon(Icons.check, color: Colors.white, size: 16)
+                          ? const Icon(Icons.check, color: Colors.white, size: 16)
                           : null,
                     ),
                     if (!isLast)
@@ -197,7 +199,7 @@ class TrackApplicationPage extends StatelessWidget {
                         child: Container(
                           width: 2,
                           color: stepData['isCompleted']
-                              ? Color(0xFF002D62)
+                              ? const Color(0xFF002D62)
                               : Colors.grey[300],
                         ),
                       ),
@@ -213,7 +215,7 @@ class TrackApplicationPage extends StatelessWidget {
                     children: [
                       Text(
                         stepTitle,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
