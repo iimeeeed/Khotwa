@@ -5,6 +5,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Nadia Belhimer",
       "jobTitle": "Product Manager",
       "appliedDate": "March 9, 2024",
+      "interviewDate": "",
+      "interviewPlace": "",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "nadia.belhimer@email.com",
@@ -21,6 +23,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Ahmed Zinedine",
       "jobTitle": "Backend Developer",
       "appliedDate": "March 8, 2024",
+      "interviewDate": "",
+      "interviewPlace": "",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "ahmed.zinedine@email.com",
@@ -37,6 +41,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Zahra Toumi",
       "jobTitle": "Data Scientist",
       "appliedDate": "March 7, 2024",
+      "interviewDate": "",
+      "interviewPlace": "",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "zahra.toumi@email.com",
@@ -53,6 +59,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Karim Belkacem",
       "jobTitle": "Marketing Specialist",
       "appliedDate": "March 6, 2024",
+      "interviewDate": "",
+      "interviewPlace": "",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "karim.belkacem@email.com",
@@ -69,6 +77,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Sonia Farouk",
       "jobTitle": "Graphic Designer",
       "appliedDate": "March 5, 2024",
+      "interviewDate": "",
+      "interviewPlace": "",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "sonia.farouk@email.com",
@@ -83,11 +93,13 @@ List<List<Map<String, String>>> candidatesData = [
     },
   ],
   [
-    // Pending Interviews
+    //pending interview
     {
       "name": "Aymen Louhaichi",
       "jobTitle": "Web Developer",
       "appliedDate": "March 6, 2024",
+      "interviewDate": "March 20, 2024",
+      "interviewPlace": "Company HQ, Algiers",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "aymen.louhaichi@example.com",
@@ -102,6 +114,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Rania Oussama",
       "jobTitle": "Mobile Developer",
       "appliedDate": "March 12, 2024",
+      "interviewDate": "March 22, 2024",
+      "interviewPlace": "Company HQ, Oran",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "rania.oussama@example.com",
@@ -117,6 +131,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Ali Meguenni",
       "jobTitle": "Network Engineer",
       "appliedDate": "March 14, 2024",
+      "interviewDate": "March 23, 2024",
+      "interviewPlace": "Company HQ, Constantine",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "ali.meguenni@example.com",
@@ -132,6 +148,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Sophie Mebarki",
       "jobTitle": "Marketing Coordinator",
       "appliedDate": "March 10, 2024",
+      "interviewDate": "March 21, 2024",
+      "interviewPlace": "Company HQ, Annaba",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "sophie.mebarki@example.com",
@@ -147,6 +165,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Hassan Benhamida",
       "jobTitle": "Sales Representative",
       "appliedDate": "March 11, 2024",
+      "interviewDate": "March 24, 2024",
+      "interviewPlace": "Company HQ, Tlemcen",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "hassan.benhamida@example.com",
@@ -161,6 +181,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Omar Ali",
       "jobTitle": "Marketing Manager",
       "appliedDate": "March 5, 2024",
+      "interviewDate": "March 19, 2024",
+      "interviewPlace": "Company HQ, Setif",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "omar.ali@example.com",
@@ -177,6 +199,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Yasmine Belkacem",
       "jobTitle": "HR Manager",
       "appliedDate": "March 1, 2024",
+      "interviewDate": "March 18, 2024",
+      "interviewPlace": "Company HQ, Algiers",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "yasmine.belkacem@example.com",
@@ -193,6 +217,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Karim Rachid",
       "jobTitle": "Project Manager",
       "appliedDate": "March 2, 2024",
+      "interviewDate": "March 18, 2024",
+      "interviewPlace": "Company HQ, Blida",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "karim.rachid@example.com",
@@ -209,6 +235,8 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Omar Khemiri",
       "jobTitle": "Business Analyst",
       "appliedDate": "March 3, 2024",
+      "interviewDate": "March 20, 2024",
+      "interviewPlace": "Company HQ, Constantine",
       "imageUrl":
           "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
       "email": "omar.khemiri@example.com",
@@ -225,14 +253,16 @@ List<List<Map<String, String>>> candidatesData = [
       "name": "Lina Boudjemaa",
       "jobTitle": "Operations Manager",
       "appliedDate": "March 4, 2024",
+      "interviewDate": "March 19, 2024",
+      "interviewPlace": "Company HQ, Bejaia",
       "imageUrl":
           "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
       "email": "lina.boudjemaa@example.com",
       "phone": "+213 681 345 678",
       "address": "Bejaia, Algeria",
       "skills":
-          "Operations Management, Logistics, Team Leadership, Strategic Planning, Supply Chain",
-      "experience": "5 years as Operations Manager at YZA Ltd.",
+          "Operations Management, Logistics, Performance Metrics, Lean Management",
+      "experience": "5 years as Operations Manager at XYZ Logistics",
       "resume": "https://example.com/resume/lina_boudjemaa.pdf",
       "certificates":
           "https://example.com/certificates/operations_management_certification"
@@ -242,51 +272,49 @@ List<List<Map<String, String>>> candidatesData = [
 
 final List<Map<String, dynamic>> RecommendedCandidatesList = [
   {
-      "name": "Hassan Benhamida",
-      "jobTitle": "Sales Representative",
-      "appliedDate": "March 11, 2024",
-      "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
-      "email": "hassan.benhamida@example.com",
-      "phone": "+213 668 098 765",
-      "address": "Tlemcen, Algeria",
-      "skills": "Sales, Negotiation, CRM, Lead Generation, Client Relations",
-      "experience": "5 years in Sales at JKL Enterprises",
-      "resume": "https://example.com/resume/hassan_benhamida.pdf",
-      "certificates": "https://example.com/certificates/sales_certification"
-    },
-    {
-      "name": "Omar Ali",
-      "jobTitle": "Marketing Manager",
-      "appliedDate": "March 5, 2024",
-      "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
-      "email": "omar.ali@example.com",
-      "phone": "+213 677 654 321",
-      "address": "Setif, Algeria",
-      "skills":
-          "Branding, Marketing Strategy, Social Media, Market Research, Advertising",
-      "experience": "6 years as a Marketing Manager at MNO Marketing",
-      "resume": "https://example.com/resume/omar_ali.pdf",
-      "certificates":
-          "https://example.com/certificates/marketing_manager_certification"
-    },
-    {
-      "name": "Yasmine Belkacem",
-      "jobTitle": "HR Manager",
-      "appliedDate": "March 1, 2024",
-      "imageUrl":
-          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
-      "email": "yasmine.belkacem@example.com",
-      "phone": "+213 678 345 876",
-      "address": "Algiers, Algeria",
-      "skills":
-          "Recruitment, Employee Relations, HR Policies, Training, Payroll",
-      "experience": "7 years as an HR Manager at PQR Solutions",
-      "resume": "https://example.com/resume/yasmine_belkacem.pdf",
-      "certificates":
-          "https://example.com/certificates/hr_manager_certification"
-    },
+    "name": "Hassan Benhamida",
+    "jobTitle": "Sales Representative",
+    "appliedDate": "March 11, 2024",
+    "imageUrl":
+        "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+    "email": "hassan.benhamida@example.com",
+    "phone": "+213 668 098 765",
+    "address": "Tlemcen, Algeria",
+    "skills": "Sales, Negotiation, CRM, Lead Generation, Client Relations",
+    "experience": "5 years in Sales at JKL Enterprises",
+    "resume": "https://example.com/resume/hassan_benhamida.pdf",
+    "certificates": "https://example.com/certificates/sales_certification"
+  },
+  {
+    "name": "Omar Ali",
+    "jobTitle": "Marketing Manager",
+    "appliedDate": "March 5, 2024",
+    "imageUrl":
+        "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+    "email": "omar.ali@example.com",
+    "phone": "+213 677 654 321",
+    "address": "Setif, Algeria",
+    "skills":
+        "Branding, Marketing Strategy, Social Media, Market Research, Advertising",
+    "experience": "6 years as a Marketing Manager at MNO Marketing",
+    "resume": "https://example.com/resume/omar_ali.pdf",
+    "certificates":
+        "https://example.com/certificates/marketing_manager_certification"
+  },
+  {
+    "name": "Yasmine Belkacem",
+    "jobTitle": "HR Manager",
+    "appliedDate": "March 1, 2024",
+    "imageUrl":
+        "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
+    "email": "yasmine.belkacem@example.com",
+    "phone": "+213 678 345 876",
+    "address": "Algiers, Algeria",
+    "skills": "Recruitment, Employee Relations, HR Policies, Training, Payroll",
+    "experience": "7 years as an HR Manager at PQR Solutions",
+    "resume": "https://example.com/resume/yasmine_belkacem.pdf",
+    "certificates": "https://example.com/certificates/hr_manager_certification"
+  },
 ];
 
 final List<Map<String, dynamic>> featuredJobs = [
@@ -298,39 +326,38 @@ final List<Map<String, dynamic>> featuredJobs = [
     'tags': ['Design', 'Full-Time', 'Junior'],
   },
   {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-    },
-  
+    'title': 'Frontend Developer',
+    'company': 'Google',
+    'salary': '160,000/year',
+    'location': 'Remote',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
+  {
+    'title': 'Frontend Developer',
+    'company': 'Google',
+    'salary': '160,000/year',
+    'location': 'Remote',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
+  {
+    'title': 'Frontend Developer',
+    'company': 'Google',
+    'salary': '160,000/year',
+    'location': 'Remote',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
+  {
+    'title': 'Frontend Developer',
+    'company': 'Google',
+    'salary': '160,000/year',
+    'location': 'Remote',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
+  {
+    'title': 'Frontend Developer',
+    'company': 'Google',
+    'salary': '160,000/year',
+    'location': 'Remote',
+    'tags': ['Design', 'Full-Time', 'Junior'],
+  },
 ];
