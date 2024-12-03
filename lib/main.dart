@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
+import './screens/company/company_dashboard.dart';
 
 void main() {
   runApp(const MainApp());

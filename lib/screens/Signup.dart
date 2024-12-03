@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'jobSeeker/forms/job_seeker_form.dart';
-import 'company_form.dart';
+import 'company/forms/company_form.dart';
 import '../commons/khotwa_logo.dart';
 import '../commons/constants.dart'; 
 

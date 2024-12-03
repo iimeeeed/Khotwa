@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../commons/Khotwa_logo.dart';
+import '../../commons/khotwa_logo.dart';
 import '../../commons/constants.dart';
 import '../../widgets/bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -82,7 +82,7 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 50),
+                    SizedBox(width: AppSizes.getScreenWidth(context)*0.126),
                     const Text(
                       'Company Dashboard',
                       textAlign: TextAlign.center,
@@ -562,7 +562,7 @@ class _BarChartProgressState extends State<BarChartProgress>
                 Positioned(
                   left: 70,
                   child: SizedBox(
-                    width: 200,
+                    width: AppSizes.getScreenWidth(context)*0.575,
                     height: 180,
                     child: LineChart(
                       LineChartData(

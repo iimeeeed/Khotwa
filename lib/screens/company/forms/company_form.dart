@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../commons/constants.dart';
-import 'company/company_verification.dart';
+import 'package:khotwa/screens/company/companyLogin.dart';
+import '../../../../commons/constants.dart';
+import '../company_verification.dart';
 
 class CompanyForm extends StatefulWidget {
   const CompanyForm({super.key});
@@ -251,6 +252,11 @@ class _CompanyFormState extends State<CompanyForm> {
         ),
         const SizedBox(width: 5),
         GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context, MaterialPageRoute(builder: (context) => LoginCompany())
+            );
+          },
           child: const Text(
             "Sign in",
             style: TextStyle(
