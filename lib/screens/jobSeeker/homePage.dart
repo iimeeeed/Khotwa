@@ -99,7 +99,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
             'company': employer,
             'salary': price,
             'location': location,
-            'tags': [], // Pass tags if available
+            'tags': [],
             'logo': str,
           }),
         ),
@@ -114,46 +114,44 @@ class _JobSearchPageState extends State<JobSearchPage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            width: 20,
-          ),
-          Container(
-            height: 70,
-            width: 70,
+          const SizedBox(width: 10),
+          SizedBox(
+            height: 50,
+            width: 50,
             child: CircleAvatar(
               child: Image.asset(str),
               backgroundColor: Colors.transparent,
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                job,
-                style: TextStyle(
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  job,
+                  style: TextStyle(
                     fontFamily: AppFonts.secondaryFont,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                employer,
-                style: TextStyle(
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  employer,
+                  style: TextStyle(
                     color: Colors.grey,
                     fontFamily: AppFonts.secondaryFont,
-                    fontSize: 11),
-              ),
-            ],
+                    fontSize: 11,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            width: 65,
-          ),
+          const SizedBox(width: 10),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -161,19 +159,24 @@ class _JobSearchPageState extends State<JobSearchPage> {
               Text(
                 price,
                 style: TextStyle(
-                    fontFamily: AppFonts.secondaryFont,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13),
+                  fontFamily: AppFonts.secondaryFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
                 location,
                 style: TextStyle(
-                    color: Colors.grey,
-                    fontFamily: AppFonts.secondaryFont,
-                    fontSize: 11),
+                  color: Colors.grey,
+                  fontFamily: AppFonts.secondaryFont,
+                  fontSize: 11,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
+          const SizedBox(width: 10),
         ],
       ),
     ),
