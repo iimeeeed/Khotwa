@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/screens/Signup.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
-import 'homePage.dart';
+import 'company_home.dart';
 import '../../commons/constants.dart';
 
-class LoginJobSeeker extends StatefulWidget {
-  const LoginJobSeeker({super.key});
+class LoginCompany extends StatefulWidget {
+  const LoginCompany({super.key});
 
   @override
-  State<LoginJobSeeker> createState() => _LoginJobSeekerState();
+  State<LoginCompany> createState() => _LoginCompanyState();
 }
 
-class _LoginJobSeekerState extends State<LoginJobSeeker> {
+class _LoginCompanyState extends State<LoginCompany> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -29,7 +29,6 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
       ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        
           Center(child: Image.asset("assets/asset1.png")),
           const SizedBox(
             height: 20,
@@ -75,7 +74,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "johndoe@example.com",
+                      hintText: "company@example.com",
                       hintStyle: const TextStyle(
                           fontFamily: AppFonts.secondaryFont,
                           color: Colors.grey,
@@ -206,7 +205,7 @@ class _LoginJobSeekerState extends State<LoginJobSeeker> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => JobSearchPage(),
+                    builder: (context) => CompanyHome(),
                   ),
                 );
               },

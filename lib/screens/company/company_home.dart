@@ -57,9 +57,17 @@ class _CompanyHomeState extends State<CompanyHome> {
   }
 
   // Function to create the candidate list tiles
-  Widget buildCandidateTile(String name, String jobTitle, String appliedDate,
-      String imageUrl, bool isRecommended,
-      {listIndex = 0, int candidateIndex = 0}) {
+  Widget buildCandidateTile(
+      String name,
+      String jobTitle,
+      String appliedDate,
+      String interviewDate,
+      String interviewPlace,
+      String imageUrl,
+      bool isRecommended,
+      bool isPendingInterview,
+      {listIndex = 0,
+      int candidateIndex = 0}) {
     return Container(
       width: AppSizes.getScreenWidth(context) * 0.95,
       margin: const EdgeInsets.only(bottom: 8),
@@ -166,58 +174,86 @@ class _CompanyHomeState extends State<CompanyHome> {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Applied: $appliedDate',
-                            style: const TextStyle(
-                              color: Color(0xFFAAAFBB),
-                              fontSize: 9,
-                              fontFamily: 'Poppins',
-                              letterSpacing: -0.09,
-                            ),
-                          ),
-                          Opacity(
-                            opacity: 0.74,
-                            child: GestureDetector(
-                              onTap: () {
-                                List<int> ID = [listIndex, candidateIndex];
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CandidatesDetails(
-                                      candidateId: ID,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 68,
-                                height: 21,
-                                decoration: ShapeDecoration(
-                                  color: AppColors.lightGreenColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    'View Application',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 7,
+                      child: (isPendingInterview)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                  Text(
+                                    'Interview Scheduled On : $interviewDate',
+                                    style: const TextStyle(
+                                      color: AppColors.blackTextColor,
+                                      fontSize: 9,
                                       fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: -0.07,
+                                      letterSpacing: -0.09,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Location: $interviewPlace',
+                                    style: const TextStyle(
+                                      color: AppColors.blackTextColor,
+                                      fontSize: 9,
+                                      fontFamily: 'Poppins',
+                                      letterSpacing: -0.09,
+                                    ),
+                                  ),
+                                ])
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Applied: $appliedDate',
+                                  style: const TextStyle(
+                                    color: Color(0xFFAAAFBB),
+                                    fontSize: 9,
+                                    fontFamily: 'Poppins',
+                                    letterSpacing: -0.09,
+                                  ),
+                                ),
+                                Opacity(
+                                  opacity: 0.74,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      List<int> ID = [
+                                        listIndex,
+                                        candidateIndex
+                                      ];
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CandidatesDetails(
+                                            candidateId: ID,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 68,
+                                      height: 21,
+                                      decoration: ShapeDecoration(
+                                        color: AppColors.lightGreenColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'View Application',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 7,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: -0.07,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -230,7 +266,7 @@ class _CompanyHomeState extends State<CompanyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      bottomNavigationBar: BottomBar(isJobseeker: false),
+      bottomNavigationBar: const BottomBar(isJobseeker: false),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -285,7 +321,7 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             // Search Bar
             (currentIndex > 0)
-                ? SearchFilterBar()
+                ? const SearchFilterBar()
                 : Container(
                     child: const Text(
                       "Here's what's happening today in your hiring pipeline.",
@@ -363,12 +399,17 @@ class _CompanyHomeState extends State<CompanyHome> {
                       itemBuilder: (context, index) {
                         final candidate =
                             candidatesList[currentIndex - 1][index];
+                        bool isPendingInterview =
+                            (currentIndex == 2) ? true : false;
                         return buildCandidateTile(
                             candidate['name']!,
                             candidate['jobTitle']!,
                             candidate['appliedDate']!,
+                            candidate['interviewDate']!,
+                            candidate['interviewPlace']!,
                             candidate['imageUrl']!,
                             false,
+                            isPendingInterview,
                             listIndex: currentIndex,
                             candidateIndex: index);
                       },
@@ -529,7 +570,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Notifications(),
+                    builder: (context) => const Notifications(),
                   ),
                 );
               },
@@ -587,19 +628,28 @@ class _CompanyHomeState extends State<CompanyHome> {
                 RecommendedCandidatesList[0]['jobTitle']!,
                 RecommendedCandidatesList[0]['appliedDate']!,
                 RecommendedCandidatesList[0]['imageUrl']!,
-                true),
+                "",
+                "",
+                true,
+                false),
             buildCandidateTile(
                 RecommendedCandidatesList[1]['name']!,
                 RecommendedCandidatesList[1]['jobTitle']!,
                 RecommendedCandidatesList[1]['appliedDate']!,
+                "",
+                "",
                 RecommendedCandidatesList[1]['imageUrl']!,
-                true),
+                true,
+                false),
             buildCandidateTile(
                 RecommendedCandidatesList[2]['name']!,
                 RecommendedCandidatesList[2]['jobTitle']!,
                 RecommendedCandidatesList[2]['appliedDate']!,
+                "",
+                "",
                 RecommendedCandidatesList[2]['imageUrl']!,
-                true),
+                true,
+                false),
           ],
         ),
       ],

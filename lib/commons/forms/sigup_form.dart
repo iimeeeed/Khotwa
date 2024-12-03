@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import '../../commons/constants.dart';
-import 'company/company_verification.dart';
+import 'package:khotwa/screens/company/companyLogin.dart';
+import 'package:khotwa/screens/jobSeeker/loginJobSeeker.dart';
+import '../../../commons/constants.dart';
+import '../../screens/company/company_verification.dart';
+import '../../screens/jobSeeker/flowSignUp/flow.dart' as flow_screen;
 
-class CompanyForm extends StatefulWidget {
-  const CompanyForm({super.key});
+class SignupForm extends StatefulWidget {
+  final bool isCompany;
+  const SignupForm({super.key,  required this.isCompany});
 
   @override
-  State<CompanyForm> createState() => _CompanyFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _CompanyFormState extends State<CompanyForm> {
+class _SignupFormState extends State<SignupForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
@@ -26,15 +30,15 @@ class _CompanyFormState extends State<CompanyForm> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildInputField(
-          label: "Company name",
+          label: (widget.isCompany)? "Company name" : "Full name",
           controller: _companyNameController,
-          hintText: "Company name",
+          hintText: (widget.isCompany)? "Company name" : "Full name",
         ),
         const SizedBox(height: 10),
         _buildInputField(
           label: "Email",
           controller: _emailController,
-          hintText: "company@example.com",
+          hintText: (widget.isCompany)? "company@example.com" : "jobseeker@example.com",
         ),
         const SizedBox(height: 10),
         _buildPasswordField(),
@@ -69,7 +73,7 @@ class _CompanyFormState extends State<CompanyForm> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const CompanyVerificationPage(),
+                  builder: (context) =>  (widget.isCompany)? CompanyVerificationPage() : flow_screen.Flow(),
                 ),
               );
             },
@@ -251,6 +255,10 @@ class _CompanyFormState extends State<CompanyForm> {
         ),
         const SizedBox(width: 5),
         GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => (widget.isCompany)? LoginCompany() : LoginJobSeeker()));
+          },
           child: const Text(
             "Sign in",
             style: TextStyle(

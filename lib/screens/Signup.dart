@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'jobSeeker/forms/job_seeker_form.dart';
-import 'company_form.dart';
+import '../commons/forms/sigup_form.dart';
 import '../commons/khotwa_logo.dart';
 import '../commons/constants.dart'; 
 
@@ -153,9 +152,9 @@ class _SignupState extends State<Signup> {
                     child: PageView(
                       controller: _pageController,
                       physics: NeverScrollableScrollPhysics(),
-                      children: const [
-                        JobSeekerForm(),
-                        CompanyForm(),
+                      children:  const [
+                        SignupForm(isCompany : false),
+                        SignupForm(isCompany : true),
                       ],
                     ),
                   ),
