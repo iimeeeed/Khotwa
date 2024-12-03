@@ -72,7 +72,7 @@ class _FlowState extends State<Flow> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 120),
+                      SizedBox(height: AppSizes.getScreenHeight(context) * 0.1),
                       Hero(
                         tag: imagePath,
                         child: SizedBox(
@@ -94,7 +94,8 @@ class _FlowState extends State<Flow> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      SizedBox(
+                          height: AppSizes.getScreenHeight(context) * 0.04),
                       SizedBox(
                         width: 300,
                         child: Text(
@@ -108,6 +109,8 @@ class _FlowState extends State<Flow> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                          height: AppSizes.getScreenHeight(context) * 0.4),
                     ],
                   ),
                 );
