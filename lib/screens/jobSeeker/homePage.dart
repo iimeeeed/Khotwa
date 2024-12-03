@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../data/candidates_data.dart';
+import '../../widgets/search_bar.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/screens/jobFlow/job_details.dart';
@@ -12,57 +14,6 @@ class JobSearchPage extends StatefulWidget {
 }
 
 class _JobSearchPageState extends State<JobSearchPage> {
-  final List<Map<String, dynamic>> featuredJobs = [
-    {
-      'title': 'Product Designer',
-      'company': 'SONATRACH',
-      'salary': '600,000 DA/y',
-      'location': 'Algiers',
-      'tags': ['Design', 'Full-Time', 'Junior'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Development'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Development'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Development'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Development'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-    {
-      'title': 'Frontend Developer',
-      'company': 'Google',
-      'salary': '160,000/year',
-      'location': 'Remote',
-      'tags': ['Development'],
-      'logo': 'assets/Sonatrach-Logo.png',
-    },
-  ];
-
   List<String> categories = [
     "All jobs",
     "Design",
@@ -72,6 +23,8 @@ class _JobSearchPageState extends State<JobSearchPage> {
   ];
 
   late List<bool> selectedCategories;
+  int currentIndex = 0;
+  bool isSaved = false;
 
   @override
   void initState() {
@@ -88,60 +41,86 @@ class _JobSearchPageState extends State<JobSearchPage> {
   }
 
   Widget buildTile(
-    String str, String job, String employer, String price, String location) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => JobDetailsPage(job: {
-            'title': job,
-            'company': employer,
-            'salary': price,
-            'location': location,
-            'tags': [],
-            'logo': str,
-          }),
-        ),
-      );
-    },
-    child: Container(
-      margin: EdgeInsets.only(bottom: 20),
-      height: AppSizes.getScreenHeight(context) * 0.08,
-      width: AppSizes.getScreenWidth(context) * 0.9,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20), color: Colors.white),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(width: 10),
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: CircleAvatar(
-              child: Image.asset(str),
-              backgroundColor: Colors.transparent,
-            ),
+      String str, String job, String employer, String price, String location) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => JobDetailsPage(job: {
+              'title': job,
+              'company': employer,
+              'salary': price,
+              'location': location,
+              'tags': [],
+              'logo': str,
+            }),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        height: AppSizes.getScreenHeight(context) * 0.08,
+        width: AppSizes.getScreenWidth(context) * 0.9,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: Colors.white),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(width: 10),
+            SizedBox(
+              height: 50,
+              width: 50,
+              child: CircleAvatar(
+                child: Image.asset("assets/Sonatrach-Logo.png"),
+                backgroundColor: Colors.transparent,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    job,
+                    style: const TextStyle(
+                      fontFamily: AppFonts.secondaryFont,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    employer,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontFamily: AppFonts.secondaryFont,
+                      fontSize: 11,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  job,
-                  style: TextStyle(
+                  price,
+                  style: const TextStyle(
                     fontFamily: AppFonts.secondaryFont,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 5),
                 Text(
-                  employer,
-                  style: TextStyle(
+                  location,
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontFamily: AppFonts.secondaryFont,
                     fontSize: 11,
@@ -150,46 +129,17 @@ class _JobSearchPageState extends State<JobSearchPage> {
                 ),
               ],
             ),
-          ),
-          const SizedBox(width: 10),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                price,
-                style: TextStyle(
-                  fontFamily: AppFonts.secondaryFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                location,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: AppFonts.secondaryFont,
-                  fontSize: 11,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-          const SizedBox(width: 10),
-        ],
+            const SizedBox(width: 10),
+          ],
+        ),
       ),
-    ),
-  );
-}
-
-
-  int currentIndex = 0;
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor :AppColors.primaryBackgroundColor,
+      backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryBackgroundColor,
@@ -231,32 +181,8 @@ class _JobSearchPageState extends State<JobSearchPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 15),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search a job or position",
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.filter_list, color: Colors.white),
-                ),
-              ],
+            const SearchFilterBar(
+              hint: "Search a job or a position",
             ),
             const SizedBox(height: 16),
 
@@ -270,34 +196,21 @@ class _JobSearchPageState extends State<JobSearchPage> {
             // Job Cards with partial visibility of the next card
             SizedBox(
               height: 180,
-              child: PageView.builder(
-                controller: PageController(
-                  viewportFraction:
-                      0.75, // Adjust this to tweak the visible fraction
-                  initialPage: 0,
-                ),
-                onPageChanged: (index) {
-                  setState(() {
-                    currentIndex = index;
-                  });
-                },
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
                 itemCount: featuredJobs.length,
                 itemBuilder: (context, index) {
                   final job = featuredJobs[index];
-                  return GestureDetector (
+                  return GestureDetector(
                     onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => JobDetailsPage(job: job)),
-  );
-},
-                    child: Transform.scale(
-                    scale: index == currentIndex ? 1 : 0.85,
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => JobDetailsApp()));
+                    },
                     child: Container(
-                      margin: const EdgeInsets.only(
-                        right: 0,
-                        left: 0,
-                      ),
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      margin: const EdgeInsets.only(right: 12),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: const Color(0xFF356899),
@@ -318,64 +231,94 @@ class _JobSearchPageState extends State<JobSearchPage> {
                             children: [
                               Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundColor:
-                                        const Color.fromRGBO(255, 255, 255, 1),
-                                    radius: 16,
-                                    backgroundImage:
-                                        AssetImage(job['logo'] ?? ''),
+                                        Color.fromRGBO(255, 255, 255, 1),
+                                    radius: 22,
+                                    child: Image(
+                                      image: AssetImage(
+                                          "assets/Sonatrach-Logo.png"),
+                                    ),
                                   ),
                                   const SizedBox(width: 8),
-                                  Text(
-                                    job['title'],
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        job['title'] ?? 'Job Title',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        job['company'] ?? 'Company Name',
+                                        style: const TextStyle(
+                                            color: Colors.white70),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                              const Icon(
-                                Icons.favorite_border,
-                                color: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  isSaved = !isSaved;
+                                  setState(() {
+                                    
+                                  });
+                                },
+                                child: Container(
+                                  child: Icon(
+                                    (!isSaved)
+                                        ? Icons.bookmark_add_outlined
+                                        : Icons.bookmark,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  margin: EdgeInsets.only(bottom: 30),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Column(
+                            children: [
+                              Center(
+                                child: Wrap(
+                                  spacing: 20,
+                                  children: (job['tags'] as List)
+                                      .map<Widget>(
+                                        (tag) => Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white24,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            tag ?? 'Tag',
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
-                          
-                          Text(
-                            job['company'],
-                            style: const TextStyle(color: Colors.white70),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 8,
-                            children: job['tags']
-                                .map<Widget>(
-                                  (tag) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white24,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Text(
-                                      tag,
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Colors.white),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 20),
                           Row(
                             children: [
                               Text(
-                                job['salary'],
+                                job['salary'] ?? 'Salary',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -383,7 +326,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                               ),
                               const Spacer(),
                               Text(
-                                job['location'],
+                                job['location'] ?? 'Location',
                                 style: const TextStyle(color: Colors.white70),
                               ),
                             ],
@@ -391,9 +334,7 @@ class _JobSearchPageState extends State<JobSearchPage> {
                         ],
                       ),
                     ),
-                  )
                   );
-                  
                 },
               ),
             ),

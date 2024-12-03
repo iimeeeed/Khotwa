@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/constants.dart';
 
 class SearchFilterBar extends StatefulWidget {
   final String hint; // Accept hint as a parameter
@@ -16,7 +17,7 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
       children: [
         Expanded(
           child: Container(
-            height: 44,
+            height: AppSizes.getScreenHeight(context)*0.06,
             child: TextField(
               decoration: InputDecoration(
                 filled: true,
@@ -49,7 +50,8 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
         ),
         const SizedBox(width: 8),
         Container(
-          height: 44,
+          height: AppSizes.getScreenHeight(context)*0.06,
+          width: AppSizes.getScreenWidth(context)*0.12,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white,

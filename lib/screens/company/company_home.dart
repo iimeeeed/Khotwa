@@ -56,7 +56,6 @@ class _CompanyHomeState extends State<CompanyHome> {
     );
   }
 
-  // Function to create the candidate list tiles
   Widget buildCandidateTile(
       String name,
       String jobTitle,

@@ -11,13 +11,21 @@ class Prefs extends StatefulWidget {
 }
 
 class _PrefsState extends State<Prefs> {
-  Map<Icon, String> _prefsMap = {
-    Icon(Icons.design_services): "Designer",
-    Icon(Icons.developer_mode): "Developer",
-    Icon(Icons.admin_panel_settings_sharp): "Administrative",
-    Icon(Icons.sell): "Marketing",
-    Icon(Icons.manage_accounts): "Management",
-    Icon(Icons.other_houses): "Others",
+  final Map<Icon, String> _prefsMap = {
+    const Icon(Icons.design_services_outlined,
+        color: AppColors.blueButtonColor): "Designer",
+    const Icon(Icons.developer_mode_outlined, color: AppColors.blueButtonColor):
+        "Developer",
+    const Icon(Icons.admin_panel_settings_outlined,
+        color: AppColors.blueButtonColor): "Administrative",
+    const Icon(Icons.sell_outlined, color: AppColors.blueButtonColor):
+        "Marketing",
+    const Icon(Icons.manage_accounts_outlined,
+        color: AppColors.blueButtonColor): "Management",
+    const Icon(
+      Icons.other_houses_outlined,
+      color: AppColors.blueButtonColor,
+    ): "Others",
   };
 
   final List<Map<String, dynamic>> _tags = [
@@ -51,45 +59,52 @@ class _PrefsState extends State<Prefs> {
   bool _showAllLocations = false;
 
   Widget buildTile(Icon icon, String str) {
-    return Container(
-      width: AppSizes.getScreenWidth(context) * 0.5,
-      height: AppSizes.getScreenHeight(context) * 0.06,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              SizedBox(width: AppSizes.getScreenWidth(context) * 0.07),
-              icon,
-              SizedBox(width: AppSizes.getScreenWidth(context) * 0.04),
-              Text(str),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Transform.scale(
-              scale: 1.1,
-              child: Checkbox(
-                side: BorderSide(color: Colors.grey, width: 1.0),
-                value: prefsChecked[str] ?? false,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                visualDensity: VisualDensity.compact,
-                shape: const CircleBorder(),
-                activeColor: Color(0xFF84BDA9),
-                onChanged: (bool? value) {
-                  setState(() {
-                    prefsChecked[str] = value ?? false;
-                  });
-                },
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          prefsChecked[str] = !(prefsChecked[str] ?? false);
+        });
+      },
+      child: Container(
+        width: AppSizes.getScreenWidth(context) * 0.5,
+        height: AppSizes.getScreenHeight(context) * 0.06,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                SizedBox(width: AppSizes.getScreenWidth(context) * 0.07),
+                icon,
+                SizedBox(width: AppSizes.getScreenWidth(context) * 0.04),
+                Text(str, style: TextStyle(
+                  fontWeight: FontWeight.bold
+                )),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.grey, width: 1.0),
+                  color: prefsChecked[str] ?? false
+                      ? AppColors.lightGreenColor
+                      : Colors.transparent,
+                ),
+                child: prefsChecked[str] ?? false
+                    ? const Icon(Icons.check, color: Colors.white, size: 16)
+                    : null,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -122,8 +137,8 @@ class _PrefsState extends State<Prefs> {
                 SizedBox(
                   height: AppSizes.getScreenHeight(context) * 0.02,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -141,7 +156,7 @@ class _PrefsState extends State<Prefs> {
                   padding: const EdgeInsets.all(20.0),
                   child: ListView(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: _prefsMap.entries.map((entry) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -152,8 +167,8 @@ class _PrefsState extends State<Prefs> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -178,8 +193,8 @@ class _PrefsState extends State<Prefs> {
             SizedBox(
               height: AppSizes.getScreenHeight(context) * 0.02,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -214,7 +229,7 @@ class _PrefsState extends State<Prefs> {
                     showCheckmark: false,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
-                      side: BorderSide(color: Colors.transparent),
+                      side: const BorderSide(color: Colors.transparent),
                     ),
                   );
                 }).toList(),
@@ -227,7 +242,7 @@ class _PrefsState extends State<Prefs> {
                           _showAllTags = true;
                         });
                       },
-                      child: Text(
+                      child: const Text(
                         "See all...",
                         style: TextStyle(
                           color: Colors.grey,
@@ -249,8 +264,8 @@ class _PrefsState extends State<Prefs> {
             SizedBox(
               height: AppSizes.getScreenHeight(context) * 0.02,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -285,7 +300,7 @@ class _PrefsState extends State<Prefs> {
                     showCheckmark: false,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
-                      side: BorderSide(color: Colors.transparent),
+                      side: const BorderSide(color: Colors.transparent),
                     ),
                   );
                 }).toList(),
@@ -298,7 +313,7 @@ class _PrefsState extends State<Prefs> {
                           _showAllLocations = true;
                         });
                       },
-                      child: Text(
+                      child: const Text(
                         "See all...",
                         style: TextStyle(
                           color: Colors.grey,
@@ -317,8 +332,10 @@ class _PrefsState extends State<Prefs> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => JobSearchPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const JobSearchPage()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.lightGreenColor,
