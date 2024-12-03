@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
-
+import 'package:flutter/rendering.dart';
 void main() {
   runApp(const MainApp());
 }
 
 class MainApp extends StatefulWidget {
+  
   const MainApp({super.key});
 
   @override
@@ -14,6 +15,7 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  
   bool isLanding = true;
   bool isLoading = false;
 
