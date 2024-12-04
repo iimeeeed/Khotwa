@@ -23,13 +23,13 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 2500), () {
+    Future.delayed(const Duration(milliseconds: 6000), () { 
       setState(() {
         isLanding = false;
         isLoading = true;
       });
 
-      Future.delayed(const Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 2000), () {  
         setState(() {
           isLoading = false; 
         });
@@ -55,16 +55,4 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
     );
   }
-
-
-/*  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Color(0xFFEFF3F2),
-        body: JobSearchApp()
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }*/
 }
