@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../commons/constants.dart';
 import 'bottom_sheet.dart';
 import '../screens/company/settings/main_settings.dart';
+import 'notifications_screen.dart';
+import '../screens/company/create_post_screen.dart';
 
 class BottomBar extends StatefulWidget {
   final bool
@@ -44,7 +46,7 @@ class _BottomBarState extends State<BottomBar> {
                 )
               : _buildTab(
                   icon: Icons.add_box_outlined,
-                  label: 'Jobs',
+                  label: 'Create',
                   index: 2,
                 ),
           // Notifications tab
@@ -74,8 +76,21 @@ class _BottomBarState extends State<BottomBar> {
     return GestureDetector(
       onTap: () {
         setState(() {
+          bool isComp = (widget.isJobseeker) ? false : true;
           selectedIndex = index;
-          BottomDialog.show(context, const SettingsPage()); //example
+          if (label == "Notifs") {
+            BottomDialog.show(
+                context,
+                NotificationsScreen(
+                  isCompany: isComp,
+                ));
+          } else {
+            if (label == "Create") {
+              BottomDialog.show(context, const CreatePost()); //example
+            } else {
+              BottomDialog.show(context, const SettingsPage()); //example
+            }
+          }
         });
       },
       child: Expanded(

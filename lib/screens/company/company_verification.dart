@@ -112,7 +112,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       child: Container(
         height: 7,
         decoration: ShapeDecoration(
-          color: isActive ?  AppColors.lightGreenColor : const Color(0xFFEFF3F2),
+          color: isActive ? AppColors.lightGreenColor : const Color(0xFFEFF3F2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -230,7 +230,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w400,
                       ),
-                      cursorColor:  AppColors.blueButtonColor,
+                      cursorColor: AppColors.blueButtonColor,
                     ),
             ),
             Positioned(
@@ -421,7 +421,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               height: 22,
                               decoration: ShapeDecoration(
                                 color: isSelected
-                                    ?  AppColors.lightGreenColor
+                                    ? AppColors.lightGreenColor
                                     : Colors.white,
                                 shape: const OvalBorder(
                                   side: BorderSide(
@@ -467,6 +467,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         ElevatedButton(
                           onPressed: () {
@@ -514,14 +515,16 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: (currentStep==3)? AppColors.blueButtonColor:AppColors.lightGreenColor,
+                            backgroundColor: (currentStep == 3)
+                                ? AppColors.blueButtonColor
+                                : AppColors.lightGreenColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                             minimumSize: const Size(83, 30),
                           ),
-                          child:  Text(
-                            (currentStep==3)? "Let's Go":'Next',
+                          child: Text(
+                            (currentStep == 3) ? "Let's Go" : 'Next',
                             style: const TextStyle(
                               fontSize: 14,
                               fontFamily: 'Poppins',
