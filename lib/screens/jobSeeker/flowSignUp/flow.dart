@@ -95,7 +95,7 @@ class _FlowState extends State<Flow> {
                         ),
                       ),
                       SizedBox(
-                          height: AppSizes.getScreenHeight(context) * 0.04),
+                          height: AppSizes.getScreenHeight(context) * 0.02),
                       SizedBox(
                         width: 300,
                         child: Text(
@@ -110,7 +110,7 @@ class _FlowState extends State<Flow> {
                         ),
                       ),
                       SizedBox(
-                          height: AppSizes.getScreenHeight(context) * 0.4),
+                          height: AppSizes.getScreenHeight(context) * 0.6),
                     ],
                   ),
                 );

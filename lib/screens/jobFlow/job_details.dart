@@ -13,9 +13,7 @@ class JobDetailsApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: JobDetailsPage(
-        job: {
-          
-        },
+        job: {},
       ),
     );
   }
@@ -52,7 +50,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
                         onPressed: () {
-                          Navigator.pop(context); // This will navigate back to the previous page
+                          Navigator.pop(
+                              context); // This will navigate back to the previous page
                         },
                       ),
                       const Icon(Icons.bookmark_border, color: Colors.white),
@@ -61,12 +60,14 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   const SizedBox(height: 24),
                   // Logo, title, company
                   CircleAvatar(
-  radius: 40,
-  backgroundColor: Colors.white,
-  child: widget.job['logo'] != null
-      ? Image.asset(widget.job['logo'], fit: BoxFit.cover) // For local asset image
-      : const Icon(Icons.business, size: 40), // Fallback icon if no logo is provided
-),
+                    radius: 40,
+                    backgroundColor: Colors.white,
+                    child: widget.job['logo'] != null
+                        ? Image.asset(widget.job['logo'],
+                            fit: BoxFit.cover) // For local asset image
+                        : const Icon(Icons.business,
+                            size: 40), // Fallback icon if no logo is provided
+                  ),
 
                   const SizedBox(height: 16),
                   Text(
@@ -84,41 +85,44 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   const SizedBox(height: 16),
                   // Tags
                   Wrap(
-  spacing: 8,
-  children: [
-    ...?widget.job['tags']?.map((tag) => Chip(
-          label: Text(
-            tag,
-            style: const TextStyle(color: Colors.white), 
-          ),
-          backgroundColor: const Color.fromARGB(255, 63, 72, 108), 
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8), 
-          ),
-        )),
-  ],
-),
+                    spacing: 8,
+                    children: [
+                      ...?widget.job['tags']?.map((tag) => Chip(
+                            label: Text(
+                              tag,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 63, 72, 108),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          )),
+                    ],
+                  ),
                   const SizedBox(height: 12),
-                  
+
                   const SizedBox(height: 12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Spacer(),
                       Text(
-                    widget.job['salary'] ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ), const Spacer(),
+                        widget.job['salary'] ?? '',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
                       const Icon(Icons.location_on, color: Colors.white),
                       const SizedBox(width: 4),
                       Text(
                         widget.job['location'] ?? '',
                         style: const TextStyle(color: Colors.white),
-                      ),const Spacer(),
+                      ),
+                      const Spacer(),
                     ],
                   ),
                 ],
@@ -132,7 +136,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   const Spacer(),
                   _buildTab('Description', isDescriptionTab, () {
                     setState(() => isDescriptionTab = true);
-                  }),const Spacer(),
+                  }),
+                  const Spacer(),
                   const SizedBox(width: 32),
                   _buildTab('Requirement', !isDescriptionTab, () {
                     setState(() => isDescriptionTab = false);
@@ -144,7 +149,9 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             // Content based on selected tab
             Padding(
               padding: const EdgeInsets.all(16),
-              child: isDescriptionTab ? _buildDescriptionContent() : _buildRequirementContent(),
+              child: isDescriptionTab
+                  ? _buildDescriptionContent()
+                  : _buildRequirementContent(),
             ),
             // Apply Now Button
             Padding(
@@ -156,7 +163,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => JobApplicationPage(job: widget.job),
+                        builder: (context) =>
+                            JobApplicationPage(job: widget.job),
                       ),
                     );
                   },
@@ -222,7 +230,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?widget.job['responsibilities']?.map((responsibility) => _buildListItem(responsibility)),
+        ...?widget.job['responsibilities']
+            ?.map((responsibility) => _buildListItem(responsibility)),
         const SizedBox(height: 24),
         const Text(
           "Location",
@@ -234,7 +243,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         Container(
           height: 200,
           color: Colors.grey[200],
-          child: const Center(child: Icon(Icons.map, size: 48, color: Colors.red)),
+          child:
+              const Center(child: Icon(Icons.map, size: 48, color: Colors.red)),
         ),
         const SizedBox(height: 24),
         const Text(
@@ -242,7 +252,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?widget.job['facilities']?.map((facility) => _buildListItem(facility)),
+        ...?widget.job['facilities']
+            ?.map((facility) => _buildListItem(facility)),
       ],
     );
   }
