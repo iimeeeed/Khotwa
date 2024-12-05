@@ -5,7 +5,7 @@ import '../../widgets/search_bar.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/screens/jobFlow/job_details.dart';
-
+import '../../widgets/bottom_bar.dart';
 class JobseekerHome extends StatefulWidget {
   const JobseekerHome({super.key});
 
@@ -81,11 +81,19 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SearchFilterBar(
+                      hint: "Search a job or a position",
+                      onSearch: handleSearch,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   Expanded(
                     child: SingleChildScrollView(
                       controller: scrollController,
                       child: Column(
-                        children: featuredJobs.map((job) {
+                        children: filteredJobs.map((job) {
                           return buildTile(
                             job['logo'] ?? '',
                             job['title'] ?? '',
@@ -248,7 +256,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     Text(
-                      "Zineb Berrekia 👋",
+                      "Zineb Berrekia ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -264,12 +272,12 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 15),
-            SearchFilterBar(
+            const SizedBox(height: 10),
+         /*   SearchFilterBar(
               hint: "Search a job or a position",
               onSearch: handleSearch,
-            ),
-            const SizedBox(height: 16),
+            ),  
+            const SizedBox(height: 16), for further investigation*/
             const Text(
               "Featured Jobs",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -500,6 +508,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           ],
         ),
       ),
+      bottomNavigationBar: const BottomBar(isJobseeker: true),
     );
   }
 }
