@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
-import 'notifications.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/search_bar.dart';
+import '../../widgets/bottom_sheet.dart';
+import '../../widgets/notifications_screen.dart';
 
 class CompanyHome extends StatefulWidget {
   const CompanyHome({super.key});
@@ -566,10 +567,10 @@ class _CompanyHomeState extends State<CompanyHome> {
             const Spacer(),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                BottomDialog.show(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const Notifications(),
+                  const NotificationsScreen(
+                    isCompany: true,
                   ),
                 );
               },

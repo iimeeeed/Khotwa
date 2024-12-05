@@ -102,9 +102,9 @@ class _ReportProblemState extends State<ReportProblem> {
                   child: Column(
                     children: [
                       const SizedBox(height: 16),
-                      SizedBox(
+                      const SizedBox(
                         height: 120,
-                        child: const Image(
+                        child: Image(
                             image: AssetImage("assets/reportProblem.png")),
                       ),
                       const SizedBox(height: 20),
@@ -179,7 +179,7 @@ class _ReportProblemState extends State<ReportProblem> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SubmissionPage()),
+                                    builder: (context) => const SubmissionPage()),
                               );
                             },
                             child: const Center(

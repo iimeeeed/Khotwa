@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/screens/jobFlow/job_application.dart';
 
 void main() {
-  runApp(JobDetailsApp());
+  runApp(const JobDetailsApp());
 }
 
 class JobDetailsApp extends StatelessWidget {

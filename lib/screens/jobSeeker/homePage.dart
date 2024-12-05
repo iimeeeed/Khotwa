@@ -205,7 +205,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => JobDetailsApp()));
+                              builder: (context) => const JobDetailsApp()));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.75,

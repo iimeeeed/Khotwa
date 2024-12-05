@@ -109,10 +109,10 @@ class _TermsPoliciesState extends State<TermsPolicies> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 32,
                         height: 32,
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                           size: 20,

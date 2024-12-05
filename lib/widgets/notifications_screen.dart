@@ -116,7 +116,7 @@ class NotificationsScreen extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     time,
                     style: TextStyle(
@@ -125,7 +125,7 @@ class NotificationsScreen extends StatelessWidget {
                       fontFamily: "poppins",
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5,),
                   Icon(Icons.timelapse_outlined, size: 14, color: textColor.withOpacity(0.6),)
                 ],
               ),
