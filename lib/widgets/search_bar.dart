@@ -22,7 +22,7 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                prefixIcon: const Icon(Icons.search, color: Color(0xFF95969D)),
+                prefixIcon: const Icon(Icons.search, color: AppColors.blueButtonColor),
                 hintText: widget.hint, 
                 hintStyle: const TextStyle(
                       color: Color(0xFFAFB0B6),
@@ -57,7 +57,7 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const Icon(Icons.filter_list, color: Color(0xFF95969D)),
+          child: const Image(image: AssetImage("assets/filter.png")),
         ),
       ],
     );

@@ -88,7 +88,7 @@ class _BottomBarState extends State<BottomBar> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      (widget.isJobseeker) ? JobseekerHome() : CompanyHome(),
+                      (widget.isJobseeker) ? const JobseekerHome() : const CompanyHome(),
                 ),
               );
               break;

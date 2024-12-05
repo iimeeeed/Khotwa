@@ -6,7 +6,7 @@ import 'package:khotwa/screens/company/settings/main_settings.dart';
 class Profile extends StatelessWidget {
   final bool isCompany;
 
-  const Profile({required this.isCompany});
+  const Profile({super.key, required this.isCompany});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,10 @@ class Profile extends StatelessWidget {
               height: AppSizes.getScreenHeight(context) * 0.25,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage('assets/profileBackground.png'),
+                  image: AssetImage('assets/profileBackground.png'),
                   fit: BoxFit.cover,
                 ),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
@@ -107,17 +107,17 @@ class Profile extends StatelessWidget {
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   isCompany ? "Industry" : 'Media, Algeria',
-                                  style: TextStyle(color: Colors.white70),
+                                  style: const TextStyle(color: Colors.white70),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         GestureDetector(
                           child: const Icon(
                             Icons.settings_outlined,
@@ -200,8 +200,8 @@ class DetailTile extends StatefulWidget {
     required this.label,
     required this.content,
     required this.icon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _DetailTileState createState() => _DetailTileState();
