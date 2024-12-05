@@ -25,12 +25,15 @@ class _JobseekerHomeState extends State<JobseekerHome> {
   late List<bool> selectedCategories;
   int currentIndex = 0;
   bool isSaved = false;
+  String searchQuery = '';
+  List<Map<String, dynamic>> filteredJobs = [];
 
   @override
   void initState() {
     super.initState();
     selectedCategories =
         List.generate(categories.length, (index) => index == 0);
+    filteredJobs = List.from(featuredJobs);
   }
 
   void toggleCategory(int index) {
@@ -199,6 +202,24 @@ class _JobseekerHomeState extends State<JobseekerHome> {
     );
   }
 
+  void handleSearch(String query) {
+    setState(() {
+      searchQuery = query.toLowerCase();
+      if (query.isEmpty) {
+        filteredJobs = List.from(featuredJobs);
+      } else {
+        filteredJobs = featuredJobs.where((job) {
+          final title = job['title']?.toString().toLowerCase() ?? '';
+          final company = job['company']?.toString().toLowerCase() ?? '';
+          final location = job['location']?.toString().toLowerCase() ?? '';
+          return title.contains(searchQuery) ||
+              company.contains(searchQuery) ||
+              location.contains(searchQuery);
+        }).toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,8 +265,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 15),
-            const SearchFilterBar(
+            SearchFilterBar(
               hint: "Search a job or a position",
+              onSearch: handleSearch,
             ),
             const SizedBox(height: 16),
             const Text(
@@ -456,13 +478,13 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                 onNotification: (scrollNotification) {
                   if (scrollNotification is ScrollStartNotification) {
                     showFeaturedJobsAsDialog(context);
-                    return true; // Prevent further propagation
+                    return true;
                   }
                   return false;
                 },
                 child: SingleChildScrollView(
                   child: Column(
-                    children: featuredJobs.map((job) {
+                    children: filteredJobs.map((job) {
                       return buildTile(
                         job['logo'] ?? '',
                         job['title'] ?? '',

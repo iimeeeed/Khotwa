@@ -261,6 +261,12 @@ class _CompanyHomeState extends State<CompanyHome> {
     );
   }
 
+  // Add this method to handle search
+  void handleCompanySearch(String query) {
+    // Implement your search logic here
+    print("Searching for: $query");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -320,7 +326,10 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             // Search Bar
             (currentIndex > 0)
-                ? const SearchFilterBar()
+                ? SearchFilterBar(
+                    hint: "Search for a company",
+                    onSearch: handleCompanySearch,
+                  )
                 : Container(
                     child: const Text(
                       "Here's what's happening today in your hiring pipeline.",
