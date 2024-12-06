@@ -58,11 +58,16 @@ class _PrefsState extends State<Prefs> {
   bool _showAllTags = false;
   bool _showAllLocations = false;
 
+  bool _others = false;
+
   Widget buildTile(Icon icon, String str) {
     return GestureDetector(
       onTap: () {
         setState(() {
           prefsChecked[str] = !(prefsChecked[str] ?? false);
+          if (str == "Others") {
+            _others = !_others;
+          }
         });
       },
       child: Container(
@@ -81,9 +86,7 @@ class _PrefsState extends State<Prefs> {
                 SizedBox(width: AppSizes.getScreenWidth(context) * 0.07),
                 icon,
                 SizedBox(width: AppSizes.getScreenWidth(context) * 0.04),
-                Text(str, style: const TextStyle(
-                  fontWeight: FontWeight.bold
-                )),
+                Text(str, style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
             Padding(
@@ -164,6 +167,31 @@ class _PrefsState extends State<Prefs> {
                       );
                     }).toList(),
                   ),
+                ),
+                if (!_others)
+                  Container(
+                    width: AppSizes.getScreenWidth(context) * 0.9,
+                    height: AppSizes.getScreenHeight(context) * 0.06,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppSizes.getScreenWidth(context) * 0.07,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Enter your text here',
+                        hintText: 'Type something...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                SizedBox(
+                  height: AppSizes.getScreenHeight(context) * 0.04,
                 ),
               ],
             ),

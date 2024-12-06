@@ -116,6 +116,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: SearchFilterBar(
+                      isCompany: false,
                       hint: "Search a job or a position",
                       onSearch: handleSearch,
                       filterScreen: const Filter(),
@@ -315,6 +316,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
               children: [
                 const SizedBox(height: 10),
                 SearchFilterBar(
+                  isCompany: false,
                   filterScreen: const Filter(),
                   hint: "Search a job or a position",
                   onSearch: handleSearch,

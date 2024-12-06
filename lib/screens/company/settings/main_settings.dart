@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/profile.dart';
+import 'package:khotwa/screens/Signup.dart';
 import '../../../commons/constants.dart';
 import 'notification_preferences.dart';
 import 'security_settings.dart';
@@ -127,8 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         'Notifications Preferences'),
                     _buildSettingsItem(Icons.privacy_tip_outlined, 'Privacy'),
                     if (!widget.isCompany)
-                      _buildSettingsItem(
-                          Icons.archive_outlined, 'Saved Jobs'),
+                      _buildSettingsItem(Icons.archive_outlined, 'Saved Jobs'),
                   ],
                 ),
                 const SizedBox(height: 26),
@@ -136,7 +136,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   'Support & About',
                   items: [
                     _buildSettingsItem(Icons.help_outline, "Help & Support"),
-                    _buildSettingsItem(Icons.policy_outlined, "Terms and Policies"),
+                    _buildSettingsItem(
+                        Icons.policy_outlined, "Terms and Policies"),
                     _buildSettingsItem(Icons.info_outline, "About"),
                   ],
                 ),
@@ -145,8 +146,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   "Actions",
                   items: [
                     _buildSettingsItem(Icons.flag_outlined, "Report a Problem"),
-                    _buildSettingsItem(Icons.person_add_alt_1_outlined,
-                        "Add Account"),
+                    _buildSettingsItem(
+                        Icons.person_add_alt_1_outlined, "Add Account"),
                     _buildSettingsItem(
                       Icons.logout,
                       "Log Out",
@@ -270,6 +271,13 @@ class _SettingsPageState extends State<SettingsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const HelpSupport()),
+        );
+        break;
+      case 'Log Out':
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const Signup()), 
         );
         break;
       default:

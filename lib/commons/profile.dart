@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
             // Profile Header Section
             Container(
               width: double.infinity,
-              height: AppSizes.getScreenHeight(context) * 0.35,
+              height: AppSizes.getScreenHeight(context) * 0.3,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/profileBackground.png'),
@@ -30,7 +30,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               child: Padding(
-              padding: EdgeInsets.only(top: 50,left: 20,right: 20),
+                padding: EdgeInsets.only(top: 65, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -117,7 +117,6 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        
                         GestureDetector(
                           child: const Icon(
                             Icons.settings_outlined,
@@ -141,6 +140,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
             ),
+            
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -161,7 +161,7 @@ class Profile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            
+
             const SizedBox(height: 20),
           ],
         ),
@@ -291,7 +291,6 @@ class _DetailTileState extends State<DetailTile> {
         ),
       );
     }
-
   }
 
   Widget _buildReadOnlyContent() {

@@ -10,16 +10,16 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   RangeValues _currentRangeValues = const RangeValues(40000, 90000);
-  List<DropdownMenuItem<String>> buildDropDown(List<String> items) {
-    return items.map((String Value) {
-      return DropdownMenuItem<String>(
-        value: Value,
-        child: Text(Value),
-      );
-    }).toList();
-  }
 
-  String? _selecteditem;
+  final Map<String, List<String>> dropdownOptions = {
+    "Job category": ["Design", "Administration", "Human Resources", "Marketing"],
+    "Job subcategory": ["3d Design", "UI/UX", "Photoshop"],
+    "Location": ["Algiers", "Medea", "Blida", "Oran", "Oum El Bouaghi"],
+    "Job Type": ["Full-Time", "Part-Time", "Internship", "Remote"],
+  };
+
+  final Map<String, String?> selectedItems = {};
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,26 +36,14 @@ class _CreatePostState extends State<CreatePost> {
                 buildInputField("Job Description", "eg: Our company offers...",
                     maxLines: 4),
                 const SizedBox(height: 16),
-                buildDropdownField("Job category", "eg: UI/UX Design", [
-                  "Design",
-                  "Administration",
-                  "Human Resources",
-                  "Marketing"
-                ]),
+                buildDropdownField("Job category", "eg: UI/UX Design"),
                 const SizedBox(height: 16),
-                buildDropdownField("Job subcategory", "eg: Graphics Design",
-                    ["3d Design", "UI/UX", "Photoshop"]),
+                buildDropdownField("Job subcategory", "eg: Graphics Design"),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
-                      child: buildDropdownField("Location", "Algiers", [
-                        "Algeirs",
-                        "Medea",
-                        "Blida",
-                        "Oran",
-                        "Oumel bouaghi"
-                      ]),
+                      child: buildDropdownField("Location", "Algiers"),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -64,8 +52,7 @@ class _CreatePostState extends State<CreatePost> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                buildDropdownField("Job Type", "Select Job Type",
-                    ["Design", "Administration"]),
+                buildDropdownField("Job Type", "Select Job Type"),
                 const SizedBox(height: 16),
                 buildPriceAdjuster(
                     currentRangeValues: _currentRangeValues,
@@ -149,7 +136,7 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget buildDropdownField(String label, String hint, List<String> myitems) {
+  Widget buildDropdownField(String label, String hint) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,19 +159,26 @@ class _CreatePostState extends State<CreatePost> {
           child: DropdownButton<String>(
             underline: Container(),
             isExpanded: true,
-            value: _selecteditem,
+            value: selectedItems[label],
             hint: Text(
               hint,
               style: const TextStyle(
                 color: Color(0xFFAFB0B6),
                 fontSize: 14,
-                fontFamily: 'poppins',
+                fontFamily: 'Poppins',
                 fontWeight: FontWeight.w400,
               ),
             ),
-            items: buildDropDown(myitems),
+            items: dropdownOptions[label]
+                ?.map((item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    ))
+                .toList(),
             onChanged: (value) {
-              _selecteditem = value;
+              setState(() {
+                selectedItems[label] = value;
+              });
             },
           ),
         ),

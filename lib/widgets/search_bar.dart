@@ -6,13 +6,16 @@ class SearchFilterBar extends StatefulWidget {
   final String hint;
   final Function(String) onSearch;
   final Widget filterScreen;
+  final bool isCompany;
 
   const SearchFilterBar({
     super.key,
     this.hint = 'Search...',
     required this.onSearch,
-    Widget? filterScreen, required Null Function() onFilterTap, 
-  }) : filterScreen = filterScreen ?? const DefaultFilterScreen(); 
+    required this.isCompany,
+    Widget? filterScreen,
+    required Null Function() onFilterTap,
+  }) : filterScreen = filterScreen ?? const DefaultFilterScreen();
 
   @override
   State<SearchFilterBar> createState() => _SearchFilterBarState();
@@ -58,21 +61,25 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
           ),
         ),
         const SizedBox(width: 8),
-        GestureDetector(
-          onTap: () {
-            BottomDialog.show(context, widget.filterScreen); // Show the filter screen in a bottom sheet
-          },
-          child: Container(
-            height: AppSizes.getScreenHeight(context) * 0.06,
-            width: AppSizes.getScreenWidth(context) * 0.12,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+        if (!widget.isCompany)
+          GestureDetector(
+            onTap: () {
+              BottomDialog.show(
+                  context,
+                  widget
+                      .filterScreen); // Show the filter screen in a bottom sheet
+            },
+            child: Container(
+              height: AppSizes.getScreenHeight(context) * 0.06,
+              width: AppSizes.getScreenWidth(context) * 0.12,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Image(image: AssetImage("assets/filter.png")),
             ),
-            child: const Image(image: AssetImage("assets/filter.png")),
           ),
-        ),
       ],
     );
   }

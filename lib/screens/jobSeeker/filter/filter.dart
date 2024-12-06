@@ -52,8 +52,7 @@ class _FilterState extends State<Filter> {
   ];
   String? _selectedLevels;
 
-  RangeValues _salaryRange =
-      const RangeValues(30000.0, 1000000.0);
+  RangeValues _salaryRange = const RangeValues(30000.0, 1000000.0);
 
   final int _visibleJobTypesCount = 4;
 
@@ -70,7 +69,6 @@ class _FilterState extends State<Filter> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-         
               _buildDropdown(
                 context: context,
                 label: "Category",
@@ -264,7 +262,9 @@ class _FilterState extends State<Filter> {
                   width: 266,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context); 
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.lightGreenColor,
                       padding: const EdgeInsets.symmetric(
@@ -290,68 +290,69 @@ class _FilterState extends State<Filter> {
     );
   }
 
- Widget _buildDropdown({
-  required BuildContext context,
-  required String label,
-  required String hint,
-  required String? value,
-  required List<String> items,
-  required void Function(String?) onChanged,
-  IconData? leadingIcon,
-}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        label,
-        style: const TextStyle(
-          fontFamily: AppFonts.secondaryFont,
-          fontSize: 18,
-          color: AppColors.blueButtonColor,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      const SizedBox(height: 8),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        height: AppSizes.getScreenHeight(context) * 0.06,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromARGB(40, 78, 75, 75),
-            width: 2,
+  Widget _buildDropdown({
+    required BuildContext context,
+    required String label,
+    required String hint,
+    required String? value,
+    required List<String> items,
+    required void Function(String?) onChanged,
+    IconData? leadingIcon,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: AppFonts.secondaryFont,
+            fontSize: 18,
+            color: AppColors.blueButtonColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<String>(
-            icon: const Icon(Icons.keyboard_arrow_down),
-            isExpanded: true,
-            value: value,
-            hint: Text(hint),
-            items: items.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Container(
-                  color: Colors.white, // Set the item background color
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Row(
-                    children: [
-                      if (leadingIcon != null) Icon(leadingIcon, size: 20),
-                      if (leadingIcon != null) const SizedBox(width: 8),
-                      Text(value),
-                    ],
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          height: AppSizes.getScreenHeight(context) * 0.06,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color.fromARGB(40, 78, 75, 75),
+              width: 2,
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              icon: const Icon(Icons.keyboard_arrow_down),
+              isExpanded: true,
+              value: value,
+              hint: Text(hint),
+              items: items.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Container(
+                    color: Colors.white, // Set the item background color
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Row(
+                      children: [
+                        if (leadingIcon != null) Icon(leadingIcon, size: 20),
+                        if (leadingIcon != null) const SizedBox(width: 8),
+                        Text(value),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
-            onChanged: onChanged,
-            dropdownColor: Colors.white, 
+                );
+              }).toList(),
+              onChanged: onChanged,
+              dropdownColor: Colors.white,
+            ),
           ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 }

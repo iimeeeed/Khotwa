@@ -23,7 +23,6 @@ class _CompanyHomeState extends State<CompanyHome> {
 
   List<List<Map<String, String>>> candidatesList = candidatesData;
 
-  //Function to create the candidate card
   Widget buildCard(String title, int index,
       {Color textColor = Colors.white, Color backgroundColor = Colors.blue}) {
     return GestureDetector(
@@ -333,6 +332,7 @@ class _CompanyHomeState extends State<CompanyHome> {
             const SizedBox(height: 16),
             (currentIndex > 0)
                 ? SearchFilterBar(
+                  isCompany: true,
                     onFilterTap: () {
                       BottomDialog.show(context, Filter());
                     },

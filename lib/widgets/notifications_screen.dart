@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/candidatesDetails.dart';
 import '../data/notifications_data.dart';
 import '../commons/constants.dart';
 
@@ -35,7 +36,6 @@ class NotificationsScreen extends StatelessWidget {
                   );
                 },
               )),
-         
         ],
       ),
     );
@@ -64,60 +64,77 @@ class NotificationsScreen extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                if (title.isNotEmpty)
-                  Container(
-                    width: 10,
-                    height: 10,
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                      color: textColor,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 16,
-                    fontFamily: "poppins",
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              description,
-              style: TextStyle(
-                color: textColor.withOpacity(0.8),
-                fontSize: 14,
-                fontFamily: "poppins",
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Row(
+        child: GestureDetector(
+          onTap: () {
+            if (title == "New Job Application") {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          CandidatesDetails(candidateId: [0,0])));
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  const Spacer(),
+                  if (title.isNotEmpty)
+                    Container(
+                      width: 10,
+                      height: 10,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        color: textColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
                   Text(
-                    time,
+                    title,
                     style: TextStyle(
-                      color: textColor.withOpacity(0.6),
-                      fontSize: 12,
+                      color: textColor,
+                      fontSize: 16,
                       fontFamily: "poppins",
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(width: 5,),
-                  Icon(Icons.timelapse_outlined, size: 14, color: textColor.withOpacity(0.6),)
                 ],
               ),
-            ),
-          ],
+              Text(
+                description,
+                style: TextStyle(
+                  color: textColor.withOpacity(0.8),
+                  fontSize: 14,
+                  fontFamily: "poppins",
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Text(
+                      time,
+                      style: TextStyle(
+                        color: textColor.withOpacity(0.6),
+                        fontSize: 12,
+                        fontFamily: "poppins",
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Icon(
+                      Icons.timelapse_outlined,
+                      size: 14,
+                      color: textColor.withOpacity(0.6),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

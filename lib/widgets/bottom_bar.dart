@@ -36,6 +36,7 @@ class _BottomBarState extends State<BottomBar> {
             index: 0,
           ),
           // Search tab
+          if (widget.isJobseeker == true)
           _buildTab(
             icon: Icons.search,
             label: 'Search',
