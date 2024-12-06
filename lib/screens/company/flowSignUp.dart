@@ -79,7 +79,7 @@ class _FlowCompanyState extends State<FlowCompany> {
                       ),
                       const SizedBox(height: 20),
                       SizedBox(
-                        width: 300,
+                        width: AppSizes.getScreenWidth(context),
                         child: Text(
                           title,
                           textAlign: TextAlign.center,
@@ -115,7 +115,7 @@ class _FlowCompanyState extends State<FlowCompany> {
             ),
           ),
           Positioned(
-            bottom: 250,
+            bottom: AppSizes.getScreenHeight(context)*0.28,
 
             left: 0,
             right: 0,
