@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
             // Profile Header Section
             Container(
               width: double.infinity,
-              height: AppSizes.getScreenHeight(context) * 0.25,
+              height: AppSizes.getScreenHeight(context) * 0.35,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/profileBackground.png'),
@@ -30,7 +30,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(top: 50,left: 20,right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -117,7 +117,7 @@ class Profile extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const Spacer(),
+                        
                         GestureDetector(
                           child: const Icon(
                             Icons.settings_outlined,
@@ -128,7 +128,9 @@ class Profile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  SettingsPage(isCompany: (isCompany)? true : false,),
+                                builder: (context) => SettingsPage(
+                                  isCompany: (isCompany) ? true : false,
+                                ),
                               ),
                             );
                           },
@@ -159,30 +161,7 @@ class Profile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Center(
-              child: Container(
-                width: 266,
-                height: 50,
-                decoration: ShapeDecoration(
-                  color: AppColors.lightGreenColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'Save',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            
             const SizedBox(height: 20),
           ],
         ),
@@ -290,30 +269,29 @@ class _DetailTileState extends State<DetailTile> {
   Widget _buildEditingContent() {
     if (widget.content is List<Map>) {
       return _buildEditableWorkEducationContent();
-    } else if (widget.content is List<String>) {
-      if (widget.label == "Skills" ||
-          widget.label == "Languages" ||
-          widget.label == "Industry") {
-        return _buildEditableChipContent();
-      } else {
-        return TextFormField(
-          controller: _controller,
-          cursorColor: AppColors.lightGreenColor,
-          style: const TextStyle(
-            color: AppColors.greyTextColor,
-            fontSize: 14,
-            fontFamily: 'poppins',
-            fontWeight: FontWeight.w400,
-          ),
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-          ),
-        );
-      }
+    } else if (widget.content is List<String>) {}
+    if (widget.label == "Skills" ||
+        widget.label == "Languages" ||
+        widget.label == "Industry") {
+      return _buildEditableChipContent();
+    } else {
+      return TextFormField(
+        controller: _controller,
+        cursorColor: AppColors.lightGreenColor,
+        style: const TextStyle(
+          color: AppColors.greyTextColor,
+          fontSize: 14,
+          fontFamily: 'poppins',
+          fontWeight: FontWeight.w400,
+        ),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+        ),
+      );
     }
-    return const SizedBox.shrink();
+
   }
 
   Widget _buildReadOnlyContent() {

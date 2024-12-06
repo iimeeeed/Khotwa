@@ -122,7 +122,9 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   }
 
   Widget _buildInputField(String label, String hint,
-      {double height = 55.0, double width = 130}) {
+      {double height = 55.0, double width = 120}) {
+    width = label == "Company Description" ? 200 : 120;
+    height = label == "Company Description" ? 150 : 90;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -321,7 +323,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: AppSizes.getScreenHeight(context) * 0.5,
+                      height: AppSizes.getScreenHeight(context) * 0.65,
                       child: Column(
                         children: [
                           if (currentStep == 0) ...[

@@ -161,22 +161,7 @@ List<List<Map<String, String>>> candidatesData = [
       "resume": "https://example.com/resume/sophie_mebarki.pdf",
       "certificates": "https://example.com/certificates/marketing_certification"
     },
-    {
-      "name": "Hassan Benhamida",
-      "jobTitle": "Sales Representative",
-      "appliedDate": "March 11, 2024",
-      "interviewDate": "March 24, 2024",
-      "interviewPlace": "Company HQ, Tlemcen",
-      "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
-      "email": "hassan.benhamida@example.com",
-      "phone": "+213 668 098 765",
-      "address": "Tlemcen, Algeria",
-      "skills": "Sales, Negotiation, CRM, Lead Generation, Client Relations",
-      "experience": "5 years in Sales at JKL Enterprises",
-      "resume": "https://example.com/resume/hassan_benhamida.pdf",
-      "certificates": "https://example.com/certificates/sales_certification"
-    },
+   
     {
       "name": "Omar Ali",
       "jobTitle": "Marketing Manager",
@@ -184,7 +169,8 @@ List<List<Map<String, String>>> candidatesData = [
       "interviewDate": "March 19, 2024",
       "interviewPlace": "Company HQ, Setif",
       "imageUrl":
-          "https://img.freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+          "freepik.com/premium-photo/young-indian-male-designer-engineer-architect-who-is-wearing-glasses-blue-shir_398492-16045.jpg",
+
       "email": "omar.ali@example.com",
       "phone": "+213 677 654 321",
       "address": "Setif, Algeria",

@@ -10,6 +10,16 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   RangeValues _currentRangeValues = const RangeValues(40000, 90000);
+  List<DropdownMenuItem<String>> buildDropDown(List<String> items) {
+    return items.map((String Value) {
+      return DropdownMenuItem<String>(
+        value: Value,
+        child: Text(Value),
+      );
+    }).toList();
+  }
+
+  String? _selecteditem;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +36,26 @@ class _CreatePostState extends State<CreatePost> {
                 buildInputField("Job Description", "eg: Our company offers...",
                     maxLines: 4),
                 const SizedBox(height: 16),
-                buildDropdownField("Job category", "eg: UI/UX Design"),
+                buildDropdownField("Job category", "eg: UI/UX Design", [
+                  "Design",
+                  "Administration",
+                  "Human Resources",
+                  "Marketing"
+                ]),
                 const SizedBox(height: 16),
-                buildDropdownField("Job subcategory", "eg: Graphics Design"),
+                buildDropdownField("Job subcategory", "eg: Graphics Design",
+                    ["3d Design", "UI/UX", "Photoshop"]),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
-                      child: buildDropdownField("Location", "Algiers"),
+                      child: buildDropdownField("Location", "Algiers", [
+                        "Algeirs",
+                        "Medea",
+                        "Blida",
+                        "Oran",
+                        "Oumel bouaghi"
+                      ]),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -42,7 +64,8 @@ class _CreatePostState extends State<CreatePost> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                buildDropdownField("Job Type", "Select Job Type"),
+                buildDropdownField("Job Type", "Select Job Type",
+                    ["Design", "Administration"]),
                 const SizedBox(height: 16),
                 buildPriceAdjuster(
                     currentRangeValues: _currentRangeValues,
@@ -83,20 +106,6 @@ class _CreatePostState extends State<CreatePost> {
                 ),
                 const SizedBox(height: 20),
               ],
-            ),
-          ),
-          Positioned(
-            top: 10,
-            left: MediaQuery.of(context).size.width / 2 - 17.5,
-            child: Container(
-              height: 4,
-              width: 35,
-              decoration: ShapeDecoration(
-                color: AppColors.greyTextColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
             ),
           ),
         ],
@@ -140,7 +149,7 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget buildDropdownField(String label, String hint) {
+  Widget buildDropdownField(String label, String hint, List<String> myitems) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -163,6 +172,7 @@ class _CreatePostState extends State<CreatePost> {
           child: DropdownButton<String>(
             underline: Container(),
             isExpanded: true,
+            value: _selecteditem,
             hint: Text(
               hint,
               style: const TextStyle(
@@ -172,12 +182,9 @@ class _CreatePostState extends State<CreatePost> {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            items: const [
-              DropdownMenuItem(value: "Option 1", child: Text("Option 1")),
-              DropdownMenuItem(value: "Option 2", child: Text("Option 2")),
-            ],
+            items: buildDropDown(myitems),
             onChanged: (value) {
-              // Handle dropdown change
+              _selecteditem = value;
             },
           ),
         ),

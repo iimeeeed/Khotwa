@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/profile.dart';
 import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
 import '../../data/candidates_data.dart';
@@ -206,7 +207,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                   'Applied: $appliedDate',
                                   style: const TextStyle(
                                     color: Color(0xFFAAAFBB),
-                                    fontSize: 12,
+                                    fontSize: 9,
                                     fontFamily: 'Poppins',
                                     letterSpacing: -0.09,
                                   ),
@@ -230,8 +231,8 @@ class _CompanyHomeState extends State<CompanyHome> {
                                       );
                                     },
                                     child: Container(
-                                      width: 95,
-                                      height: 35,
+                                      width: 68,
+                                      height: 21,
                                       decoration: ShapeDecoration(
                                         color: AppColors.lightGreenColor,
                                         shape: RoundedRectangleBorder(
@@ -243,10 +244,10 @@ class _CompanyHomeState extends State<CompanyHome> {
                                         child: Text(
                                           'View Application',
                                           style: TextStyle(
-                                            color: Color.fromARGB(255, 3, 0, 76),
-                                            fontSize: 10,
+                                            color: Colors.white,
+                                            fontSize: 7,
                                             fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w400,
                                             letterSpacing: -0.07,
                                           ),
                                         ),
@@ -280,7 +281,7 @@ class _CompanyHomeState extends State<CompanyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 5),
             const Align(
               alignment: Alignment.topRight,
               child: Text(
@@ -293,20 +294,25 @@ class _CompanyHomeState extends State<CompanyHome> {
                 ),
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: AssetImage(
-                        "assets/Sonatrach-Logo.png",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile(isCompany: true,)));
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        backgroundImage: AssetImage(
+                          "assets/Sonatrach-Logo.png",
+                        ),
+                        radius: 24,
                       ),
-                      radius: 24,
                     ),
-                    SizedBox(width: 10),
-                    Column(
+                    const SizedBox(width: 10),
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -328,10 +334,10 @@ class _CompanyHomeState extends State<CompanyHome> {
             (currentIndex > 0)
                 ? SearchFilterBar(
                     onFilterTap: () {
-                      BottomDialog.show(context, const Filter());
+                      BottomDialog.show(context, Filter());
                     },
                     onSearch: handleCompanySearch,
-                    filterScreen: const Filter(),
+                    filterScreen: Filter(),
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -340,7 +346,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                         const Flexible(
                           child: Text(
                             "Here's what's happening today in your hiring pipeline.",
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.left,
                             style: TextStyle(
                               color: AppColors.greyTextColor,
                               fontSize: 15,
