@@ -116,6 +116,7 @@ class _FlowCompanyState extends State<FlowCompany> {
           ),
           Positioned(
             bottom: 250,
+
             left: 0,
             right: 0,
             child: Row(

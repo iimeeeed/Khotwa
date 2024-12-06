@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/widgets/bottom_sheet.dart';
 import '../../data/candidates_data.dart';
 import '../../widgets/search_bar.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/screens/jobFlow/job_details.dart';
-
+import '../../widgets/bottom_bar.dart';
 class JobseekerHome extends StatefulWidget {
   const JobseekerHome({super.key});
 
@@ -24,19 +25,93 @@ class _JobseekerHomeState extends State<JobseekerHome> {
   late List<bool> selectedCategories;
   int currentIndex = 0;
   bool isSaved = false;
+  String searchQuery = '';
+  List<Map<String, dynamic>> filteredJobs = [];
 
   @override
   void initState() {
     super.initState();
     selectedCategories =
         List.generate(categories.length, (index) => index == 0);
+    filteredJobs = List.from(featuredJobs);
   }
 
   void toggleCategory(int index) {
     setState(() {
-      selectedCategories = List.filled(categories.length, false);
-      selectedCategories[index] = true;
+      if (index == 0) {
+        selectedCategories = List.filled(categories.length, false);
+        selectedCategories[index] = true;
+      } else {
+        selectedCategories[0] = false;
+        selectedCategories[index] = !selectedCategories[index];
+      }
     });
+  }
+
+  void showFeaturedJobsAsDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.48,
+          minChildSize: 0.4,
+          maxChildSize: 0.9,
+          builder: (context, scrollController) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 8, bottom: 12),
+                      height: 4,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SearchFilterBar(
+                      hint: "Search a job or a position",
+                      onSearch: handleSearch,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Column(
+                        children: filteredJobs.map((job) {
+                          return buildTile(
+                            job['logo'] ?? '',
+                            job['title'] ?? '',
+                            job['company'],
+                            job['salary'],
+                            job['location'],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget buildTile(
@@ -135,6 +210,24 @@ class _JobseekerHomeState extends State<JobseekerHome> {
     );
   }
 
+  void handleSearch(String query) {
+    setState(() {
+      searchQuery = query.toLowerCase();
+      if (query.isEmpty) {
+        filteredJobs = List.from(featuredJobs);
+      } else {
+        filteredJobs = featuredJobs.where((job) {
+          final title = job['title']?.toString().toLowerCase() ?? '';
+          final company = job['company']?.toString().toLowerCase() ?? '';
+          final location = job['location']?.toString().toLowerCase() ?? '';
+          return title.contains(searchQuery) ||
+              company.contains(searchQuery) ||
+              location.contains(searchQuery);
+        }).toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,7 +256,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     Text(
-                      "Zineb Berrekia 👋",
+                      "Zineb Berrekia ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -179,20 +272,17 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 15),
-            const SearchFilterBar(
+            const SizedBox(height: 10),
+         /*   SearchFilterBar(
               hint: "Search a job or a position",
-            ),
-            const SizedBox(height: 16),
-
-            // Featured Jobs Section
+              onSearch: handleSearch,
+            ),  
+            const SizedBox(height: 16), for further investigation*/
             const Text(
               "Featured Jobs",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-
-            // Job Cards with partial visibility of the next card
             SizedBox(
               height: 180,
               child: ListView.builder(
@@ -267,9 +357,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                               GestureDetector(
                                 onTap: () {
                                   isSaved = !isSaved;
-                                  setState(() {
-                                    
-                                  });
+                                  setState(() {});
                                 },
                                 child: Container(
                                   margin: const EdgeInsets.only(bottom: 30),
@@ -337,27 +425,6 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                 },
               ),
             ),
-
-            const SizedBox(height: 16),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                featuredJobs.length,
-                (dotIndex) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: dotIndex == currentIndex
-                        ? Colors.blue[900]
-                        : Colors.blue[200],
-                  ),
-                ),
-              ),
-            ),
             SizedBox(
               height: AppSizes.getScreenHeight(context) * 0.04,
             ),
@@ -414,25 +481,34 @@ class _JobseekerHomeState extends State<JobseekerHome> {
             SizedBox(
               height: AppSizes.getScreenHeight(context) * 0.02,
             ),
-
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: featuredJobs.map((job) {
-                    return buildTile(
-                      job['logo'] ?? '',
-                      job['title'],
-                      job['company'],
-                      job['salary'],
-                      job['location'],
-                    );
-                  }).toList(),
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (scrollNotification) {
+                  if (scrollNotification is ScrollStartNotification) {
+                    showFeaturedJobsAsDialog(context);
+                    return true;
+                  }
+                  return false;
+                },
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: filteredJobs.map((job) {
+                      return buildTile(
+                        job['logo'] ?? '',
+                        job['title'] ?? '',
+                        job['company'],
+                        job['salary'],
+                        job['location'],
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
+      bottomNavigationBar: const BottomBar(isJobseeker: true),
     );
   }
 }

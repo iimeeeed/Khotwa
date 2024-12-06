@@ -263,6 +263,12 @@ class _CompanyHomeState extends State<CompanyHome> {
     );
   }
 
+  // Add this method to handle search
+  void handleCompanySearch(String query) {
+    // Implement your search logic here
+    print("Searching for: $query");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -322,6 +328,7 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             // Search Bar
             (currentIndex > 0)
+
                 ? const SearchFilterBar()
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -357,6 +364,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                           },
                         ),
                       ],
+
                     ),
                   ),
 
