@@ -17,9 +17,9 @@ class BottomDialog {
           maxChildSize: 0.9,
           builder: (context, scrollController) {
             return Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.primaryBackgroundColor,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               ),
               child: Column(
                 children: [

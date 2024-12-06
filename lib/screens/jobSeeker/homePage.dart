@@ -88,9 +88,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                     child: SearchFilterBar(
                       hint: "Search a job or a position",
                       onSearch: handleSearch,
-                      filterScreen: Filter(),
+                      filterScreen: const Filter(),
                       onFilterTap: () {
-                        BottomDialog.show(context, Filter());
+                        BottomDialog.show(context, const Filter());
                       },
                     ),
                   ),
@@ -280,11 +280,11 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           children: [
             const SizedBox(height: 10),
             SearchFilterBar(
-              filterScreen: Filter(),
+              filterScreen: const Filter(),
               hint: "Search a job or a position",
               onSearch: handleSearch,
               onFilterTap: () {
-                BottomDialog.show(context, Filter());
+                BottomDialog.show(context, const Filter());
               },
             ),
             const SizedBox(height: 16),

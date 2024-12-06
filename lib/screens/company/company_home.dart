@@ -206,7 +206,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                   'Applied: $appliedDate',
                                   style: const TextStyle(
                                     color: Color(0xFFAAAFBB),
-                                    fontSize: 9,
+                                    fontSize: 12,
                                     fontFamily: 'Poppins',
                                     letterSpacing: -0.09,
                                   ),
@@ -230,8 +230,8 @@ class _CompanyHomeState extends State<CompanyHome> {
                                       );
                                     },
                                     child: Container(
-                                      width: 68,
-                                      height: 21,
+                                      width: 95,
+                                      height: 35,
                                       decoration: ShapeDecoration(
                                         color: AppColors.lightGreenColor,
                                         shape: RoundedRectangleBorder(
@@ -243,10 +243,10 @@ class _CompanyHomeState extends State<CompanyHome> {
                                         child: Text(
                                           'View Application',
                                           style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 7,
+                                            color: Color.fromARGB(255, 3, 0, 76),
+                                            fontSize: 10,
                                             fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w400,
+                                            fontWeight: FontWeight.bold,
                                             letterSpacing: -0.07,
                                           ),
                                         ),
@@ -280,7 +280,7 @@ class _CompanyHomeState extends State<CompanyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 5),
+            const SizedBox(height: 30),
             const Align(
               alignment: Alignment.topRight,
               child: Text(
@@ -328,10 +328,10 @@ class _CompanyHomeState extends State<CompanyHome> {
             (currentIndex > 0)
                 ? SearchFilterBar(
                     onFilterTap: () {
-                      BottomDialog.show(context, Filter());
+                      BottomDialog.show(context, const Filter());
                     },
                     onSearch: handleCompanySearch,
-                    filterScreen: Filter(),
+                    filterScreen: const Filter(),
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -340,7 +340,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                         const Flexible(
                           child: Text(
                             "Here's what's happening today in your hiring pipeline.",
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.greyTextColor,
                               fontSize: 15,

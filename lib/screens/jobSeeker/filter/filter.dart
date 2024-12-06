@@ -19,7 +19,7 @@ class _FilterState extends State<Filter> {
     'Temporary'
   ];
   bool _showAllJobTypes = false;
-  List<int> _selectedTypes = [];
+  final List<int> _selectedTypes = [];
 
   final List<String> _categories = [
     'Design',
@@ -235,7 +235,7 @@ class _FilterState extends State<Filter> {
                         side: const BorderSide(color: Colors.transparent),
                       ),
                     );
-                  }).toList(),
+                  }),
                   if (_jobTypes.length > _visibleJobTypesCount)
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),

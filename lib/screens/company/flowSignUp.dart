@@ -115,7 +115,7 @@ class _FlowCompanyState extends State<FlowCompany> {
             ),
           ),
           Positioned(
-            bottom: 250,
+            bottom:AppSizes.getScreenHeight(context)*0.15,
 
             left: 0,
             right: 0,
