@@ -8,6 +8,35 @@ import 'package:khotwa/screens/jobFlow/job_details.dart';
 import '../../widgets/bottom_bar.dart';
 import './filter/filter.dart';
 
+// Add this class before the JobseekerHome class
+class StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double maxHeight;
+  final double minHeight;
+
+  StickyHeaderDelegate({
+    required this.child,
+    required this.maxHeight,
+    required this.minHeight,
+  });
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(child: child);
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  bool shouldRebuild(StickyHeaderDelegate oldDelegate) {
+    return true;
+  }
+}
+
 class JobseekerHome extends StatefulWidget {
   const JobseekerHome({super.key});
 
@@ -48,76 +77,6 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         selectedCategories[index] = !selectedCategories[index];
       }
     });
-  }
-
-  void showFeaturedJobsAsDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      builder: (BuildContext context) {
-        return DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.48,
-          minChildSize: 0.4,
-          maxChildSize: 0.9,
-          builder: (context, scrollController) {
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 8, bottom: 12),
-                      height: 4,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SearchFilterBar(
-                      hint: "Search a job or a position",
-                      onSearch: handleSearch,
-                      filterScreen: Filter(),
-                      onFilterTap: () {
-                        BottomDialog.show(context, Filter());
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: filteredJobs.map((job) {
-                          return buildTile(
-                            job['logo'] ?? '',
-                            job['title'] ?? '',
-                            job['company'],
-                            job['salary'],
-                            job['location'],
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 
   Widget buildTile(
@@ -241,6 +200,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryBackgroundColor,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         actions: const [
           KhotwaLogo(),
         ],
@@ -273,250 +235,286 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            SearchFilterBar(
-              filterScreen: Filter(),
-              hint: "Search a job or a position",
-              onSearch: handleSearch,
-              onFilterTap: () {
-                BottomDialog.show(context, Filter());
-              },
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              "Featured Jobs",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 180,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: featuredJobs.length,
-                itemBuilder: (context, index) {
-                  final job = featuredJobs[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const JobDetailsApp()));
+      body: CustomScrollView(
+        slivers: [
+          // Sticky Search Bar
+          SliverAppBar(
+            backgroundColor: AppColors.primaryBackgroundColor,
+            floating: false,
+            pinned: true,
+            automaticallyImplyLeading: false,
+            elevation: 2,
+            toolbarHeight: 80,
+            flexibleSpace: Container(
+              color: AppColors.primaryBackgroundColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: SafeArea(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SearchFilterBar(
+                    filterScreen: Filter(),
+                    hint: "Search a job or a position",
+                    onSearch: handleSearch,
+                    onFilterTap: () {
+                      BottomDialog.show(context, Filter());
                     },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      margin: const EdgeInsets.only(right: 12),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF356899),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundColor:
-                                        Color.fromRGBO(255, 255, 255, 1),
-                                    radius: 22,
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/Sonatrach-Logo.png"),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        job['title'] ?? 'Job Title',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        job['company'] ?? 'Company Name',
-                                        style: const TextStyle(
-                                            color: Colors.white70),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  isSaved = !isSaved;
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(bottom: 30),
-                                  child: Icon(
-                                    (!isSaved)
-                                        ? Icons.bookmark_add_outlined
-                                        : Icons.bookmark,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Column(
-                            children: [
-                              Center(
-                                child: Wrap(
-                                  spacing: 20,
-                                  children: (job['tags'] as List)
-                                      .map<Widget>(
-                                        (tag) => Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8, vertical: 4),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white24,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Text(
-                                            tag ?? 'Tag',
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Text(
-                                job['salary'] ?? 'Salary',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                job['location'] ?? 'Location',
-                                style: const TextStyle(color: Colors.white70),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: AppSizes.getScreenHeight(context) * 0.04,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  children: List.generate(categories.length, (index) {
-                return GestureDetector(
-                  onTap: () => toggleCategory(index),
-                  child: Container(
-                    margin: EdgeInsets.only(
-                        right: AppSizes.getScreenWidth(context) * 0.03),
-                    padding: const EdgeInsets.only(
-                        top: 7, bottom: 7, right: 14, left: 14),
-                    decoration: BoxDecoration(
-                      color: selectedCategories[index]
-                          ? AppColors.blueButtonColor
-                          : Colors.white,
-                      border: Border.all(
-                        width: 0.7,
-                        color: AppColors.blueButtonColor,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        categories[index],
-                        style: TextStyle(
-                          color: selectedCategories[index]
-                              ? Colors.white
-                              : AppColors.blueButtonColor,
-                          fontFamily: AppFonts.secondaryFont,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              })),
-            ),
-            SizedBox(
-              height: AppSizes.getScreenHeight(context) * 0.03,
-            ),
-            const Text(
-              "Popular jobs",
-              style: TextStyle(
-                  fontFamily: AppFonts.secondaryFont,
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: AppSizes.getScreenHeight(context) * 0.02,
-            ),
-            Expanded(
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (scrollNotification) {
-                  if (scrollNotification is ScrollStartNotification) {
-                    showFeaturedJobsAsDialog(context);
-                    return true;
-                  }
-                  return false;
-                },
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: filteredJobs.map((job) {
-                      return buildTile(
-                        job['logo'] ?? '',
-                        job['title'] ?? '',
-                        job['company'],
-                        job['salary'],
-                        job['location'],
-                      );
-                    }).toList(),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          // Featured Jobs section
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Featured Jobs",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 180,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: featuredJobs.length,
+                      itemBuilder: (context, index) {
+                        final job = featuredJobs[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const JobDetailsApp()));
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.75,
+                            margin: const EdgeInsets.only(right: 12),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF356899),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const CircleAvatar(
+                                          backgroundColor:
+                                              Color.fromRGBO(255, 255, 255, 1),
+                                          radius: 22,
+                                          child: Image(
+                                            image: AssetImage(
+                                                "assets/Sonatrach-Logo.png"),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              job['title'] ?? 'Job Title',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              job['company'] ?? 'Company Name',
+                                              style: const TextStyle(
+                                                  color: Colors.white70),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        isSaved = !isSaved;
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(bottom: 30),
+                                        child: Icon(
+                                          (!isSaved)
+                                              ? Icons.bookmark_add_outlined
+                                              : Icons.bookmark,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Column(
+                                  children: [
+                                    Center(
+                                      child: Wrap(
+                                        spacing: 20,
+                                        children: (job['tags'] as List)
+                                            .map<Widget>(
+                                              (tag) => Container(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 4),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white24,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: Text(
+                                                  tag ?? 'Tag',
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            )
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    Text(
+                                      job['salary'] ?? 'Salary',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      job['location'] ?? 'Location',
+                                      style: const TextStyle(color: Colors.white70),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // Sticky Categories
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: StickyHeaderDelegate(
+              child: Container(
+                color: AppColors.primaryBackgroundColor,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(categories.length, (index) {
+                      return GestureDetector(
+                        onTap: () => toggleCategory(index),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            right: AppSizes.getScreenWidth(context) * 0.03,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 7,
+                            horizontal: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            color: selectedCategories[index]
+                                ? AppColors.blueButtonColor
+                                : Colors.white,
+                            border: Border.all(
+                              width: 0.7,
+                              color: AppColors.blueButtonColor,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            categories[index],
+                            style: TextStyle(
+                              color: selectedCategories[index]
+                                  ? Colors.white
+                                  : AppColors.blueButtonColor,
+                              fontFamily: AppFonts.secondaryFont,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              maxHeight: 60,
+              minHeight: 60,
+            ),
+          ),
+          // Sticky Popular Jobs title
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: StickyHeaderDelegate(
+              child: Container(
+                color: AppColors.primaryBackgroundColor,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Popular jobs",
+                  style: TextStyle(
+                    fontFamily: AppFonts.secondaryFont,
+                    fontSize: 20,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              maxHeight: 50,
+              minHeight: 50,
+            ),
+          ),
+          // Popular jobs list
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final job = filteredJobs[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: buildTile(
+                    job['logo'] ?? '',
+                    job['title'] ?? '',
+                    job['company'],
+                    job['salary'],
+                    job['location'],
+                  ),
+                );
+              },
+              childCount: filteredJobs.length,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const BottomBar(isJobseeker: true),
     );
