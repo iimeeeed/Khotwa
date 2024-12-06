@@ -293,7 +293,6 @@ class _CompanyHomeState extends State<CompanyHome> {
                 ),
               ),
             ),
-
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -326,10 +325,14 @@ class _CompanyHomeState extends State<CompanyHome> {
               ],
             ),
             const SizedBox(height: 16),
-
             (currentIndex > 0)
-
-                ?  SearchFilterBar(filterScreen: Filter(), onSearch: handleCompanySearch,)
+                ? SearchFilterBar(
+                    onFilterTap: () {
+                      BottomDialog.show(context, Filter());
+                    },
+                    onSearch: handleCompanySearch,
+                    filterScreen: Filter(),
+                  )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -364,12 +367,9 @@ class _CompanyHomeState extends State<CompanyHome> {
                           },
                         ),
                       ],
-
                     ),
                   ),
-
             const SizedBox(height: 30),
-
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(

@@ -89,6 +89,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       hint: "Search a job or a position",
                       onSearch: handleSearch,
                       filterScreen: Filter(),
+                      onFilterTap: () {
+                        BottomDialog.show(context, Filter());
+                      },
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -280,6 +283,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
               filterScreen: Filter(),
               hint: "Search a job or a position",
               onSearch: handleSearch,
+              onFilterTap: () {
+                BottomDialog.show(context, Filter());
+              },
             ),
             const SizedBox(height: 16),
             const Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/constants.dart';
 
 class BottomDialog {
   static void show(BuildContext context, Widget inputWidget) {
@@ -15,7 +16,27 @@ class BottomDialog {
           minChildSize: 0.9,
           maxChildSize: 0.9,
           builder: (context, scrollController) {
-            return inputWidget;
+            return Container(
+              decoration: BoxDecoration(
+                color: AppColors.primaryBackgroundColor,
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(30)),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    
+                    width: 50,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade400,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  Expanded(child: inputWidget),
+                ],
+              ),
+            );
           },
         );
       },

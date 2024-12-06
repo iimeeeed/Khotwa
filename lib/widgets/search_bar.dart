@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/constants.dart';
+import 'package:khotwa/widgets/bottom_sheet.dart';
 
 class SearchFilterBar extends StatefulWidget {
   final String hint;
   final Function(String) onSearch;
-  final Widget filterScreen; // Added parameter for the screen to navigate to
+  final Widget filterScreen;
 
   const SearchFilterBar({
     super.key,
     this.hint = 'Search...',
     required this.onSearch,
-    required this.filterScreen, // Required parameter
-  });
+    Widget? filterScreen, required Null Function() onFilterTap, 
+  }) : filterScreen = filterScreen ?? const DefaultFilterScreen(); 
 
   @override
   State<SearchFilterBar> createState() => _SearchFilterBarState();
@@ -59,12 +60,7 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
         const SizedBox(width: 8),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => widget.filterScreen, // Navigate to the passed screen
-              ),
-            );
+            BottomDialog.show(context, widget.filterScreen); // Show the filter screen in a bottom sheet
           },
           child: Container(
             height: AppSizes.getScreenHeight(context) * 0.06,
@@ -78,6 +74,21 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
           ),
         ),
       ],
+    );
+  }
+}
+
+// Default filter screen widget (can be customized)
+class DefaultFilterScreen extends StatelessWidget {
+  const DefaultFilterScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'No filters available',
+        style: TextStyle(fontSize: 18, color: Colors.grey),
+      ),
     );
   }
 }
