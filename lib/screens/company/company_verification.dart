@@ -324,147 +324,161 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (currentStep == 0) ...[
-                      const Center(
-                        child: Text(
-                          'Fill your Company Details',
-                          style: TextStyle(
-                            color: AppColors.blueButtonColor,
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 35),
-                      _buildInputField('Company Name', 'Your Company Name'),
-                      const SizedBox(height: 30),
-                      _buildInputField('Industry', 'Select your Industry'),
-                      const SizedBox(height: 30),
-                      _buildInputField(
-                          'Company Size', 'Select your Company Size'),
-                      const SizedBox(height: 30),
-                      _buildInputField('Location', 'Your Exact Address'),
-                      const SizedBox(height: 20),
-                    ] else if (currentStep == 1) ...[
-                      const Center(
-                        child: Text(
-                          'Enter your contact infos',
-                          style: TextStyle(
-                            color: AppColors.blueButtonColor,
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 35),
-                      _buildInputField('Email Address', 'Email'),
-                      const SizedBox(height: 30),
-                      _buildInputField('Phone Number', 'Phone Number'),
-                      const SizedBox(height: 30),
-                    ] else if (currentStep == 2) ...[
-                      const Center(
-                        child: Text(
-                          'Enter your Profile infos',
-                          style: TextStyle(
-                            color: AppColors.blueButtonColor,
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 35),
-                      _buildInputField('Website', "Your company's website link",
-                          width: 160),
-                      const SizedBox(height: 30),
-                      _buildInputField('Logo', 'Drop here to attach or upload',
-                          height: 130, width: 160),
-                      const SizedBox(height: 30),
-                      _buildInputField('Company Description',
-                          "Briefly describe your company's mission, vision, and services",
-                          height: 130, width: 160),
-                      const SizedBox(height: 30),
-                    ] else if (currentStep == 3) ...[
-                      const Center(
-                        child: Text(
-                          'Enter your Identification infos',
-                          style: TextStyle(
-                            color: AppColors.blueButtonColor,
-                            fontSize: 18,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 35),
-                      _buildInputField('Trade Register Number (RC)',
-                          "`Registre de Commerce` number",
-                          width: 240),
-                      const SizedBox(height: 30),
-                      _buildInputField('Tax Identification Number (NIF)',
-                          "`Numéro d'Identification Fiscale `",
-                          width: 240),
-                      const SizedBox(height: 30),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Container(
+                      height: AppSizes.getScreenHeight(context)*0.5,
+                      child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isSelected = !isSelected;
-                              });
-                            },
-                            child: Container(
-                              width: 22,
-                              height: 22,
-                              decoration: ShapeDecoration(
-                                color: isSelected
-                                    ? AppColors.lightGreenColor
-                                    : Colors.white,
-                                shape: const OvalBorder(
-                                  side: BorderSide(
-                                    width: 0.5,
-                                    color: AppColors.blueButtonColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Flexible(
-                            child: RichText(
-                              text: const TextSpan(
+                          if (currentStep == 0) ...[
+                            const Center(
+                              child: Text(
+                                'Fill your Company Details',
                                 style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
+                                  color: AppColors.blueButtonColor,
+                                  fontSize: 18,
                                   fontFamily: 'Poppins',
-                                  height: 1.5,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                children: [
-                                  TextSpan(
-                                      text:
-                                          'I confirm I represent HR/Personnel, Recruiting, Marketing, PR, or am an executive at my company and I agree to Khotwa\'s '),
-                                  TextSpan(
-                                    text: 'Terms of Use',
-                                    style: TextStyle(color: Color(0xFF6EA5ED)),
-                                  ),
-                                  TextSpan(text: ' and acknowledge its '),
-                                  TextSpan(
-                                    text: 'privacy policy',
-                                    style: TextStyle(color: Color(0xFF6EA5ED)),
-                                  ),
-                                  TextSpan(text: ' on behalf of my company.'),
-                                ],
                               ),
                             ),
-                          ),
+                            const SizedBox(height: 35),
+                            _buildInputField(
+                                'Company Name', 'Your Company Name'),
+                            const SizedBox(height: 30),
+                            _buildInputField(
+                                'Industry', 'Select your Industry'),
+                            const SizedBox(height: 30),
+                            _buildInputField(
+                                'Company Size', 'Select your Company Size'),
+                            const SizedBox(height: 30),
+                            _buildInputField('Location', 'Your Exact Address'),
+                            const SizedBox(height: 20),
+                          ] else if (currentStep == 1) ...[
+                            const Center(
+                              child: Text(
+                                'Enter your contact infos',
+                                style: TextStyle(
+                                  color: AppColors.blueButtonColor,
+                                  fontSize: 18,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 35),
+                            _buildInputField('Email Address', 'Email'),
+                            const SizedBox(height: 30),
+                            _buildInputField('Phone Number', 'Phone Number'),
+                            const SizedBox(height: 30),
+                          ] else if (currentStep == 2) ...[
+                            const Center(
+                              child: Text(
+                                'Enter your Profile infos',
+                                style: TextStyle(
+                                  color: AppColors.blueButtonColor,
+                                  fontSize: 18,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 35),
+                            _buildInputField(
+                                'Website', "Your company's website link",
+                                width: 160),
+                            const SizedBox(height: 30),
+                            _buildInputField(
+                                'Logo', 'Drop here to attach or upload',
+                                height: 130, width: 160),
+                            const SizedBox(height: 30),
+                            _buildInputField('Company Description',
+                                "Briefly describe your company's mission, vision, and services",
+                                height: 130, width: 160),
+                            const SizedBox(height: 30),
+                          ] else if (currentStep == 3) ...[
+                            const Center(
+                              child: Text(
+                                'Enter your Identification infos',
+                                style: TextStyle(
+                                  color: AppColors.blueButtonColor,
+                                  fontSize: 18,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 35),
+                            _buildInputField('Trade Register Number (RC)',
+                                "`Registre de Commerce` number",
+                                width: 240),
+                            const SizedBox(height: 30),
+                            _buildInputField('Tax Identification Number (NIF)',
+                                "`Numéro d'Identification Fiscale `",
+                                width: 240),
+                            const SizedBox(height: 30),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isSelected = !isSelected;
+                                    });
+                                  },
+                                  child: Container(
+                                    width: 22,
+                                    height: 22,
+                                    decoration: ShapeDecoration(
+                                      color: isSelected
+                                          ? AppColors.lightGreenColor
+                                          : Colors.white,
+                                      shape: const OvalBorder(
+                                        side: BorderSide(
+                                          width: 0.5,
+                                          color: AppColors.blueButtonColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Flexible(
+                                  child: RichText(
+                                    text: const TextSpan(
+                                      style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        height: 1.5,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text:
+                                                'I confirm I represent HR/Personnel, Recruiting, Marketing, PR, or am an executive at my company and I agree to Khotwa\'s '),
+                                        TextSpan(
+                                          text: 'Terms of Use',
+                                          style: TextStyle(
+                                              color: Color(0xFF6EA5ED)),
+                                        ),
+                                        TextSpan(text: ' and acknowledge its '),
+                                        TextSpan(
+                                          text: 'privacy policy',
+                                          style: TextStyle(
+                                              color: Color(0xFF6EA5ED)),
+                                        ),
+                                        TextSpan(
+                                            text: ' on behalf of my company.'),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 30),
+                          ],
+                          const SizedBox(height: 20),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                    ],
-                    const SizedBox(height: 20),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
