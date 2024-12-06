@@ -328,7 +328,7 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             (currentIndex > 0)
 
-                ? const SearchFilterBar()
+                ?  SearchFilterBar( onSearch: handleCompanySearch,)
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
