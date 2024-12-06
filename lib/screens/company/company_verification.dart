@@ -298,13 +298,9 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 _buildProgressIndicator(),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
@@ -324,8 +320,8 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: AppSizes.getScreenHeight(context)*0.5,
+                    SizedBox(
+                      height: AppSizes.getScreenHeight(context) * 0.5,
                       child: Column(
                         children: [
                           if (currentStep == 0) ...[
@@ -383,16 +379,15 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 35),
                             _buildInputField(
-                                'Website', "Your company's website link",
-                                width: 160),
+                                'Website', "Your company's website link"),
                             const SizedBox(height: 30),
                             _buildInputField(
                                 'Logo', 'Drop here to attach or upload',
-                                height: 130, width: 160),
+                                height: 130),
                             const SizedBox(height: 30),
                             _buildInputField('Company Description',
                                 "Briefly describe your company's mission, vision, and services",
-                                height: 130, width: 160),
+                                height: 130),
                             const SizedBox(height: 30),
                           ] else if (currentStep == 3) ...[
                             const Center(
@@ -408,12 +403,10 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 35),
                             _buildInputField('Trade Register Number (RC)',
-                                "`Registre de Commerce` number",
-                                width: 240),
+                                "`Registre de Commerce` number"),
                             const SizedBox(height: 30),
                             _buildInputField('Tax Identification Number (NIF)',
-                                "`Numéro d'Identification Fiscale `",
-                                width: 240),
+                                "`Numéro d'Identification Fiscale`"),
                             const SizedBox(height: 30),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -475,86 +468,79 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 30),
                           ],
-                          const SizedBox(height: 20),
                         ],
                       ),
-                      const SizedBox(height: 30),
-                    ],
+                    ),
                     const SizedBox(height: 20),
-                    Positioned(
-                      
-                
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              if (currentStep > 0) {
-                                setState(() {
-                                  currentStep--;
-                                });
-                                _pageController.animateToPage(currentStep,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInOut);
-                              } else {}
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFEFF3F2),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              minimumSize: const Size(83, 30),
-
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            if (currentStep > 0) {
+                              setState(() {
+                                currentStep--;
+                              });
+                              _pageController.animateToPage(currentStep,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFEFF3F2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            child: const Text(
-                              'Back',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                color: Color(0xFF95969D),
-                                fontWeight: FontWeight.w500,
-                              ),
+                            minimumSize: const Size(83, 30),
+                          ),
+                          child: const Text(
+                            'Back',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              color: Color(0xFF95969D),
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (currentStep < 3) {
-                                setState(() {
-                                  currentStep++;
-                                });
-                                _pageController.animateToPage(currentStep,
-                                    duration: const Duration(milliseconds: 300),
-                                    curve: Curves.easeInOut);
-                              } else {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const CompanyHome()),
-                                );
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: (currentStep == 3)
-                                  ? AppColors.blueButtonColor
-                                  : AppColors.lightGreenColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              minimumSize: const Size(83, 30),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (currentStep < 3) {
+                              setState(() {
+                                currentStep++;
+                              });
+                              _pageController.animateToPage(currentStep,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const CompanyHome()),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: (currentStep == 3)
+                                ? AppColors.blueButtonColor
+                                : AppColors.lightGreenColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Text(
-                              (currentStep == 3) ? "Let's Go" : 'Next',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            minimumSize: const Size(83, 30),
+                          ),
+                          child: Text(
+                            (currentStep == 3) ? "Let's Go" : 'Next',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
