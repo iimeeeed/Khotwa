@@ -4,11 +4,13 @@ import 'package:khotwa/commons/constants.dart';
 class SearchFilterBar extends StatefulWidget {
   final String hint;
   final Function(String) onSearch;
+  final Widget filterScreen; // Added parameter for the screen to navigate to
 
   const SearchFilterBar({
     super.key,
     this.hint = 'Search...',
     required this.onSearch,
+    required this.filterScreen, // Required parameter
   });
 
   @override
@@ -55,15 +57,25 @@ class _SearchFilterBarState extends State<SearchFilterBar> {
           ),
         ),
         const SizedBox(width: 8),
-        Container(
-          height: AppSizes.getScreenHeight(context) * 0.06,
-          width: AppSizes.getScreenWidth(context) * 0.12,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => widget.filterScreen, // Navigate to the passed screen
+              ),
+            );
+          },
+          child: Container(
+            height: AppSizes.getScreenHeight(context) * 0.06,
+            width: AppSizes.getScreenWidth(context) * 0.12,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Image(image: AssetImage("assets/filter.png")),
           ),
-          child: const Image(image: AssetImage("assets/filter.png")),
         ),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/company/company_dashboard.dart';
+import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
@@ -328,7 +329,7 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             (currentIndex > 0)
 
-                ?  SearchFilterBar( onSearch: handleCompanySearch,)
+                ?  SearchFilterBar(filterScreen: Filter(), onSearch: handleCompanySearch,)
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(

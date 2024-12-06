@@ -8,7 +8,6 @@ import 'package:khotwa/screens/jobFlow/job_details.dart';
 import '../../widgets/bottom_bar.dart';
 import './filter/filter.dart';
 
-
 class JobseekerHome extends StatefulWidget {
   const JobseekerHome({super.key});
 
@@ -89,6 +88,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                     child: SearchFilterBar(
                       hint: "Search a job or a position",
                       onSearch: handleSearch,
+                      filterScreen: Filter(),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -276,11 +276,12 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-         SearchFilterBar(
+            SearchFilterBar(
+              filterScreen: Filter(),
               hint: "Search a job or a position",
               onSearch: handleSearch,
-            ),  
-            const SizedBox(height: 16), 
+            ),
+            const SizedBox(height: 16),
             const Text(
               "Featured Jobs",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
