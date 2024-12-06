@@ -79,6 +79,77 @@ class _JobseekerHomeState extends State<JobseekerHome> {
     });
   }
 
+
+  void showFeaturedJobsAsDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.48,
+          minChildSize: 0.4,
+          maxChildSize: 0.9,
+          builder: (context, scrollController) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 8, bottom: 12),
+                      height: 4,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: SearchFilterBar(
+                      hint: "Search a job or a position",
+                      onSearch: handleSearch,
+                      filterScreen: const Filter(),
+                      onFilterTap: () {
+                        BottomDialog.show(context, const Filter());
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Column(
+                        children: filteredJobs.map((job) {
+                          return buildTile(
+                            job['logo'] ?? '',
+                            job['title'] ?? '',
+                            job['company'],
+                            job['salary'],
+                            job['location'],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   Widget buildTile(
       String str, String job, String employer, String price, String location) {
     return GestureDetector(
@@ -235,28 +306,40 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           ],
         ),
       ),
-      body: CustomScrollView(
-        slivers: [
-          // Sticky Search Bar
-          SliverAppBar(
-            backgroundColor: AppColors.primaryBackgroundColor,
-            floating: false,
-            pinned: true,
-            automaticallyImplyLeading: false,
-            elevation: 2,
-            toolbarHeight: 80,
-            flexibleSpace: Container(
-              color: AppColors.primaryBackgroundColor,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: SafeArea(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: SearchFilterBar(
-                    filterScreen: Filter(),
-                    hint: "Search a job or a position",
-                    onSearch: handleSearch,
-                    onFilterTap: () {
-                      BottomDialog.show(context, Filter());
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            SearchFilterBar(
+              filterScreen: const Filter(),
+              hint: "Search a job or a position",
+              onSearch: handleSearch,
+              onFilterTap: () {
+                BottomDialog.show(context, const Filter());
+              },
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              "Featured Jobs",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 180,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: featuredJobs.length,
+                itemBuilder: (context, index) {
+                  final job = featuredJobs[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const JobDetailsApp()));
+
                     },
                   ),
                 ),

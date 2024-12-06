@@ -478,76 +478,83 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                           const SizedBox(height: 20),
                         ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            if (currentStep > 0) {
-                              setState(() {
-                                currentStep--;
-                              });
-                              _pageController.animateToPage(currentStep,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut);
-                            } else {}
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFEFF3F2),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                      const SizedBox(height: 30),
+                    ],
+                    const SizedBox(height: 20),
+                    Positioned(
+                      
+                
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              if (currentStep > 0) {
+                                setState(() {
+                                  currentStep--;
+                                });
+                                _pageController.animateToPage(currentStep,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut);
+                              } else {}
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFEFF3F2),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              minimumSize: const Size(83, 30),
+
                             ),
-                            minimumSize: const Size(83, 30),
-                          ),
-                          child: const Text(
-                            'Back',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              color: Color(0xFF95969D),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (currentStep < 3) {
-                              setState(() {
-                                currentStep++;
-                              });
-                              _pageController.animateToPage(currentStep,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut);
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CompanyHome()),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: (currentStep == 3)
-                                ? AppColors.blueButtonColor
-                                : AppColors.lightGreenColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            minimumSize: const Size(83, 30),
-                          ),
-                          child: Text(
-                            (currentStep == 3) ? "Let's Go" : 'Next',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                            child: const Text(
+                              'Back',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                                color: Color(0xFF95969D),
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          ElevatedButton(
+                            onPressed: () {
+                              if (currentStep < 3) {
+                                setState(() {
+                                  currentStep++;
+                                });
+                                _pageController.animateToPage(currentStep,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut);
+                              } else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const CompanyHome()),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: (currentStep == 3)
+                                  ? AppColors.blueButtonColor
+                                  : AppColors.lightGreenColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              minimumSize: const Size(83, 30),
+                            ),
+                            child: Text(
+                              (currentStep == 3) ? "Let's Go" : 'Next',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

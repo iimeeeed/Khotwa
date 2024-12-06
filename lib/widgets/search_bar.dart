@@ -84,7 +84,7 @@ class DefaultFilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'No filters available',
         style: TextStyle(fontSize: 18, color: Colors.grey),
