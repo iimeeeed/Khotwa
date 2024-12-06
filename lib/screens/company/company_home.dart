@@ -326,7 +326,6 @@ class _CompanyHomeState extends State<CompanyHome> {
             ),
             const SizedBox(height: 16),
 
-            // Search Bar
             (currentIndex > 0)
 
                 ? const SearchFilterBar()

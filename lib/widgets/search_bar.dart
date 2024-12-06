@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/constants.dart';
-
 class SearchFilterBar extends StatefulWidget {
   final String hint;
   final Function(String) onSearch;
@@ -8,8 +7,15 @@ class SearchFilterBar extends StatefulWidget {
   const SearchFilterBar({
     super.key,
     this.hint = 'Search...',
-    required this.onSearch,
+    this.onSearch = _defaultOnSearch, // Assign a default function
   });
+
+  static void _defaultOnSearch(String value) {
+    // Navigate to the CompanyHome screen or perform a default action
+    print("Default search action for value: $value");
+    // Example: Add navigation logic here if needed
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => CompanyHome()));
+  }
 
   @override
   State<SearchFilterBar> createState() => _SearchFilterBarState();
