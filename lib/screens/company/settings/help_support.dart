@@ -54,10 +54,10 @@ class _HelpSupportState extends State<HelpSupport> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 32,
                         height: 32,
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                           size: 20,
@@ -277,10 +277,10 @@ class _HelpSupportState extends State<HelpSupport> {
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: SizedBox(
                 height: 44,
-                child: const TextField(
+                child: TextField(
                   decoration: InputDecoration(
                     hintText: "Type a keyword...",
                     hintStyle: TextStyle(

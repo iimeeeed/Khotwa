@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_home.dart';
 import '../commons/constants.dart';
 import 'bottom_sheet.dart';
 import '../screens/company/settings/main_settings.dart';
 import 'notifications_screen.dart';
 import '../screens/company/create_post_screen.dart';
+import '../commons/profile.dart';
+import '../screens/jobSeeker/homePage.dart';
 
 class BottomBar extends StatefulWidget {
   final bool
@@ -78,18 +81,46 @@ class _BottomBarState extends State<BottomBar> {
         setState(() {
           bool isComp = (widget.isJobseeker) ? false : true;
           selectedIndex = index;
-          if (label == "Notifs") {
-            BottomDialog.show(
+
+          switch (label) {
+            case "Home":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      (widget.isJobseeker) ? const JobseekerHome() : const CompanyHome(),
+                ),
+              );
+              break;
+            case "Notifs":
+              BottomDialog.show(
                 context,
                 NotificationsScreen(
                   isCompany: isComp,
-                ));
-          } else {
-            if (label == "Create") {
-              BottomDialog.show(context, const CreatePost()); //example
-            } else {
-              BottomDialog.show(context, const SettingsPage()); //example
-            }
+                ),
+              );
+              break;
+
+            case "Create":
+              BottomDialog.show(context, const CreatePost());
+              break;
+            case "Profile":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Profile(isCompany: (widget.isJobseeker) ? false : true),
+                ),
+              );
+              break;
+
+            default:
+              BottomDialog.show(
+                  context,
+                  SettingsPage(
+                    isCompany: (widget.isJobseeker) ? false : true,
+                  ));
+              break;
           }
         });
       },

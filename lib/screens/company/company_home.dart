@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_dashboard.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
-import 'notifications.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/search_bar.dart';
+import '../../widgets/bottom_sheet.dart';
+import '../../widgets/notifications_screen.dart';
 
 class CompanyHome extends StatefulWidget {
   const CompanyHome({super.key});
@@ -326,39 +328,48 @@ class _CompanyHomeState extends State<CompanyHome> {
 
             // Search Bar
             (currentIndex > 0)
-                ? SearchFilterBar(
-                    hint: "Search for a company",
-                    onSearch: handleCompanySearch,
-                  )
-                : Container(
-                    child: const Text(
-                      "Here's what's happening today in your hiring pipeline.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.greyTextColor,
-                        fontSize: 15,
-                        fontFamily: 'poppins',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: -0.15,
-                      ),
+
+                ? const SearchFilterBar()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        const Flexible(
+                          child: Text(
+                            "Here's what's happening today in your hiring pipeline.",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: AppColors.greyTextColor,
+                              fontSize: 15,
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: -0.15,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        GestureDetector(
+                          child: const Image(
+                            image: AssetImage("assets/dashboard.png"),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CompanyDashboard(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+
                     ),
                   ),
+
             const SizedBox(height: 30),
-            const SizedBox(
-              width: 254,
-              child: Text(
-                'Candidates',
-                style: TextStyle(
-                  color: AppColors.blueButtonColor,
-                  fontSize: 18,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  height: 0.07,
-                  letterSpacing: -0.27,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
+
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -575,10 +586,10 @@ class _CompanyHomeState extends State<CompanyHome> {
             const Spacer(),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                BottomDialog.show(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const Notifications(),
+                  const NotificationsScreen(
+                    isCompany: true,
                   ),
                 );
               },

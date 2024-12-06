@@ -60,10 +60,10 @@ class SubmissionPage extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            Center(
+            const Center(
               child: SizedBox(
                 height: 120,
-                child: const Image(
+                child: Image(
                   image: AssetImage("assets/successfulSubmit.png"),
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_verification.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../../../commons/constants.dart';
-import 'company_home.dart';
 
 class FlowCompany extends StatefulWidget {
   const FlowCompany({super.key});
@@ -69,7 +69,7 @@ class _FlowCompanyState extends State<FlowCompany> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 50),
+                      SizedBox(height: AppSizes.getScreenHeight(context) * 0.1),
                       Hero(
                         tag: imagePath,
                         child: SizedBox(
@@ -91,7 +91,8 @@ class _FlowCompanyState extends State<FlowCompany> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 30),
+                      SizedBox(
+                          height: AppSizes.getScreenHeight(context) * 0.04),
                       SizedBox(
                         width: 300,
                         child: Text(
@@ -105,6 +106,8 @@ class _FlowCompanyState extends State<FlowCompany> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                          height: AppSizes.getScreenHeight(context) * 0.4),
                     ],
                   ),
                 );
@@ -112,7 +115,8 @@ class _FlowCompanyState extends State<FlowCompany> {
             ),
           ),
           Positioned(
-            bottom: AppSizes.getScreenHeight(context) * 0.15,
+            bottom: 250,
+
             left: 0,
             right: 0,
             child: Row(
@@ -197,11 +201,9 @@ class _FlowCompanyState extends State<FlowCompany> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const CompanyHome(),
-                              ),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const CompanyVerificationPage()));
                           },
                           child: const Text(
                             "Explore",

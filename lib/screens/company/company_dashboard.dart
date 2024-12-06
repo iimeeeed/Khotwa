@@ -3,7 +3,6 @@ import '../../commons/khotwa_logo.dart';
 import '../../commons/constants.dart';
 import '../../widgets/bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class CompanyDashboard extends StatefulWidget {
   const CompanyDashboard({super.key});
@@ -72,10 +71,10 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 32,
                         height: 32,
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
                           color: AppColors.blueButtonColor,
                           size: 20,

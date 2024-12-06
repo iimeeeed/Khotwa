@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_home.dart';
 import '../../commons/constants.dart';
-import 'flowSignUp.dart';
 
 class CompanyVerificationPage extends StatefulWidget {
   const CompanyVerificationPage({super.key});
@@ -510,7 +510,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const FlowCompany()),
+                                    builder: (context) => const CompanyHome()),
                               );
                             }
                           },

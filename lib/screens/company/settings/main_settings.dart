@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/profile.dart';
 import '../../../commons/constants.dart';
 import 'notification_preferences.dart';
 import 'security_settings.dart';
@@ -8,7 +9,9 @@ import 'About.dart';
 import 'help_support.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final bool isCompany;
+
+  const SettingsPage({super.key, required this.isCompany});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -58,10 +61,10 @@ class _SettingsPageState extends State<SettingsPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 32,
                         height: 32,
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
                           color: Colors.white,
                           size: 20,
@@ -222,6 +225,15 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       onTap: () {
         switch (text) {
+          case 'Edit profile':
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Profile(
+                        isCompany: (widget.isCompany) ? true : false,
+                      )),
+            );
+            break;
           case 'Security':
             Navigator.push(
               context,

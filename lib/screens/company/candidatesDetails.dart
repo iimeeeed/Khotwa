@@ -14,39 +14,11 @@ class CandidatesDetails extends StatefulWidget {
 class _CandidatesDetailsState extends State<CandidatesDetails> {
   AppColors colors = AppColors();
 
-  Widget progressIem(String txt, bool filled) {
-    return Container(
-      width: 74,
-      height: 30,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: ShapeDecoration(
-        color: (filled) ? const Color(0xFF1B4174) : Colors.white,
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Color(0xFF1B4174), width: 0.5),
-          borderRadius: BorderRadius.circular(97),
-        ),
-      ),
-      child: Center(
-        child: Text(
-          txt,
-          style: TextStyle(
-            color: (filled) ? Colors.white : const Color(0xFF1B4174),
-            fontSize: 8,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            height: 1.2,
-            letterSpacing: -0.09,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget buildCandidateTile(
       String name, String jobTitle, String appliedDate, String imageUrl) {
     return Container(
-      width: 326,
-      height: 130,
+      width: AppSizes.getScreenHeight(context) * 0.9,
+      height: 90,
       margin: const EdgeInsets.only(bottom: 8),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -137,25 +109,6 @@ class _CandidatesDetailsState extends State<CandidatesDetails> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          const Divider(color: Color(0xFFAAAFBB), height: 0.8, thickness: 1),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                progressIem("Submitted", true),
-                progressIem("Seen", true),
-                progressIem("Interviewed", false),
-                progressIem("Accepted", false),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -233,10 +186,10 @@ class _CandidatesDetailsState extends State<CandidatesDetails> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 32,
                         height: 32,
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
                           color: Color(0xFF1B4174),
                           size: 20,
