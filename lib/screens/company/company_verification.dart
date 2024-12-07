@@ -347,8 +347,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             const SizedBox(height: 30),
                             _buildInputField(
                                 'Company Size', 'Select your Company Size'),
-                            const SizedBox(height: 30),
-                            _buildInputField('Location', 'Your Exact Address'),
                             const SizedBox(height: 20),
                           ] else if (currentStep == 1) ...[
                             const Center(
@@ -367,6 +365,8 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             const SizedBox(height: 30),
                             _buildInputField('Phone Number', 'Phone Number'),
                             const SizedBox(height: 30),
+                            _buildInputField('Location', 'Your Exact Address'),
+                            const SizedBox(height: 20),
                           ] else if (currentStep == 2) ...[
                             const Center(
                               child: Text(
@@ -487,6 +487,8 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               _pageController.animateToPage(currentStep,
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut);
+                            } else {
+                              Navigator.pop(context);
                             }
                           },
                           style: ElevatedButton.styleFrom(

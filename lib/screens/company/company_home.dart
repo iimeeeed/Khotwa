@@ -3,6 +3,7 @@ import 'package:khotwa/commons/profile.dart';
 import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
 import '../../data/candidates_data.dart';
+import '../../data/jobs_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
 import '../../widgets/bottom_bar.dart';
@@ -300,9 +301,9 @@ class _CompanyHomeState extends State<CompanyHome> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile(isCompany: true,)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Profile(isCompany: true,)));
                       },
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         backgroundColor: Colors.white,
                         backgroundImage: AssetImage(
                           "assets/Sonatrach-Logo.png",
@@ -334,10 +335,10 @@ class _CompanyHomeState extends State<CompanyHome> {
                 ? SearchFilterBar(
                   isCompany: true,
                     onFilterTap: () {
-                      BottomDialog.show(context, Filter());
+                      BottomDialog.show(context, const Filter());
                     },
                     onSearch: handleCompanySearch,
-                    filterScreen: Filter(),
+                    filterScreen: const Filter(),
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -130,25 +130,30 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
                         tiles: generalNotificationsTiles,
                       ),
                       const SizedBox(height: 20),
-                      Center(
-                        child: Container(
-                          width: 266,
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF84BDA9),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Center(
+                          child: Container(
+                            width: 266,
+                            height: 50,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF84BDA9),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
                             ),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Save',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
+                            child: const Center(
+                              child: Text(
+                                'Save',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),

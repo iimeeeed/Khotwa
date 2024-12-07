@@ -17,6 +17,7 @@ class Profile extends StatelessWidget {
           children: [
             // Profile Header Section
             Container(
+              
               width: double.infinity,
               height: AppSizes.getScreenHeight(context) * 0.3,
               decoration: const BoxDecoration(
@@ -30,7 +31,7 @@ class Profile extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.only(top: 65, left: 20, right: 20),
+                padding: const EdgeInsets.only(top: 65, left: 20, right: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

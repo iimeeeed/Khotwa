@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/company/company_home.dart';
+import 'package:khotwa/screens/jobSeeker/jobseeker_applications.dart';
+import 'package:khotwa/screens/jobSeeker/saved_jobs.dart';
 import '../commons/constants.dart';
 import 'bottom_sheet.dart';
 import '../screens/company/settings/main_settings.dart';
@@ -37,11 +39,11 @@ class _BottomBarState extends State<BottomBar> {
           ),
           // Search tab
           if (widget.isJobseeker == true)
-          _buildTab(
-            icon: Icons.search,
-            label: 'Search',
-            index: 1,
-          ),
+            _buildTab(
+              icon: Icons.work_outline_outlined,
+              label: 'Apps',
+              index: 1,
+            ),
           widget.isJobseeker
               ? _buildTab(
                   icon: Icons.bookmark_outline,
@@ -88,8 +90,9 @@ class _BottomBarState extends State<BottomBar> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      (widget.isJobseeker) ? const JobseekerHome() : const CompanyHome(),
+                  builder: (context) => (widget.isJobseeker)
+                      ? const JobseekerHome()
+                      : const CompanyHome(),
                 ),
               );
               break;
@@ -98,6 +101,22 @@ class _BottomBarState extends State<BottomBar> {
                 context,
                 NotificationsScreen(
                   isCompany: isComp,
+                ),
+              );
+              break;
+              case "Apps":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const JobseekerApplications(),
+                ),
+              );
+              break;
+            case "Saved":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SavedJobs(),
                 ),
               );
               break;

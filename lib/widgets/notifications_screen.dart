@@ -71,7 +71,7 @@ class NotificationsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          CandidatesDetails(candidateId: [0,0])));
+                          const CandidatesDetails(candidateId: [0,0])));
             }
           },
           child: Column(

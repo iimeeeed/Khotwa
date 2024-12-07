@@ -179,7 +179,7 @@ class _PrefsState extends State<Prefs> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: TextField(
+                    child: const TextField(
                       decoration: InputDecoration(
                         labelText: 'Enter your text here',
                         hintText: 'Type something...',
