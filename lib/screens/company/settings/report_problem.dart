@@ -56,7 +56,7 @@ class _ReportProblemState extends State<ReportProblem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(width:15),
+                  const SizedBox(width:15),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);

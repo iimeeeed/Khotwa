@@ -147,7 +147,7 @@ class _BottomBarState extends State<BottomBar> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>CompanyDashboard()
+                  builder: (context) =>const CompanyDashboard()
                       
                 ),
               );

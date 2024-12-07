@@ -213,10 +213,10 @@ class _SecuritySettingsState extends State<SecuritySettings> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(Icons.people_outline, color: AppColors.greyTextColor),
               SizedBox(width: 15),
@@ -230,9 +230,9 @@ class _SecuritySettingsState extends State<SecuritySettings> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.only(left: 40),
+            padding: EdgeInsets.only(left: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -244,8 +244,8 @@ class _SecuritySettingsState extends State<SecuritySettings> {
                     fontFamily: AppFonts.secondaryFont,
                   ),
                 ),
-                const SizedBox(height: 5),
-                const Text(
+                SizedBox(height: 5),
+                Text(
                   'Total active sessions',
                   style: TextStyle(
                     color: AppColors.blackTextColor,
@@ -254,7 +254,7 @@ class _SecuritySettingsState extends State<SecuritySettings> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5),
                 Text(
                   'DESKTOP-6TIG6EC • Kyiv, Ukraine\niphone 11 • Kyiv, Ukraine',
                   style: TextStyle(

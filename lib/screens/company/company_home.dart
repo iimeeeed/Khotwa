@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/profile.dart';
-import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
-import 'package:khotwa/screens/jobSeeker/jobseeker_applications.dart';
 import '../../data/candidates_data.dart';
 import '../../data/jobs_data.dart';
 import '../../commons/constants.dart';
@@ -346,11 +344,11 @@ class _CompanyHomeState extends State<CompanyHome> {
                     onSearch: handleCompanySearch,
                     filterScreen: const Filter(),
                   )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                : const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       children: [
-                        const Flexible(
+                        Flexible(
                           child: Text(
                             "Here's what's happening today in your hiring pipeline.",
                             textAlign: TextAlign.center,
@@ -363,7 +361,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                             ),
                           ),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           width: 15,
                         ),
                       ],

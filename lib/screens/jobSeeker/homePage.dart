@@ -112,14 +112,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobDetailsPage(job: {
-              'title': job,
-              'company': employer,
-              'salary': price,
-              'location': location,
-              'tags': const [],
-              'logo': str,
-            }),
+            builder: (context) => JobDetailsPage( 
+              
+            ),
           ),
         );
       },
@@ -276,10 +271,157 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       BottomDialog.show(context, const Filter());
                     },
                   ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Featured Jobs",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                  height: 180,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: featuredJobs.length,
+                    itemBuilder: (context, index) {
+                      final job = featuredJobs[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const JobDetailsApp(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.75,
+                          margin: const EdgeInsets.only(right: 12),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF356899),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const CircleAvatar(
+                                        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+                                        radius: 22,
+                                        child: Image(
+                                          image: AssetImage(
+                                              "assets/Sonatrach-Logo.png"),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            job['title'] ?? 'Job Title',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            job['company'] ?? 'Company Name',
+                                            style: const TextStyle(
+                                                color: Colors.white70),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      isSaved = !isSaved;
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(bottom: 30),
+                                      child: Icon(
+                                        (!isSaved)
+                                            ? Icons.bookmark_add_outlined
+                                            : Icons.bookmark,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Center(
+                                child: Wrap(
+                                  spacing: 20,
+                                  children: (job['tags'] as List)
+                                      .map<Widget>(
+                                        (tag) => Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white24,
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          child: Text(
+                                            tag ?? 'Tag',
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Text(
+                                    job['salary'] ?? 'Salary',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    job['location'] ?? 'Location',
+                                    style: const TextStyle(color: Colors.white70),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+
                 ],
               ),
             ),
           ),
+          // Sticky Categories
           SliverPersistentHeader(
             pinned: true,
             delegate: StickyHeaderDelegate(

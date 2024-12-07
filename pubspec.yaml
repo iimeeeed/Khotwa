@@ -16,6 +16,7 @@ dependencies:
   percent_indicator: ^4.2.4 
   fl_chart: ^0.69.2
   keyboard_dismisser: ^3.0.0
+  flutter_launcher_icons: ^0.14.2
 
 dev_dependencies:
   flutter_test:
@@ -42,3 +43,6 @@ flutter:
       fonts:
         - asset: assets/fonts/DMSans-Italic.ttf
 
+flutter_icons:
+  ios: true
+  image_path: "assets/icon.png"
