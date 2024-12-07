@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/profile.dart';
 import 'package:khotwa/screens/Signup.dart';
+import 'package:khotwa/screens/jobSeeker/saved_jobs.dart';
 import '../../../commons/constants.dart';
 import 'notification_preferences.dart';
 import 'security_settings.dart';
@@ -110,8 +111,8 @@ class _SettingsPageState extends State<SettingsPage> {
             color: Color(0xFFEFF3F2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
+                topLeft: Radius.circular(0),
+                topRight: Radius.circular(0),
               ),
             ),
           ),
@@ -127,7 +128,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     _buildSettingsItem(Icons.security_outlined, 'Security'),
                     _buildSettingsItem(Icons.notifications_active_outlined,
                         'Notifications Preferences'),
-                    _buildSettingsItem(Icons.privacy_tip_outlined, 'Privacy'),
+                   
                     if (!widget.isCompany)
                       _buildSettingsItem(Icons.archive_outlined, 'Saved Jobs'),
                   ],
@@ -147,8 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   "Actions",
                   items: [
                     _buildSettingsItem(Icons.flag_outlined, "Report a Problem"),
-                    _buildSettingsItem(
-                        Icons.person_add_alt_1_outlined, "Add Account"),
+                    
                     _buildSettingsItem(
                       Icons.logout,
                       "Log Out",
@@ -278,6 +278,12 @@ class _SettingsPageState extends State<SettingsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const Signup()),
+        );
+        break;
+      case 'Saved Jobs':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SavedJobs()),
         );
         break;
       default:
