@@ -1,20 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/screens/jobFlow/job_application.dart';
-
-void main() {
-  runApp(const JobDetailsApp());
-}
+import 'package:khotwa/screens/jobSeeker/homePage.dart';
 
 class JobDetailsApp extends StatelessWidget {
   const JobDetailsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    const sampleJob = {
+      'logo': 'assets/Sonatrach-Logo.png',
+      'title': 'Software Engineer',
+      'company': 'Tech Innovators Inc.',
+      'tags': ['Full-time', 'Remote', 'IT'],
+      'salary': '80,000DZD/year',
+      'location': 'San Francisco, CA',
+      'description':
+          'We are looking for a Software Engineer to join our team...',
+      'responsibilities': [
+        'Develop high-quality software solutions.',
+        'Collaborate with cross-functional teams.',
+        'Maintain and improve code quality and documentation.',
+        'Participate in code reviews and provide constructive feedback.'
+      ],
+      'address': '123 Silicon Valley Blvd, San Francisco, CA 94016',
+      'facilities': [
+        'Flexible work hours',
+        'Health insurance',
+        'Free lunch and snacks',
+        'Annual company retreat'
+      ],
+      'requirements': [
+        'Bachelors degree in Computer Science or related field.',
+        'Proficiency in programming languages like Dart, Java, or Python.',
+        'Experience with Flutter is a plus.',
+        'Excellent problem-solving skills and teamwork.',
+        'Strong communication skills.'
+      ]
+    };
+
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: JobDetailsPage(
-        job: {},
-      ),
+      home: JobDetailsPage(job: sampleJob),
     );
   }
 }
@@ -29,6 +56,7 @@ class JobDetailsPage extends StatefulWidget {
 
 class _JobDetailsPageState extends State<JobDetailsPage> {
   bool isDescriptionTab = true;
+  bool isSaved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,150 +65,127 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Blue background container
-            Container(
-              color: const Color(0xFF002D62),
-              padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
-              child: Column(
-                children: [
-                  // Back and bookmark icons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () {
-                          Navigator.pop(
-                              context); // This will navigate back to the previous page
-                        },
-                      ),
-                      const Icon(Icons.bookmark_border, color: Colors.white),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  // Logo, title, company
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.white,
-                    child: widget.job['logo'] != null
-                        ? Image.asset(widget.job['logo'],
-                            fit: BoxFit.cover) // For local asset image
-                        : const Icon(Icons.business,
-                            size: 40), // Fallback icon if no logo is provided
-                  ),
-
-                  const SizedBox(height: 16),
-                  Text(
-                    widget.job['title'] ?? '',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    widget.job['company'] ?? '',
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  const SizedBox(height: 16),
-                  // Tags
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      ...?widget.job['tags']?.map((tag) => Chip(
-                            label: Text(
-                              tag,
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            backgroundColor:
-                                const Color.fromARGB(255, 63, 72, 108),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          )),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  const SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Text(
-                        widget.job['salary'] ?? '',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Spacer(),
-                      const Icon(Icons.location_on, color: Colors.white),
-                      const SizedBox(width: 4),
-                      Text(
-                        widget.job['location'] ?? '',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Tabs
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  _buildTab('Description', isDescriptionTab, () {
-                    setState(() => isDescriptionTab = true);
-                  }),
-                  const Spacer(),
-                  const SizedBox(width: 32),
-                  _buildTab('Requirement', !isDescriptionTab, () {
-                    setState(() => isDescriptionTab = false);
-                  }),
-                  const Spacer(),
-                ],
-              ),
-            ),
-            // Content based on selected tab
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: isDescriptionTab
-                  ? _buildDescriptionContent()
-                  : _buildRequirementContent(),
-            ),
-            // Apply Now Button
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            JobApplicationPage(job: widget.job),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF002D62),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: const Text(
-                    "Apply Now",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
+            _buildHeader(),
+            _buildTabs(),
+            _buildTabContent(),
+            _buildApplyButton(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      color: AppColors.blueButtonColor,
+      padding: const EdgeInsets.fromLTRB(16, 40, 16, 24),
+      child: Column(
+        children: [
+          // Back and bookmark icons
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const JobseekerHome()));
+                },
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isSaved = !isSaved;
+                  });
+                },
+                child: Icon(
+                  isSaved ? Icons.bookmark : Icons.bookmark_add_outlined,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Logo, title, and company name
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.white,
+            child: widget.job['logo'] != null
+                ? Image.asset(widget.job['logo'], fit: BoxFit.cover)
+                : const Icon(Icons.business, size: 40),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            widget.job['title'] ?? '',
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          Text(
+            widget.job['company'] ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.white),
+          ),
+          const SizedBox(height: 16),
+          Wrap(
+            spacing: 8,
+            children: [
+              ...?widget.job['tags']?.map((tag) => Chip(
+                    label: Text(
+                      tag,
+                      style: const TextStyle(color: AppColors.blueButtonColor),
+                    ),
+                    backgroundColor: AppColors.primaryBackgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  )),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.job['salary'] ?? '',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Spacer(),
+              const Icon(Icons.location_on, color: AppColors.lightGreenColor),
+              const SizedBox(width: 4),
+              Text(
+                widget.job['location'] ?? '',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabs() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          const Spacer(),
+          _buildTab('Description', isDescriptionTab, () {
+            setState(() => isDescriptionTab = true);
+          }),
+          const Spacer(),
+          const SizedBox(width: 32),
+          _buildTab('Requirement', !isDescriptionTab, () {
+            setState(() => isDescriptionTab = false);
+          }),
+          const Spacer(),
+        ],
       ),
     );
   }
@@ -193,7 +198,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           Text(
             title,
             style: TextStyle(
-              color: isActive ? const Color(0xFF002D62) : Colors.grey,
+              color: isActive ? AppColors.blueButtonColor : Colors.grey,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
               fontSize: 16,
             ),
@@ -204,7 +209,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               width: 8,
               height: 8,
               decoration: const BoxDecoration(
-                color: Color(0xFF002D62),
+                color: AppColors.blueButtonColor,
                 shape: BoxShape.circle,
               ),
             ),
@@ -214,16 +219,21 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     );
   }
 
+  Widget _buildTabContent() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: isDescriptionTab
+          ? _buildDescriptionContent()
+          : _buildRequirementContent(),
+    );
+  }
+
   Widget _buildDescriptionContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.job['description'] ?? '',
             style: TextStyle(color: Colors.grey[600])),
-        TextButton(
-          onPressed: () {},
-          child: const Text("Read More.."),
-        ),
         const SizedBox(height: 24),
         const Text(
           "Responsibilities:",
@@ -233,22 +243,41 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
         ...?widget.job['responsibilities']
             ?.map((responsibility) => _buildListItem(responsibility)),
         const SizedBox(height: 24),
-        const Text(
-          "Location",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.location_on, color: AppColors.lightGreenColor),
+            const SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                widget.job['address'] ?? '',
+                style: const TextStyle(color: AppColors.greyTextColor),
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        Text(widget.job['address'] ?? ''),
         const SizedBox(height: 16),
-        Container(
-          height: 200,
-          color: Colors.grey[200],
-          child:
-              const Center(child: Icon(Icons.map, size: 48, color: Colors.red)),
+        Center(
+          child: Container(
+            height: 200,
+            color: Colors.grey[200],
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  "assets/map.png",
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+                const Icon(Icons.map, size: 48, color: Colors.red),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 16),
         const Text(
-          "Facilities and Others",
+          "Facilities and Others:",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
@@ -262,10 +291,13 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Requirements will go here...",
-          style: TextStyle(color: Colors.grey[600]),
+        const Text(
+          "Requirements:",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
+        const SizedBox(height: 8),
+        ...?widget.job['requirements']
+            ?.map((requirement) => _buildListItem(requirement)),
       ],
     );
   }
@@ -285,6 +317,33 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildApplyButton() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => JobApplicationPage(job: widget.job),
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.blueButtonColor,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+          ),
+          child: const Text(
+            "Apply Now",
+            style: TextStyle(fontSize: 18, color: Colors.white),
+          ),
+        ),
       ),
     );
   }

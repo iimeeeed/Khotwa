@@ -79,7 +79,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            const Spacer(),
+            SizedBox(
+              width: AppSizes.getScreenWidth(context)*0.32,
+            ),
             const Text(
               'Settings',
               textAlign: TextAlign.center,
@@ -90,7 +92,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const Spacer(flex: 2),
           ],
         ),
       ),
@@ -276,8 +277,7 @@ class _SettingsPageState extends State<SettingsPage> {
       case 'Log Out':
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => const Signup()), 
+          MaterialPageRoute(builder: (context) => const Signup()),
         );
         break;
       default:
