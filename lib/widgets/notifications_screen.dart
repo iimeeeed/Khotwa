@@ -35,20 +35,7 @@ class NotificationsScreen extends StatelessWidget {
                   );
                 },
               )),
-          Positioned(
-            top: 10,
-            left: MediaQuery.of(context).size.width / 2 - 17.5,
-            child: Container(
-              height: 4,
-              width: 35,
-              decoration: ShapeDecoration(
-                color: AppColors.greyTextColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-          ),
+          
         ],
       ),
     );

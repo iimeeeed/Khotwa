@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
 import '../../data/candidates_data.dart';
+import '../../data/jobs_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
 import '../../widgets/bottom_bar.dart';
@@ -333,40 +334,20 @@ class _CompanyHomeState extends State<CompanyHome> {
                     onSearch: handleCompanySearch,
                     filterScreen: Filter(),
                   )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      children: [
-                        const Flexible(
-                          child: Text(
-                            "Here's what's happening today in your hiring pipeline.",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              color: AppColors.greyTextColor,
-                              fontSize: 15,
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: -0.15,
-                            ),
-                          ),
+                : const Padding(
+                    padding:  EdgeInsets.symmetric(horizontal: 10),
+                    child:  Flexible(
+                      child: Text(
+                        "Here's what's happening today in your hiring pipeline.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: AppColors.greyTextColor,
+                          fontSize: 15,
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: -0.15,
                         ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        GestureDetector(
-                          child: const Image(
-                            image: AssetImage("assets/dashboard.png"),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const CompanyDashboard(),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                   ),
             const SizedBox(height: 30),

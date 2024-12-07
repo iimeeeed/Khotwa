@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/profile.dart';
+import 'package:khotwa/screens/jobSeeker/saved_jobs.dart';
 import '../../../commons/constants.dart';
 import 'notification_preferences.dart';
 import 'security_settings.dart';
@@ -119,8 +120,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             'Notifications Preferences'),
                         _buildSettingsItem(
                             Icons.privacy_tip_outlined, 'Privacy'),
-                        _buildSettingsItem(
-                            Icons.archive_outlined, 'Saved Jobs'),
+                        (widget.isCompany)
+                            ? Container()
+                            : _buildSettingsItem(
+                                Icons.archive_outlined, 'Saved Jobs'),
                       ]),
                       const SizedBox(height: 26),
                       _buildSettingsCard(
@@ -245,6 +248,12 @@ class _SettingsPageState extends State<SettingsPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => const NotificationPreferences()),
+            );
+            break;
+          case 'Saved Jobs':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SavedJobs()),
             );
             break;
           case 'Report a Problem':

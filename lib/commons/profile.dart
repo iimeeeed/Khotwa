@@ -128,7 +128,9 @@ class Profile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  SettingsPage(isCompany: (isCompany)? true : false,),
+                                builder: (context) => SettingsPage(
+                                  isCompany: (isCompany) ? true : false,
+                                ),
                               ),
                             );
                           },
@@ -295,23 +297,23 @@ class _DetailTileState extends State<DetailTile> {
           widget.label == "Languages" ||
           widget.label == "Industry") {
         return _buildEditableChipContent();
-      } else {
-        return TextFormField(
-          controller: _controller,
-          cursorColor: AppColors.lightGreenColor,
-          style: const TextStyle(
-            color: AppColors.greyTextColor,
-            fontSize: 14,
-            fontFamily: 'poppins',
-            fontWeight: FontWeight.w400,
-          ),
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-          ),
-        );
       }
+    } else {
+      return TextFormField(
+        controller: _controller,
+        cursorColor: AppColors.lightGreenColor,
+        style: const TextStyle(
+          color: AppColors.greyTextColor,
+          fontSize: 14,
+          fontFamily: 'poppins',
+          fontWeight: FontWeight.w400,
+        ),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+        ),
+      );
     }
     return const SizedBox.shrink();
   }

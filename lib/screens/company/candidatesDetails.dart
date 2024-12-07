@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../data/candidates_data.dart';
 import '../../commons/constants.dart';
+import 'plan_interview.dart';
+import '../../widgets/bottom_sheet.dart';
 
 class CandidatesDetails extends StatefulWidget {
   final List<int> candidateId;
@@ -223,24 +225,33 @@ class _CandidatesDetailsState extends State<CandidatesDetails> {
                 height: 20,
               ),
               Center(
-                child: Container(
-                  width: 266,
-                  height: 50,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF84BDA9),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6)),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Plan Interview',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'poppin',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    BottomDialog.show(
+                context,
+                     PlanInterview(),
+                      
+                    );
+                  },
+                  child: Container(
+                    width: AppSizes.getScreenWidth(context)*0.6,
+                    height: AppSizes.getScreenHeight(context)*0.08,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFF84BDA9),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6)),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Plan Interview',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'poppin',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
                       ),
                     ),
                   ),

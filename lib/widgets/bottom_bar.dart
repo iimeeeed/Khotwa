@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/company/company_home.dart';
+import 'package:khotwa/screens/jobSeeker/saved_jobs.dart';
 import '../commons/constants.dart';
 import 'bottom_sheet.dart';
 import '../screens/company/settings/main_settings.dart';
@@ -7,6 +8,7 @@ import 'notifications_screen.dart';
 import '../screens/company/create_post_screen.dart';
 import '../commons/profile.dart';
 import '../screens/jobSeeker/homePage.dart';
+import '../screens/company/company_dashboard.dart';
 
 class BottomBar extends StatefulWidget {
   final bool
@@ -35,12 +37,18 @@ class _BottomBarState extends State<BottomBar> {
             label: 'Home',
             index: 0,
           ),
-          // Search tab
-          _buildTab(
-            icon: Icons.search,
-            label: 'Search',
-            index: 1,
-          ),
+          // Search tab , dashboard
+          widget.isJobseeker
+              ? _buildTab(
+                  icon: Icons.search,
+                  label: 'Search',
+                  index: 1,
+                )
+              : _buildTab(
+                  icon: Icons.bar_chart_outlined,
+                  label: 'Dashboard',
+                  index: 1,
+                ),
           widget.isJobseeker
               ? _buildTab(
                   icon: Icons.bookmark_outline,
@@ -87,8 +95,17 @@ class _BottomBarState extends State<BottomBar> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      (widget.isJobseeker) ? const JobseekerHome() : const CompanyHome(),
+                  builder: (context) => (widget.isJobseeker)
+                      ? const JobseekerHome()
+                      : const CompanyHome(),
+                ),
+              );
+              break;
+            case "Dashboard":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CompanyDashboard(),
                 ),
               );
               break;
@@ -103,6 +120,15 @@ class _BottomBarState extends State<BottomBar> {
 
             case "Create":
               BottomDialog.show(context, const CreatePost());
+              break;
+            case "Saved":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      const SavedJobs(),
+                ),
+              );
               break;
             case "Profile":
               Navigator.push(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/widgets/bottom_sheet.dart';
-import '../../data/candidates_data.dart';
+import '../../data/jobs_data.dart';
 import '../../widgets/search_bar.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
