@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/commons/profile.dart';
 import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
+import 'package:khotwa/screens/jobSeeker/jobseeker_applications.dart';
 import '../../data/candidates_data.dart';
 import '../../data/jobs_data.dart';
 import '../../commons/constants.dart';
@@ -207,7 +208,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                   'Applied: $appliedDate',
                                   style: const TextStyle(
                                     color: Color(0xFFAAAFBB),
-                                    fontSize: 9,
+                                    fontSize: 10,
                                     fontFamily: 'Poppins',
                                     letterSpacing: -0.09,
                                   ),
@@ -231,8 +232,8 @@ class _CompanyHomeState extends State<CompanyHome> {
                                       );
                                     },
                                     child: Container(
-                                      width: 68,
-                                      height: 21,
+                                      width: 105,
+                                      height: 35,
                                       decoration: ShapeDecoration(
                                         color: AppColors.lightGreenColor,
                                         shape: RoundedRectangleBorder(
@@ -245,9 +246,9 @@ class _CompanyHomeState extends State<CompanyHome> {
                                           'View Application',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 7,
+                                            fontSize: 12,
                                             fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w400,
+                                            fontWeight: FontWeight.w500,
                                             letterSpacing: -0.07,
                                           ),
                                         ),
@@ -301,7 +302,12 @@ class _CompanyHomeState extends State<CompanyHome> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Profile(isCompany: true,)));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Profile(
+                                      isCompany: true,
+                                    )));
                       },
                       child: const CircleAvatar(
                         backgroundColor: Colors.white,
@@ -333,7 +339,7 @@ class _CompanyHomeState extends State<CompanyHome> {
             const SizedBox(height: 16),
             (currentIndex > 0)
                 ? SearchFilterBar(
-                  isCompany: true,
+                    isCompany: true,
                     onFilterTap: () {
                       BottomDialog.show(context, const Filter());
                     },
@@ -347,7 +353,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                         const Flexible(
                           child: Text(
                             "Here's what's happening today in your hiring pipeline.",
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: AppColors.greyTextColor,
                               fontSize: 15,
@@ -359,19 +365,6 @@ class _CompanyHomeState extends State<CompanyHome> {
                         ),
                         const SizedBox(
                           width: 15,
-                        ),
-                        GestureDetector(
-                          child: const Image(
-                            image: AssetImage("assets/dashboard.png"),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const CompanyDashboard(),
-                              ),
-                            );
-                          },
                         ),
                       ],
                     ),
@@ -617,6 +610,7 @@ class _CompanyHomeState extends State<CompanyHome> {
           children: [
             generateNotificationTile("New Job Application"),
             generateNotificationTile("Scheduled Interview Reminder"),
+            generateNotificationTile("New Job Application"),
           ],
         ),
         const SizedBox(height: 30),
@@ -633,7 +627,11 @@ class _CompanyHomeState extends State<CompanyHome> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+        setState(() {
+          currentIndex = 1;
+        });
+      },
               child: const Text(
                 'See all',
                 style: TextStyle(

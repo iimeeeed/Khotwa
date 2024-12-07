@@ -63,6 +63,7 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(width: 15,),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -71,6 +72,7 @@ class _NotificationPreferencesState extends State<NotificationPreferences> {
                       Icons.arrow_back,
                       color: Colors.white,
                       size: 20,
+                      
                     ),
                   ),
                   const SizedBox(width: 58),
