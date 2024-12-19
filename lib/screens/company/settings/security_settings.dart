@@ -24,8 +24,14 @@ class _SecuritySettingsState extends State<SecuritySettings> {
             left: 0,
             right: 0,
             child: Container(
-              height: 110,
-              decoration: const BoxDecoration(color: AppColors.blueButtonColor),
+              height: 140,
+              decoration: const BoxDecoration(
+                color: AppColors.blueButtonColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+              ),
             ),
           ),
           // Gradient overlay
@@ -37,6 +43,10 @@ class _SecuritySettingsState extends State<SecuritySettings> {
               width: double.infinity,
               height: 140,
               decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
                 gradient: LinearGradient(
                   begin: const Alignment(0.03, -1.00),
                   end: const Alignment(-0.03, 1),
@@ -59,14 +69,14 @@ class _SecuritySettingsState extends State<SecuritySettings> {
                   icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
                 ),
-                const SizedBox(width: 60),
+                const SizedBox(width: 90),
                 const Text(
                   'Security Settings',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontFamily: AppFonts.secondaryFont,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -75,7 +85,7 @@ class _SecuritySettingsState extends State<SecuritySettings> {
 
           // Main content
           Positioned(
-            top: 140,
+            top: 120,
             left: 0,
             right: 0,
             bottom: 0,
@@ -85,7 +95,7 @@ class _SecuritySettingsState extends State<SecuritySettings> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 40),
                     _buildEmailSection(),
                     _buildPasswordSection(),
                     _buildTwoFactorSection(),
