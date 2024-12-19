@@ -8,7 +8,6 @@ import 'package:khotwa/screens/jobFlow/job_details.dart';
 import '../../widgets/bottom_bar.dart';
 import './filter/filter.dart';
 
-// Add this class before the JobseekerHome class
 class StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Widget child;
   final double maxHeight;
@@ -49,7 +48,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
     "All jobs",
     "Design",
     "Product management",
-    "Developement",
+    "Development",
     "Marketing"
   ];
 
@@ -58,97 +57,52 @@ class _JobseekerHomeState extends State<JobseekerHome> {
   bool isSaved = false;
   String searchQuery = '';
   List<Map<String, dynamic>> filteredJobs = [];
+  List<String> activeFilters = [];
 
   @override
   void initState() {
     super.initState();
-    selectedCategories =
-        List.generate(categories.length, (index) => index == 0);
+    selectedCategories = List.generate(categories.length, (index) => index == 0);
     filteredJobs = List.from(featuredJobs);
   }
 
   void toggleCategory(int index) {
     setState(() {
+      // Handle "All jobs" selection
       if (index == 0) {
         selectedCategories = List.filled(categories.length, false);
         selectedCategories[index] = true;
+        activeFilters.clear();
+        filteredJobs = List.from(featuredJobs); // Reset to all jobs
+        return;
+      }
+
+      selectedCategories[0] = false; // Deselect "All jobs"
+
+      // Toggle the selected state of the chip
+      selectedCategories[index] = !selectedCategories[index];
+      final selectedCategory = categories[index].toLowerCase();
+
+      if (selectedCategories[index]) {
+        // Add filter
+        activeFilters.add(selectedCategory);
       } else {
-        selectedCategories[0] = false;
-        selectedCategories[index] = !selectedCategories[index];
+        // Remove filter
+        activeFilters.remove(selectedCategory);
+      }
+
+      // Apply filters
+      if (activeFilters.isEmpty) {
+        filteredJobs = List.from(featuredJobs); // Show all jobs if no filters
+      } else {
+        filteredJobs = featuredJobs.where((job) {
+          final firstTag = (job['tags'] as List).isNotEmpty
+              ? (job['tags'][0] as String).toLowerCase()
+              : '';
+          return activeFilters.contains(firstTag);
+        }).toList();
       }
     });
-  }
-
-
-  void showFeaturedJobsAsDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-      ),
-      builder: (BuildContext context) {
-        return DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.48,
-          minChildSize: 0.4,
-          maxChildSize: 0.9,
-          builder: (context, scrollController) {
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 8, bottom: 12),
-                      height: 4,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: SearchFilterBar(
-                      isCompany: false,
-                      hint: "Search a job or a position",
-                      onSearch: handleSearch,
-                      filterScreen: const Filter(),
-                      onFilterTap: () {
-                        BottomDialog.show(context, const Filter());
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      child: Column(
-                        children: filteredJobs.map((job) {
-                          return buildTile(
-                            job['logo'] ?? '',
-                            job['title'] ?? '',
-                            job['company'],
-                            job['salary'],
-                            job['location'],
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
   }
 
   Widget buildTile(
@@ -158,14 +112,9 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobDetailsPage(job: {
-              'title': job,
-              'company': employer,
-              'salary': price,
-              'location': location,
-              'tags': const [],
-              'logo': str,
-            }),
+            builder: (context) => JobDetailsPage( 
+              
+            ),
           ),
         );
       },
@@ -247,90 +196,88 @@ class _JobseekerHomeState extends State<JobseekerHome> {
     );
   }
 
-  void handleSearch(String query) {
-    setState(() {
-      searchQuery = query.toLowerCase();
-      if (query.isEmpty) {
-        filteredJobs = List.from(featuredJobs);
-      } else {
-        filteredJobs = featuredJobs.where((job) {
-          final title = job['title']?.toString().toLowerCase() ?? '';
-          final company = job['company']?.toString().toLowerCase() ?? '';
-          final location = job['location']?.toString().toLowerCase() ?? '';
-          return title.contains(searchQuery) ||
-              company.contains(searchQuery) ||
-              location.contains(searchQuery);
-        }).toList();
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: AppColors.primaryBackgroundColor,
-    appBar: AppBar(
-      automaticallyImplyLeading: false,
+    return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      elevation: 0,
-      surfaceTintColor: Colors.transparent,
-      scrolledUnderElevation: 0,
-      actions: const [
-        KhotwaLogo(),
-      ],
-      title: const Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: AssetImage("assets/zinebPic.png"),
-                radius: 24,
-              ),
-              SizedBox(width: 10),
-              Column(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.primaryBackgroundColor,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        actions: const [
+          KhotwaLogo(),
+        ],
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage("assets/zinebPic.png"),
+                  radius: 24,
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Welcome Back!",
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
+                    Text(
+                      "Zineb Berrekia",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Welcome Back!",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  const SizedBox(height: 10),
+                  SearchFilterBar(
+                    isCompany: false,
+                    filterScreen: const Filter(),
+                    hint: "Search a job or a position",
+                    onSearch: (query) {
+                      setState(() {
+                        searchQuery = query.toLowerCase();
+                        if (query.isEmpty) {
+                          filteredJobs = List.from(featuredJobs);
+                        } else {
+                          filteredJobs = featuredJobs.where((job) {
+                            final title = job['title']?.toString().toLowerCase() ?? '';
+                            final company = job['company']?.toString().toLowerCase() ?? '';
+                            final location = job['location']?.toString().toLowerCase() ?? '';
+                            return title.contains(searchQuery) ||
+                                company.contains(searchQuery) ||
+                                location.contains(searchQuery);
+                          }).toList();
+                        }
+                      });
+                    },
+                    onFilterTap: () {
+                      BottomDialog.show(context, const Filter());
+                    },
                   ),
-                  Text(
-                    "Zineb Berrekia",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "Featured Jobs",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-    ),
-    body: CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10),
-                SearchFilterBar(
-                  isCompany: false,
-                  filterScreen: const Filter(),
-                  hint: "Search a job or a position",
-                  onSearch: handleSearch,
-                  onFilterTap: () {
-                    BottomDialog.show(context, const Filter());
-                  },
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  "Featured Jobs",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
+                  const SizedBox(height: 8),
+                  SizedBox(
                   height: 180,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -342,7 +289,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  JobDetailsApp(),
+                              builder: (context) => const JobDetailsApp(),
                             ),
                           );
                         },
@@ -469,107 +416,84 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                     },
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        // Sticky Categories
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: StickyHeaderDelegate(
-            child: Container(
-              color: AppColors.primaryBackgroundColor,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(categories.length, (index) {
-                    return GestureDetector(
-                      onTap: () => toggleCategory(index),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          right: AppSizes.getScreenWidth(context) * 0.03,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 7,
-                          horizontal: 14,
-                        ),
-                        decoration: BoxDecoration(
-                          color: selectedCategories[index]
-                              ? AppColors.blueButtonColor
-                              : Colors.white,
-                          border: Border.all(
-                            width: 0.7,
-                            color: AppColors.blueButtonColor,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          categories[index],
-                          style: TextStyle(
-                            color: selectedCategories[index]
-                                ? Colors.white
-                                : AppColors.blueButtonColor,
-                            fontFamily: AppFonts.secondaryFont,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ),
-            maxHeight: 60,
-            minHeight: 60,
-          ),
-        ),
-        // Sticky Popular Jobs title
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: StickyHeaderDelegate(
-            child: Container(
-              color: AppColors.primaryBackgroundColor,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Popular jobs",
-                style: TextStyle(
-                  fontFamily: AppFonts.secondaryFont,
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            maxHeight: 50,
-            minHeight: 50,
-          ),
-        ),
-        // Popular jobs list
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final job = filteredJobs[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: buildTile(
-                  job['logo'] ?? '',
-                  job['title'] ?? '',
-                  job['company'],
-                  job['salary'],
-                  job['location'],
-                ),
-              );
-            },
-            childCount: filteredJobs.length,
-          ),
-        ),
-      ],
-    ),
-    bottomNavigationBar: const BottomBar(isJobseeker: true),
-  );
-}
 
+                ],
+              ),
+            ),
+          ),
+          // Sticky Categories
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: StickyHeaderDelegate(
+              child: Container(
+                color: AppColors.primaryBackgroundColor,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(categories.length, (index) {
+                      return GestureDetector(
+                        onTap: () => toggleCategory(index),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            right: AppSizes.getScreenWidth(context) * 0.03,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 7,
+                            horizontal: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            color: selectedCategories[index]
+                                ? AppColors.blueButtonColor
+                                : Colors.white,
+                            border: Border.all(
+                              width: 0.7,
+                              color: AppColors.blueButtonColor,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            categories[index],
+                            style: TextStyle(
+                              color: selectedCategories[index]
+                                  ? Colors.white
+                                  : AppColors.blueButtonColor,
+                              fontFamily: AppFonts.secondaryFont,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              maxHeight: 60,
+              minHeight: 60,
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final job = filteredJobs[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: buildTile(
+                    job['logo'] ?? '',
+                    job['title'] ?? '',
+                    job['company'],
+                    job['salary'],
+                    job['location'],
+                  ),
+                );
+              },
+              childCount: filteredJobs.length,
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const BottomBar(isJobseeker: true),
+    );
+  }
 }

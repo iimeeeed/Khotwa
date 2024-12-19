@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_dashboard.dart';
 import 'package:khotwa/screens/company/company_home.dart';
 import 'package:khotwa/screens/jobSeeker/jobseeker_applications.dart';
 import 'package:khotwa/screens/jobSeeker/saved_jobs.dart';
@@ -37,6 +38,12 @@ class _BottomBarState extends State<BottomBar> {
             label: 'Home',
             index: 0,
           ),
+           if (widget.isJobseeker == false)
+                       _buildTab(
+              icon: Icons.dashboard_customize,
+              label: 'Dashboard',
+              index: 1,
+            ),
           // Search tab
           if (widget.isJobseeker == true)
             _buildTab(
@@ -44,6 +51,9 @@ class _BottomBarState extends State<BottomBar> {
               label: 'Apps',
               index: 1,
             ),
+                     
+
+          
           widget.isJobseeker
               ? _buildTab(
                   icon: Icons.bookmark_outline,
@@ -130,6 +140,15 @@ class _BottomBarState extends State<BottomBar> {
                 MaterialPageRoute(
                   builder: (context) =>
                       Profile(isCompany: (widget.isJobseeker) ? false : true),
+                ),
+              );
+              break;
+            case "Dashboard":
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>const CompanyDashboard()
+                      
                 ),
               );
               break;

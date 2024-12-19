@@ -105,6 +105,7 @@ class _AboutState extends State<About> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(width: 15,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
@@ -125,7 +126,7 @@ class _AboutState extends State<About> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                         height: 0.08,
@@ -197,9 +198,9 @@ class _AboutState extends State<About> {
             title,
             style: const TextStyle(
               color: AppColors.blueButtonColor,
-              fontSize: 16,
+              fontSize: 20,
               fontFamily: 'Poppins',
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               height: 0.08,
             ),
           ),
@@ -227,7 +228,7 @@ class _AboutState extends State<About> {
                             text: section['title'],
                             style: const TextStyle(
                               color: AppColors.blueButtonColor,
-                              fontSize: 14,
+                              fontSize: 16,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
@@ -245,7 +246,7 @@ class _AboutState extends State<About> {
                             text: section['content'],
                             style: const TextStyle(
                               color: AppColors.greyTextColor,
-                              fontSize: 12,
+                              fontSize: 14,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
                             ),

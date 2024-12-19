@@ -56,6 +56,7 @@ class _ReportProblemState extends State<ReportProblem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  const SizedBox(width:15),
                   GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
@@ -187,7 +188,7 @@ class _ReportProblemState extends State<ReportProblem> {
                                 'Submit',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Color.fromARGB(255, 0, 9, 66),
                                   fontSize: 16,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,

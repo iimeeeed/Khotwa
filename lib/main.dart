@@ -23,13 +23,13 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(milliseconds: 6000), () { 
+    Future.delayed(const Duration(milliseconds: 2000), () { 
       setState(() {
         isLanding = false;
         isLoading = true;
       });
 
-      Future.delayed(const Duration(milliseconds: 2000), () {  
+      Future.delayed(const Duration(milliseconds: 0), () {  
         setState(() {
           isLoading = false; 
         });

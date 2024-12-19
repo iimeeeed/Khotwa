@@ -105,6 +105,7 @@ class _TermsPoliciesState extends State<TermsPolicies> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const SizedBox(width: 15,),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
@@ -136,34 +137,37 @@ class _TermsPoliciesState extends State<TermsPolicies> {
               ),
             ),
           ),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SingleChildScrollView(
-              child: Container(
-                decoration: const ShapeDecoration(
-                  color: Color(0xFFEFF3F2),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Positioned(
+              top: 100,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SingleChildScrollView(
+                child: Container(
+                  decoration: const ShapeDecoration(
+                    color: Color(0xFFEFF3F2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
                     ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: sections.map((section) {
-                      return Column(
-                        children: [
-                          buildCard(
-                              section['title'], section['content']),
-                          const SizedBox(height: 26),
-                        ],
-                      );
-                    }).toList(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Column(
+                      children: sections.map((section) {
+                        return Column(
+                          children: [
+                            buildCard(
+                                section['title'], section['content']),
+                            const SizedBox(height: 26),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ),
@@ -199,7 +203,7 @@ class _TermsPoliciesState extends State<TermsPolicies> {
             title,
             style: const TextStyle(
               color: AppColors.blueButtonColor,
-              fontSize: 16,
+              fontSize: 20,
               fontFamily: 'Poppins',
               fontWeight: FontWeight.w500,
               height: 0.08,
@@ -229,7 +233,7 @@ class _TermsPoliciesState extends State<TermsPolicies> {
                             text: section['title'],
                             style: const TextStyle(
                               color: AppColors.blueButtonColor,
-                              fontSize: 14,
+                              fontSize: 16,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w500,
                             ),
@@ -247,7 +251,7 @@ class _TermsPoliciesState extends State<TermsPolicies> {
                             text: section['content'],
                             style: const TextStyle(
                               color: AppColors.greyTextColor,
-                              fontSize: 12,
+                              fontSize: 14,
                               fontFamily: 'DM Sans',
                               fontWeight: FontWeight.w400,
                             ),

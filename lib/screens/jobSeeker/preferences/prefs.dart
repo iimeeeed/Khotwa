@@ -168,15 +168,15 @@ class _PrefsState extends State<Prefs> {
                     }).toList(),
                   ),
                 ),
-                if (!_others)
+                if (_others)
                   Container(
-                    width: AppSizes.getScreenWidth(context) * 0.9,
+                    width: AppSizes.getScreenWidth(context) * 0.8,
                     height: AppSizes.getScreenHeight(context) * 0.06,
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSizes.getScreenWidth(context) * 0.07,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const TextField(

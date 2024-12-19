@@ -8,47 +8,15 @@ class JobDetailsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const sampleJob = {
-      'logo': 'assets/Sonatrach-Logo.png',
-      'title': 'Software Engineer',
-      'company': 'Tech Innovators Inc.',
-      'tags': ['Full-time', 'Remote', 'IT'],
-      'salary': '80,000DZD/year',
-      'location': 'San Francisco, CA',
-      'description':
-          'We are looking for a Software Engineer to join our team...',
-      'responsibilities': [
-        'Develop high-quality software solutions.',
-        'Collaborate with cross-functional teams.',
-        'Maintain and improve code quality and documentation.',
-        'Participate in code reviews and provide constructive feedback.'
-      ],
-      'address': '123 Silicon Valley Blvd, San Francisco, CA 94016',
-      'facilities': [
-        'Flexible work hours',
-        'Health insurance',
-        'Free lunch and snacks',
-        'Annual company retreat'
-      ],
-      'requirements': [
-        'Bachelors degree in Computer Science or related field.',
-        'Proficiency in programming languages like Dart, Java, or Python.',
-        'Experience with Flutter is a plus.',
-        'Excellent problem-solving skills and teamwork.',
-        'Strong communication skills.'
-      ]
-    };
-
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: JobDetailsPage(job: sampleJob),
+      home: JobDetailsPage(),
     );
   }
 }
 
 class JobDetailsPage extends StatefulWidget {
-  final Map<String, dynamic> job;
-  const JobDetailsPage({super.key, required this.job});
+  const JobDetailsPage({super.key});
 
   @override
   State<JobDetailsPage> createState() => _JobDetailsPageState();
@@ -57,6 +25,38 @@ class JobDetailsPage extends StatefulWidget {
 class _JobDetailsPageState extends State<JobDetailsPage> {
   bool isDescriptionTab = true;
   bool isSaved = false;
+
+  // Hard-coded job details
+  final Map<String, dynamic> job = {
+    'logo': 'assets/Sonatrach-Logo.png',
+    'title': 'Software Engineer',
+    'company': 'Tech Innovators Inc.',
+    'tags': ['Full-time', 'Remote', 'IT'],
+    'salary': '80,000DZD/year',
+    'location': 'San Francisco, CA',
+    'description':
+        'We are looking for a Software Engineer to join our team...',
+    'responsibilities': [
+      'Develop high-quality software solutions.',
+      'Collaborate with cross-functional teams.',
+      'Maintain and improve code quality and documentation.',
+      'Participate in code reviews and provide constructive feedback.'
+    ],
+    'address': '123 Silicon Valley Blvd, San Francisco, CA 94016',
+    'facilities': [
+      'Flexible work hours',
+      'Health insurance',
+      'Free lunch and snacks',
+      'Annual company retreat'
+    ],
+    'requirements': [
+      'Bachelors degree in Computer Science or related field.',
+      'Proficiency in programming languages like Dart, Java, or Python.',
+      'Experience with Flutter is a plus.',
+      'Excellent problem-solving skills and teamwork.',
+      'Strong communication skills.'
+    ]
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -111,13 +111,13 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.white,
-            child: widget.job['logo'] != null
-                ? Image.asset(widget.job['logo'], fit: BoxFit.cover)
+            child: job['logo'] != null
+                ? Image.asset(job['logo'], fit: BoxFit.cover)
                 : const Icon(Icons.business, size: 40),
           ),
           const SizedBox(height: 16),
           Text(
-            widget.job['title'] ?? '',
+            job['title'] ?? '',
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -125,14 +125,14 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             ),
           ),
           Text(
-            widget.job['company'] ?? '',
+            job['company'] ?? '',
             style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
           const SizedBox(height: 16),
           Wrap(
             spacing: 8,
             children: [
-              ...?widget.job['tags']?.map((tag) => Chip(
+              ...?job['tags']?.map((tag) => Chip(
                     label: Text(
                       tag,
                       style: const TextStyle(color: AppColors.blueButtonColor),
@@ -149,7 +149,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                widget.job['salary'] ?? '',
+                job['salary'] ?? '',
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -160,7 +160,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               const Icon(Icons.location_on, color: AppColors.lightGreenColor),
               const SizedBox(width: 4),
               Text(
-                widget.job['location'] ?? '',
+                job['location'] ?? '',
                 style: const TextStyle(color: Colors.white),
               ),
             ],
@@ -232,7 +232,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.job['description'] ?? '',
+        Text(job['description'] ?? '',
             style: TextStyle(color: Colors.grey[600])),
         const SizedBox(height: 24),
         const Text(
@@ -240,7 +240,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?widget.job['responsibilities']
+        ...?job['responsibilities']
             ?.map((responsibility) => _buildListItem(responsibility)),
         const SizedBox(height: 24),
         Row(
@@ -250,7 +250,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             const SizedBox(width: 4),
             Flexible(
               child: Text(
-                widget.job['address'] ?? '',
+                job['address'] ?? '',
                 style: const TextStyle(color: AppColors.greyTextColor),
               ),
             ),
@@ -281,8 +281,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?widget.job['facilities']
-            ?.map((facility) => _buildListItem(facility)),
+        ...?job['facilities']?.map((facility) => _buildListItem(facility)),
       ],
     );
   }
@@ -296,8 +295,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?widget.job['requirements']
-            ?.map((requirement) => _buildListItem(requirement)),
+        ...?job['requirements']?.map((requirement) => _buildListItem(requirement)),
       ],
     );
   }
@@ -331,7 +329,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => JobApplicationPage(job: widget.job),
+                builder: (context) => JobApplicationPage(job: job),
               ),
             );
           },

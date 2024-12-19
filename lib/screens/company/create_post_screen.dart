@@ -12,7 +12,12 @@ class _CreatePostState extends State<CreatePost> {
   RangeValues _currentRangeValues = const RangeValues(40000, 90000);
 
   final Map<String, List<String>> dropdownOptions = {
-    "Job category": ["Design", "Administration", "Human Resources", "Marketing"],
+    "Job category": [
+      "Design",
+      "Administration",
+      "Human Resources",
+      "Marketing"
+    ],
     "Job subcategory": ["3d Design", "UI/UX", "Photoshop"],
     "Location": ["Algiers", "Medea", "Blida", "Oran", "Oum El Bouaghi"],
     "Job Type": ["Full-Time", "Part-Time", "Internship", "Remote"],
@@ -72,7 +77,7 @@ class _CreatePostState extends State<CreatePost> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle post action
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.lightGreenColor,
