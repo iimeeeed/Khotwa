@@ -1,5 +1,4 @@
-import '../db/db_helper.dart';
-import '../db/db_base.dart';
+import '../db/job_seekers_table.dart';
 import 'repository_base.dart';
 import '../models/job_seeker.dart';
 

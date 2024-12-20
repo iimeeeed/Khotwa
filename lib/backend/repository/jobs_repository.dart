@@ -1,39 +1,38 @@
-import '../db/db_helper.dart';
-import '../db/db_base.dart';
+import '../db/jobs_table.dart';
 import 'repository_base.dart';
 import '../models/job.dart';
 
 class JobsRepository implements RepositoryBase<Job> {
-  final DBHelper _dbHelper = DBHelper();
+  final JobsTable jobs = JobsTable();
 
   @override
   Future<bool> insert(Job data) async {
     final Map<String, dynamic> jobData = data.toMap();
-    return await _dbHelper.insertRecord('jobs', jobData);
+    return await jobs.insertRecord(jobData);
   }
 
   @override
   Future<List<Map<String, dynamic>>> getAll() async {
-    return await _dbHelper.getRecords('jobs');
+    return await jobs.getRecords();
   }
 
   @override
   Future<Map<String, dynamic>?> getById(int id) async {
-    return await _dbHelper.getRecordById('jobs', id);
+    return await jobs.getRecordById(id);
   }
 
   @override
   Future<bool> update(Map<String, dynamic> data, String whereClause, List<dynamic> whereArgs) async {
-    return await _dbHelper.updateRecord('jobs', data, whereClause, whereArgs);
+    return await jobs.updateRecord(data, whereClause, whereArgs);
   }
 
   @override
   Future<bool> delete(String whereClause, List<dynamic> whereArgs) async {
-    return await _dbHelper.deleteRecord('jobs', whereClause, whereArgs);
+    return await jobs.deleteRecord(whereClause, whereArgs);
   }
 
   @override
   Future<List<Map<String, dynamic>>> customQuery(String sql, [List<dynamic>? arguments]) async {
-    return await _dbHelper.rawQuery(sql, arguments);
+    return await jobs.rawQuery(sql, arguments);
   }
 }

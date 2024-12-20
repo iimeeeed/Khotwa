@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class Company {
   final int id;
   final String companyName;
@@ -7,7 +9,7 @@ class Company {
   final String companyEmail;
   final String? companyPhone;
   final String? companyWebsite;
-  final String? companyLogo;
+  final Uint8List? companyLogo; // Change to Uint8List to store binary data
   final String? companyDescription;
   final String tradeRegisterNumber;
   final String taxIdentificationNumber;

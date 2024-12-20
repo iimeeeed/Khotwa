@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/screens/company/company_home.dart';
 import '../../commons/constants.dart';
+import 'package:file_picker/file_picker.dart';
+import 'dart:io';
+import 'dart:typed_data';
+import '../../backend/models/company.dart';
+import '../../backend/repository/companies_repository.dart';
 
 class CompanyVerificationPage extends StatefulWidget {
   const CompanyVerificationPage({super.key});
@@ -13,7 +18,233 @@ class CompanyVerificationPage extends StatefulWidget {
 class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   int currentStep = 0;
   bool isSelected = false;
+  File? _selectedLogo;
+  Uint8List? _logoBytes;
+  final CompaniesRepository _companiesRepository = CompaniesRepository(); 
 
+  // Controllers for TextFields
+  final TextEditingController companyNameController = TextEditingController();
+  final TextEditingController industryController = TextEditingController();
+  final TextEditingController companySizeController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController websiteController = TextEditingController();
+  final TextEditingController companyDescriptionController = TextEditingController();
+  final TextEditingController tradeRegisterController = TextEditingController();
+  final TextEditingController taxIdentificationController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose controllers when the widget is removed from the widget tree
+    companyNameController.dispose();
+    industryController.dispose();
+    companySizeController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    locationController.dispose();
+    websiteController.dispose();
+    companyDescriptionController.dispose();
+    tradeRegisterController.dispose();
+    taxIdentificationController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _uploadLogo() async {
+    // Pick an image file
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image, // Ensures only image files are picked
+    );
+    // Check if a file was selected and has a valid path
+    if (result != null && result.files.single.path != null) {
+      final file = File(result.files.single.path!);
+      // Read the file as bytes (Uint8List)
+      _logoBytes = await file.readAsBytes();
+      setState(() {
+        _selectedLogo = file;
+     });
+    }
+  }
+
+  // Function to save company data into the database
+  Future<void> saveCompanyData() async {
+    // Create the Company object with form data
+    Company company = Company(
+      id : 1, // just for testing
+      companyName: companyNameController.text,
+      companyIndustry: industryController.text,
+      companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
+      companyLocation: locationController.text.isEmpty ? null : locationController.text,
+      companyEmail: emailController.text,
+      companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
+      companyWebsite: websiteController.text.isEmpty ? null : websiteController.text,
+      companyLogo: _logoBytes,
+      companyDescription: companyDescriptionController.text,
+      tradeRegisterNumber: tradeRegisterController.text,
+      taxIdentificationNumber: taxIdentificationController.text,
+      createdAt: '10-10-2004', // for testing
+    );
+    bool success = await _companiesRepository.insert(company);
+    if (success) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CompanyHome(id: 1,)),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save company data')),
+      );
+    }
+  }
+
+  Widget _buildInputField(String label, String hint,
+      {TextEditingController? controller,
+      double height = 90,
+      double width = 120}) {
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: height,
+              decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(width: 1, color: Color(0xFFB0B0B0)),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                shadows: const [
+                  BoxShadow(
+                    color: Color(0x3F000000),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment:
+                  (label == "Logo") ? Alignment.center : Alignment.centerLeft,
+              child: label == "Logo"
+                  ? GestureDetector(
+  onTap: _uploadLogo,
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      if (_selectedLogo != null) 
+        Image.file(
+          _selectedLogo!,
+          height: 40,
+        )
+      else 
+        const Column(
+          children: [
+             Icon(
+              Icons.cloud_upload,
+              color: Color.fromARGB(255, 216, 219, 218),
+              size: 24,
+            ),
+             SizedBox(height: 12),
+             Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Drop here to attach or ',
+                    style: TextStyle(
+                      color: Color(0xFFD5D9D8),
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'upload',
+                    style: TextStyle(
+                      color: Color(0xFF93C5FD),
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+             SizedBox(height: 12),
+             Text(
+              'Max size: 5MB',
+              style: TextStyle(
+                color: Color(0xFFD5D9D8),
+                fontSize: 12,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+    ],
+  ),
+)
+
+                  : TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: hint,
+                        hintStyle: const TextStyle(
+                          color: Color(0xFFD5D9D8),
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w300,
+                        ),
+                        prefixText: label == "Website" ? "https://" : null,
+                        prefixStyle: const TextStyle(
+                          color: AppColors.blueButtonColor,
+                          fontSize: 13,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      cursorColor: AppColors.blueButtonColor,
+                    ),
+            ),
+            Positioned(
+              top: -12,
+              left: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), 
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFEFF3F2),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(width: 1, color: Color(0xFFCDD0CF)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      color: AppColors.blueButtonColor,
+                      fontSize: 14,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
   final PageController _pageController = PageController();
 
   Widget getProgressIndicator(String step) {
@@ -121,151 +352,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
     );
   }
 
-  Widget _buildInputField(String label, String hint,
-      {double height = 55.0, double width = 120}) {
-    width = label == "Company Description" ? 200 : 120;
-    height = label == "Company Description" ? 150 : 90;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              height: height,
-              decoration: ShapeDecoration(
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(width: 1, color: Color(0xFFB0B0B0)),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              alignment:
-                  (label == "Logo") ? Alignment.center : Alignment.centerLeft,
-              child: label == "Logo"
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 24,
-                          height: 24,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(),
-                          child: const Icon(
-                            Icons.cloud_upload,
-                            color: Color.fromARGB(255, 216, 219, 218),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Drop here to attach or ',
-                                style: TextStyle(
-                                  color: Color(0xFFD5D9D8),
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0.10,
-                                  letterSpacing: -0.32,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'upload',
-                                style: TextStyle(
-                                  color: Color(0xFF93C5FD),
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0.10,
-                                  letterSpacing: -0.32,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Text(
-                          'Max size: 5MB',
-                          style: TextStyle(
-                            color: Color(0xFFD5D9D8),
-                            fontSize: 12,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0.14,
-                            letterSpacing: -0.24,
-                          ),
-                        ),
-                      ],
-                    )
-                  : TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: hint,
-                        hintStyle: const TextStyle(
-                          color: Color(0xFFD5D9D8),
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w300,
-                        ),
-                        prefixText: label == "Website" ? "https://" : null,
-                        prefixStyle: const TextStyle(
-                          color: AppColors.blueButtonColor,
-                          fontSize: 13,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: -0.26,
-                        ),
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                      ),
-                      cursorColor: AppColors.blueButtonColor,
-                    ),
-            ),
-            Positioned(
-              top: -12,
-              left: 16,
-              child: Container(
-                width: width,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFEFF3F2),
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 1, color: Color(0xFFCDD0CF)),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    label,
-                    style: const TextStyle(
-                      color: AppColors.blueButtonColor,
-                      fontSize: 14,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -340,13 +426,13 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 35),
                             _buildInputField(
-                                'Company Name', 'Your Company Name'),
+                                'Company Name', 'Your Company Name', controller:companyNameController),
                             const SizedBox(height: 30),
                             _buildInputField(
-                                'Industry', 'Select your Industry'),
+                                'Industry', 'Select your Industry', controller: industryController),
                             const SizedBox(height: 30),
                             _buildInputField(
-                                'Company Size', 'Select your Company Size'),
+                                'Company Size', 'Select your Company Size', controller: companySizeController),
                             const SizedBox(height: 20),
                           ] else if (currentStep == 1) ...[
                             const Center(
@@ -361,11 +447,11 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                               ),
                             ),
                             const SizedBox(height: 35),
-                            _buildInputField('Email Address', 'Email'),
+                            _buildInputField('Email Address', 'Email', controller: emailController),
                             const SizedBox(height: 30),
-                            _buildInputField('Phone Number', 'Phone Number'),
+                            _buildInputField('Phone Number', 'Phone Number', controller: phoneController),
                             const SizedBox(height: 30),
-                            _buildInputField('Location', 'Your Exact Address'),
+                            _buildInputField('Location', 'Your Exact Address', controller: locationController),
                             const SizedBox(height: 20),
                           ] else if (currentStep == 2) ...[
                             const Center(
@@ -381,14 +467,14 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 35),
                             _buildInputField(
-                                'Website', "Your company's website link"),
+                                'Website', "Your company's website link", controller: websiteController),
                             const SizedBox(height: 30),
                             _buildInputField(
                                 'Logo', 'Drop here to attach or upload',
-                                height: 130),
+                                height: 200),
                             const SizedBox(height: 30),
                             _buildInputField('Company Description',
-                                "Briefly describe your company's mission, vision, and services",
+                                "Briefly describe your company's mission, vision, and services", controller: companyDescriptionController,
                                 height: 130),
                             const SizedBox(height: 30),
                           ] else if (currentStep == 3) ...[
@@ -405,10 +491,10 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             ),
                             const SizedBox(height: 35),
                             _buildInputField('Trade Register Number (RC)',
-                                "`Registre de Commerce` number"),
+                                "`Registre de Commerce` number", controller: tradeRegisterController),
                             const SizedBox(height: 30),
                             _buildInputField('Tax Identification Number (NIF)',
-                                "`Numéro d'Identification Fiscale`"),
+                                "`Numéro d'Identification Fiscale`", controller: taxIdentificationController),
                             const SizedBox(height: 30),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -518,11 +604,8 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                   duration: const Duration(milliseconds: 300),
                                   curve: Curves.easeInOut);
                             } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const CompanyHome()),
-                              );
+                              saveCompanyData();
+                              
                             }
                           },
                           style: ElevatedButton.styleFrom(

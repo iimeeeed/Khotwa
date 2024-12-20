@@ -9,19 +9,44 @@ import '../../widgets/bottom_bar.dart';
 import '../../widgets/search_bar.dart';
 import '../../widgets/bottom_sheet.dart';
 import '../../widgets/notifications_screen.dart';
+import '../../backend/repository/companies_repository.dart';
+
 
 class CompanyHome extends StatefulWidget {
-  const CompanyHome({super.key});
+  final int id;
+  //id set to 1 just for testing purposes
+  const CompanyHome({Key? key, this.id = 1}) : super(key: key);
 
   @override
   _CompanyHomeState createState() => _CompanyHomeState();
 }
 
+
 class _CompanyHomeState extends State<CompanyHome> {
   int currentIndex = 0;
-  AppColors colors = AppColors();
-
   List<List<Map<String, String>>> candidatesList = candidatesData;
+  late Map _company; // Store the company information
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCompanyData(); // Fetch company data when the widget is initialized
+  }
+    final CompaniesRepository _companiesRepository = CompaniesRepository(); 
+
+
+  // Fetch the company data based on the id
+  Future<void> _fetchCompanyData() async {
+    final companyData = await _companiesRepository.getById(widget.id);
+    if (companyData != null) {
+      setState(() {
+        _company = companyData; 
+      });
+    } else {
+      setState(() {
+      });
+    }
+  }
 
   Widget buildCard(String title, int index,
       {Color textColor = Colors.white, Color backgroundColor = Colors.blue}) {
@@ -316,16 +341,16 @@ class _CompanyHomeState extends State<CompanyHome> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    const Column(
+                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Welcome Back!",
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                         Text(
-                          "Sonatrach 👋",
-                          style: TextStyle(
+                          "${_company['company_name']} 👋",
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ],

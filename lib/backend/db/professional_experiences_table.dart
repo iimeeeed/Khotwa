@@ -1,4 +1,3 @@
-import 'db_helper.dart';
 import 'db_base.dart';
 
 class ProfessionalExperiencesTable extends DBBaseTable {

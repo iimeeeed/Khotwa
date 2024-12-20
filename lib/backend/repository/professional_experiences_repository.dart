@@ -1,40 +1,40 @@
-import '../db/db_helper.dart';
-import '../db/db_base.dart';
+
+import '../db/professional_experiences_table.dart';
 import 'repository_base.dart';
 import '../models/professional_experience.dart';
 
 
 class ProfessionalExperiencesRepository implements RepositoryBase<ProfessionalExperience> {
-  final DBHelper _dbHelper = DBHelper();
+  final ProfessionalExperiencesTable professionalExp = ProfessionalExperiencesTable();
 
   @override
   Future<bool> insert(ProfessionalExperience data) async {
     final Map<String, dynamic> experienceData = data.toMap();
-    return await _dbHelper.insertRecord('professional_experiences', experienceData);
+    return await professionalExp.insertRecord( experienceData);
   }
 
   @override
   Future<List<Map<String, dynamic>>> getAll() async {
-    return await _dbHelper.getRecords('professional_experiences');
+    return await professionalExp.getRecords();
   }
 
   @override
   Future<Map<String, dynamic>?> getById(int id) async {
-    return await _dbHelper.getRecordById('professional_experiences', id);
+    return await professionalExp.getRecordById( id);
   }
 
   @override
   Future<bool> update(Map<String, dynamic> data, String whereClause, List<dynamic> whereArgs) async {
-    return await _dbHelper.updateRecord('professional_experiences', data, whereClause, whereArgs);
+    return await professionalExp.updateRecord( data, whereClause, whereArgs);
   }
 
   @override
   Future<bool> delete(String whereClause, List<dynamic> whereArgs) async {
-    return await _dbHelper.deleteRecord('professional_experiences', whereClause, whereArgs);
+    return await professionalExp.deleteRecord( whereClause, whereArgs);
   }
 
   @override
   Future<List<Map<String, dynamic>>> customQuery(String sql, [List<dynamic>? arguments]) async {
-    return await _dbHelper.rawQuery(sql, arguments);
+    return await professionalExp.rawQuery(sql, arguments);
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import '../db/db_base.dart';
 
 abstract class RepositoryBase<T> {
   Future<bool> insert(T data);

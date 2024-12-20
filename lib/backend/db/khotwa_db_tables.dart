@@ -1,5 +1,3 @@
-import 'package:sqflite/sqflite.dart';
-import 'db_base.dart';
 
 class DBTables {
   // Companies Table
@@ -13,7 +11,7 @@ class DBTables {
       company_email TEXT UNIQUE NOT NULL,
       company_phone TEXT,
       company_website TEXT,
-      company_logo TEXT,
+      company_logo BLOB, -- Use BLOB for storing images
       company_description TEXT,
       trade_register_number TEXT UNIQUE NOT NULL,
       tax_identification_number TEXT UNIQUE NOT NULL,

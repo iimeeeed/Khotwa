@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -20,6 +19,12 @@ class DBHelper {
     DBTables.jobsTableSql,
     DBTables.applicationsTableSql
   ];
+
+  // Singleton instance for DBHelper
+  static final DBHelper instance = DBHelper._privateConstructor();
+
+  // Private named constructor for the singleton
+  DBHelper._privateConstructor();
 
   // Open the database or create it if it doesn't exist
   static Future<Database> getDatabase() async {
