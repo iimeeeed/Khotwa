@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../commons/constants.dart';
+import '../../backend/models/job.dart';
+import '../../backend/repository/jobs_repository.dart';
+
+import '../../screens/jobFlow/job_details.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -9,6 +13,9 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+  int currentStep = 0;
+  bool isSelected = false;
+  final JobsRepository _jobRepository = JobsRepository();
   RangeValues _currentRangeValues = const RangeValues(40000, 90000);
 
   final Map<String, List<String>> dropdownOptions = {
@@ -24,6 +31,67 @@ class _CreatePostState extends State<CreatePost> {
   };
 
   final Map<String, String?> selectedItems = {};
+
+  final TextEditingController jobTitleController = TextEditingController();
+  final TextEditingController jobDescriptionController =
+      TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController facilitiesController = TextEditingController();
+  final TextEditingController responsibilitiesController =
+      TextEditingController();
+  final TextEditingController requirementsController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose controllers when the widget is removed from the widget tree
+    jobTitleController.dispose();
+    jobDescriptionController.dispose();
+    addressController.dispose();
+    facilitiesController.dispose();
+    responsibilitiesController.dispose();
+    requirementsController.dispose();
+    super.dispose();
+  }
+
+  // Function to save job post data
+  Future<void> saveJobPost() async {
+    // Capture data from form
+    Job jobpost = Job(
+      id: 1, // Assuming you will get this dynamically, or set as 1 for testing
+      companyId: 2, // Replace with the company ID associated with the job
+      jobTitle: jobTitleController.text,
+      jobDescription: jobDescriptionController.text,
+      jobLocation: selectedItems[
+          "Location"]!, // You can retrieve location from the dropdown
+      jobType:
+          selectedItems["Job Type"], // Optional: e.g., Full-time, Part-time
+      salary: (_currentRangeValues.end + _currentRangeValues.start) /
+          2, // Calculating the average salary as an example
+      skillsRequired:
+          "Skill1, Skill2, Skill3", // You can change this to get dynamic input
+      jobCategory: selectedItems["Job category"], // From dropdown
+      experienceLevel:
+          "Mid", // You can add an experience level dropdown or leave it static
+      applicationDeadline:
+          "2024-12-31", // Example: Static date or dynamic input from the form
+      createdAt: DateTime.now().toString(),
+    );
+    bool success = await _jobRepository
+        .insert(jobpost); // Assuming you have a job repository to insert
+    if (success) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const JobDetailsApp(id: 1),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save job post')),
+      );
+    }
+  }
+  //
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +145,8 @@ class _CreatePostState extends State<CreatePost> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
+                    saveJobPost();
+                    print('worked');
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(

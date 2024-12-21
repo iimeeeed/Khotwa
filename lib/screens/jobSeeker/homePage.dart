@@ -112,7 +112,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => JobDetailsPage( 
+            builder: (context) => const JobDetailsPage( 
               
             ),
           ),
