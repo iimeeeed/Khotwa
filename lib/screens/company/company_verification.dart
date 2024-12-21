@@ -21,7 +21,12 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   bool isSelected = false;
   File? _selectedLogo;
   Uint8List? _logoBytes;
+  final PageController _pageController = PageController();
   final CompaniesRepository _companiesRepository = CompaniesRepository(); 
+  final GlobalKey<FormState> _step1FormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step2FormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step3FormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _step4FormKey = GlobalKey<FormState>();
 
   // Controllers for TextFields
   final TextEditingController companyNameController = TextEditingController();
@@ -52,56 +57,104 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   }
 
   Future<void> _uploadLogo() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles(
-    type: FileType.image,
-  );
-  if (result != null && result.files.single.path != null) {
-    final file = File(result.files.single.path!);
-    _logoBytes = await file.readAsBytes(); // Read image as bytes
-    setState(() {
-      _selectedLogo = file;
-    });
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+    if (result != null && result.files.single.path != null) {
+      final file = File(result.files.single.path!);
+      _logoBytes = await file.readAsBytes(); // Read image as bytes
+      setState(() {
+        _selectedLogo = file;
+      });
+    }
   }
-}
 
   // Function to save company data into the database
   Future<void> saveCompanyData() async {
-  String? base64Logo = _logoBytes != null ? base64Encode(_logoBytes!) : null;
+    String? base64Logo = _logoBytes != null ? base64Encode(_logoBytes!) : null;
 
-  Company company = Company(
-    id: 2, // just for testing
-    companyName: companyNameController.text,
-    companyIndustry: industryController.text,
-    companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
-    companyLocation: locationController.text.isEmpty ? null : locationController.text,
-    companyEmail: emailController.text,
-    companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
-    companyWebsite: websiteController.text.isEmpty ? null : websiteController.text,
-    companyLogo: base64Logo, // Save Base64 string
-    companyDescription: companyDescriptionController.text,
-    tradeRegisterNumber: tradeRegisterController.text,
-    taxIdentificationNumber: taxIdentificationController.text,
-    createdAt: '10-10-2004', // for testing
-  );
+    Company company = Company(
+      id: 2, // just for testing
+      companyName: companyNameController.text,
+      companyIndustry: industryController.text,
+      companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
+      companyLocation: locationController.text.isEmpty ? null : locationController.text,
+      companyEmail: emailController.text,
+      companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
+      companyWebsite: websiteController.text.isEmpty ? null : websiteController.text,
+      companyLogo: base64Logo, // Save Base64 string
+      companyDescription: companyDescriptionController.text,
+      tradeRegisterNumber: tradeRegisterController.text,
+      taxIdentificationNumber: taxIdentificationController.text,
+      createdAt: '10-10-2004', // for testing
+    );
 
-  bool success = await _companiesRepository.insert(company);
-  if (success) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CompanyHome(id: 1),
-      ),
-    );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Failed to save company data')),
-    );
+    bool success = await _companiesRepository.insert(company);
+    if (success) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CompanyHome(id: 1),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to save company data')),
+      );
+    }
   }
-}
 
+  // Field validators
+  String? _validateField(String? value, String fieldName) {
+    if (value == null || value.isEmpty) {
+      return '$fieldName is required';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email is required';
+    }
+    final emailRegExp = RegExp(r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Phone number is required';
+    }
+    final phoneRegExp = RegExp(r'^(06|05|07)\d{8}$');
+    if (!phoneRegExp.hasMatch(value)) {
+      return 'Please enter a valid phone number';
+    }
+    return null;
+  }
+
+  bool handleStepValidation() {
+  switch (currentStep) {
+    case 0:
+      if (!_step1FormKey.currentState!.validate()) return false;
+      break;
+    case 1:
+      if (!_step2FormKey.currentState!.validate()) return false;
+      break;
+    case 2:
+      if (!_step3FormKey.currentState!.validate()) return false;
+      break;
+    case 3:
+      if (!_step4FormKey.currentState!.validate()) return false;
+      break;
+  }
+  return true;
+}
 
   Widget _buildInputField(String label, String hint,
       {TextEditingController? controller,
+      FormFieldValidator<String>? validator,
       double height = 90,
       double width = 120}) {
 
@@ -132,91 +185,91 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                   (label == "Logo") ? Alignment.center : Alignment.centerLeft,
               child: label == "Logo"
                   ? GestureDetector(
-  onTap: _uploadLogo,
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      if (_selectedLogo != null) 
-        Image.file(
-          _selectedLogo!,
-          height: 100,
-        )
-      else 
-        const Column(
-          children: [
-             Icon(
-              Icons.cloud_upload,
-              color: Color.fromARGB(255, 216, 219, 218),
-              size: 24,
-            ),
-             SizedBox(height: 12),
-             Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Drop here to attach or ',
-                    style: TextStyle(
-                      color: Color(0xFFD5D9D8),
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: 'upload',
-                    style: TextStyle(
-                      color: Color(0xFF93C5FD),
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-             SizedBox(height: 12),
-             Text(
-              'Max size: 5MB',
-              style: TextStyle(
-                color: Color(0xFFD5D9D8),
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-    ],
-  ),
-)
-
-                  : TextField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: hint,
-                        hintStyle: const TextStyle(
-                          color: Color(0xFFD5D9D8),
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w300,
+                      onTap: _uploadLogo,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (_selectedLogo != null) 
+                            Image.file(
+                              _selectedLogo!,
+                              height: 100,
+                            )
+                          else 
+                            const Column(
+                              children: [
+                                Icon(
+                                  Icons.cloud_upload,
+                                  color: Color.fromARGB(255, 216, 219, 218),
+                                  size: 24,
+                                ),
+                                SizedBox(height: 12),
+                                Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Drop here to attach or ',
+                                        style: TextStyle(
+                                          color: Color(0xFFD5D9D8),
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'upload',
+                                        style: TextStyle(
+                                          color: Color(0xFF93C5FD),
+                                          fontSize: 16,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  'Max size: 5MB',
+                                  style: TextStyle(
+                                    color: Color(0xFFD5D9D8),
+                                    fontSize: 12,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    )
+                  :TextFormField(
+                        validator: validator,
+                        controller: controller,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: hint,
+                          hintStyle: const TextStyle(
+                            color: Color(0xFFD5D9D8),
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w300,
+                          ),
+                          prefixText: label == "Website" ? "https://" : null,
+                          prefixStyle: const TextStyle(
+                            color: AppColors.blueButtonColor,
+                            fontSize: 13,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                        prefixText: label == "Website" ? "https://" : null,
-                        prefixStyle: const TextStyle(
-                          color: AppColors.blueButtonColor,
-                          fontSize: 13,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w400,
                         ),
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w400,
-                      ),
-                      cursorColor: AppColors.blueButtonColor,
-                    ),
+                        cursorColor: AppColors.blueButtonColor,
+                  ),
             ),
             Positioned(
               top: -12,
@@ -224,7 +277,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6), 
                 decoration: ShapeDecoration(
-                  color: const Color(0xFFEFF3F2),
+                  color: AppColors.primaryBackgroundColor,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(width: 1, color: Color(0xFFCDD0CF)),
                     borderRadius: BorderRadius.circular(12),
@@ -248,7 +301,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       ],
     );
   }
-  final PageController _pageController = PageController();
 
   Widget getProgressIndicator(String step) {
     return Positioned(
@@ -273,6 +325,20 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       child: Image.asset(
         "assets/man.png",
         height: 40,
+      ),
+    );
+  }
+
+  Widget _buildProgressSegment({bool isActive = false}) {
+    return Expanded(
+      child: Container(
+        height: 7,
+        decoration: ShapeDecoration(
+          color: isActive ? AppColors.lightGreenColor : AppColors.primaryBackgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
       ),
     );
   }
@@ -341,20 +407,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
     );
   }
 
-  Widget _buildProgressSegment({bool isActive = false}) {
-    return Expanded(
-      child: Container(
-        height: 7,
-        decoration: ShapeDecoration(
-          color: isActive ? AppColors.lightGreenColor : const Color(0xFFEFF3F2),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -400,7 +452,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
               child: Container(
                 height: AppSizes.getScreenHeight(context),
                 decoration: const BoxDecoration(
-                  color: Color(0xFFEFF3F2),
+                  color:AppColors.primaryBackgroundColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(45),
                     topRight: Radius.circular(45),
@@ -427,16 +479,23 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 35),
-                            _buildInputField(
-                                'Company Name', 'Your Company Name', controller:companyNameController),
-                            const SizedBox(height: 30),
-                            _buildInputField(
-                                'Industry', 'Select your Industry', controller: industryController),
-                            const SizedBox(height: 30),
-                            _buildInputField(
-                                'Company Size', 'Select your Company Size', controller: companySizeController),
-                            const SizedBox(height: 20),
+                            Form(
+                              key: _step1FormKey,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 35),
+                                  _buildInputField(
+                                      'Company Name', 'Your Company Name', controller:companyNameController, validator: (value) => _validateField(value, 'Company Name'),),
+                                  const SizedBox(height: 30),
+                                  _buildInputField(
+                                      'Industry', 'Select your Industry', controller: industryController, validator: (value) => _validateField(value, 'Industry'),),
+                                  const SizedBox(height: 30),
+                                  _buildInputField(
+                                      'Company Size', 'Select your Company Size', controller: companySizeController, validator: (value) => _validateField(value, 'Company Size'),),
+                                  const SizedBox(height: 20),
+                                ], 
+                              ),
+                            )
                           ] else if (currentStep == 1) ...[
                             const Center(
                               child: Text(
@@ -449,13 +508,20 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 35),
-                            _buildInputField('Email Address', 'Email', controller: emailController),
-                            const SizedBox(height: 30),
-                            _buildInputField('Phone Number', 'Phone Number', controller: phoneController),
-                            const SizedBox(height: 30),
-                            _buildInputField('Location', 'Your Exact Address', controller: locationController),
-                            const SizedBox(height: 20),
+                            Form(
+                              key: _step2FormKey,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 35),
+                                  _buildInputField('Email Address', 'Email', controller: emailController, validator: (value) => _validateEmail(value),),
+                                  const SizedBox(height: 30),
+                                  _buildInputField('Phone Number', 'Phone Number', controller: phoneController, validator: (value) => _validatePhone(value)),
+                                  const SizedBox(height: 30),
+                                  _buildInputField('Location', 'Your Exact Address', controller: locationController, validator: (value) => _validateField(value, 'Location'),),
+                                    const SizedBox(height: 20),
+                                ]
+                              )
+                            )
                           ] else if (currentStep == 2) ...[
                             const Center(
                               child: Text(
@@ -468,18 +534,25 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 35),
-                            _buildInputField(
-                                'Website', "Your company's website link", controller: websiteController),
-                            const SizedBox(height: 30),
-                            _buildInputField(
-                                'Logo', 'Drop here to attach or upload',
-                                height: 150),
-                            const SizedBox(height: 30),
-                            _buildInputField('Company Description',
-                                "Briefly describe your company's mission, vision, and services", controller: companyDescriptionController,
-                                height: 130),
-                            const SizedBox(height: 30),
+                            Form(
+                              key: _step3FormKey,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 35),
+                                  _buildInputField(
+                                      'Website', "Your company's website link", controller: websiteController, validator: (value) => _validateField(value, 'website'),),
+                                  const SizedBox(height: 30),
+                                  _buildInputField(
+                                      'Logo', 'Drop here to attach or upload',
+                                      height: 150),
+                                  const SizedBox(height: 30),
+                                  _buildInputField('Company Description',
+                                      "Briefly describe your company's mission, vision, and services", controller: companyDescriptionController, validator: (value) => _validateField(value, 'Company Description'),
+                                      height: 130),
+                                  const SizedBox(height: 30),
+                                ]
+                              )
+                            )
                           ] else if (currentStep == 3) ...[
                             const Center(
                               child: Text(
@@ -492,72 +565,79 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 35),
-                            _buildInputField('Trade Register Number (RC)',
-                                "`Registre de Commerce` number", controller: tradeRegisterController),
-                            const SizedBox(height: 30),
-                            _buildInputField('Tax Identification Number (NIF)',
-                                "`Numéro d'Identification Fiscale`", controller: taxIdentificationController),
-                            const SizedBox(height: 30),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isSelected = !isSelected;
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 22,
-                                    height: 22,
-                                    decoration: ShapeDecoration(
-                                      color: isSelected
-                                          ? AppColors.lightGreenColor
-                                          : Colors.white,
-                                      shape: const OvalBorder(
-                                        side: BorderSide(
-                                          width: 0.5,
-                                          color: AppColors.blueButtonColor,
+                            Form(
+                              key: _step4FormKey,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 35),
+                                  _buildInputField('Trade Register Number (RC)',
+                                      "`Registre de Commerce` number", controller: tradeRegisterController, validator: (value) => _validateField(value, 'RC')), 
+                                  const SizedBox(height: 30),
+                                  _buildInputField('Tax Identification Number (NIF)',
+                                      "`Numéro d'Identification Fiscale`", controller: taxIdentificationController, validator: (value) => _validateField(value, 'NIF')),
+                                  const SizedBox(height: 30),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isSelected = !isSelected;
+                                          });
+                                        },
+                                        child: Container(
+                                          width: 22,
+                                          height: 22,
+                                          decoration: ShapeDecoration(
+                                            color: isSelected
+                                                ? AppColors.lightGreenColor
+                                                : Colors.white,
+                                            shape: const OvalBorder(
+                                              side: BorderSide(
+                                                width: 0.5,
+                                                color: AppColors.blueButtonColor,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Flexible(
-                                  child: RichText(
-                                    text: const TextSpan(
-                                      style: TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 16,
-                                        fontFamily: 'Poppins',
-                                        height: 1.5,
+                                      const SizedBox(width: 10),
+                                      Flexible(
+                                        child: RichText(
+                                          text: const TextSpan(
+                                            style: TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 16,
+                                              fontFamily: 'Poppins',
+                                              height: 1.5,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                  text:
+                                                      'I confirm I represent HR/Personnel, Recruiting, Marketing, PR, or am an executive at my company and I agree to Khotwa\'s '),
+                                              TextSpan(
+                                                text: 'Terms of Use',
+                                                style: TextStyle(
+                                                    color: Color(0xFF6EA5ED)),
+                                              ),
+                                              TextSpan(text: ' and acknowledge its '),
+                                              TextSpan(
+                                                text: 'privacy policy',
+                                                style: TextStyle(
+                                                    color: Color(0xFF6EA5ED)),
+                                              ),
+                                              TextSpan(
+                                                  text: ' on behalf of my company.'),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      children: [
-                                        TextSpan(
-                                            text:
-                                                'I confirm I represent HR/Personnel, Recruiting, Marketing, PR, or am an executive at my company and I agree to Khotwa\'s '),
-                                        TextSpan(
-                                          text: 'Terms of Use',
-                                          style: TextStyle(
-                                              color: Color(0xFF6EA5ED)),
-                                        ),
-                                        TextSpan(text: ' and acknowledge its '),
-                                        TextSpan(
-                                          text: 'privacy policy',
-                                          style: TextStyle(
-                                              color: Color(0xFF6EA5ED)),
-                                        ),
-                                        TextSpan(
-                                            text: ' on behalf of my company.'),
-                                      ],
-                                    ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 30),
+                                  const SizedBox(height: 30),
+                                ]
+                              )
+                            )
                           ],
                         ],
                       ),
@@ -581,7 +661,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFEFF3F2),
+                            backgroundColor:AppColors.primaryBackgroundColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -599,16 +679,19 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (currentStep < 3) {
-                              setState(() {
-                                currentStep++;
-                              });
-                              _pageController.animateToPage(currentStep,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut);
-                            } else {
-                              saveCompanyData();
-                              
+                            if(handleStepValidation())
+                            {
+                              if (currentStep < 3) {
+                                setState(() {
+                                  currentStep++;
+                                });
+                                _pageController.animateToPage(currentStep,
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut);
+                              } else {
+                                saveCompanyData();
+                                
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(
