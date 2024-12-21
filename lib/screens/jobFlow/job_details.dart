@@ -2,76 +2,70 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/commons/constants.dart';
 import 'package:khotwa/screens/jobFlow/job_application.dart';
 import 'package:khotwa/screens/jobSeeker/homePage.dart';
+import '../../backend/repository/jobs_repository.dart';
 
 class JobDetailsApp extends StatelessWidget {
-  const JobDetailsApp({super.key});
+  final int id; // id for fetching job details
+  const JobDetailsApp({super.key, this.id = 1}); // Default id for testing
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: JobDetailsPage(),
+      home: JobDetailsPage(jobId: id),
     );
   }
 }
 
 class JobDetailsPage extends StatefulWidget {
-  const JobDetailsPage({super.key});
+  final int jobId; // Added jobId property
+
+  const JobDetailsPage({super.key, required this.jobId});
 
   @override
   State<JobDetailsPage> createState() => _JobDetailsPageState();
 }
 
 class _JobDetailsPageState extends State<JobDetailsPage> {
-  bool isDescriptionTab = true;
-  bool isSaved = false;
+  final JobsRepository _jobRepository = JobsRepository();
+  Map<String, dynamic>? jobpost; // Store job data
+  bool isDescriptionTab = true; // Tab state
+  bool isSaved = false; // Bookmark state
+  bool _isLoading = true; // Loading state
 
-  // Hard-coded job details
-  final Map<String, dynamic> job = {
-    'logo': 'assets/Sonatrach-Logo.png',
-    'title': 'Software Engineer',
-    'company': 'Tech Innovators Inc.',
-    'tags': ['Full-time', 'Remote', 'IT'],
-    'salary': '80,000DZD/year',
-    'location': 'San Francisco, CA',
-    'description':
-        'We are looking for a Software Engineer to join our team...',
-    'responsibilities': [
-      'Develop high-quality software solutions.',
-      'Collaborate with cross-functional teams.',
-      'Maintain and improve code quality and documentation.',
-      'Participate in code reviews and provide constructive feedback.'
-    ],
-    'address': '123 Silicon Valley Blvd, San Francisco, CA 94016',
-    'facilities': [
-      'Flexible work hours',
-      'Health insurance',
-      'Free lunch and snacks',
-      'Annual company retreat'
-    ],
-    'requirements': [
-      'Bachelors degree in Computer Science or related field.',
-      'Proficiency in programming languages like Dart, Java, or Python.',
-      'Experience with Flutter is a plus.',
-      'Excellent problem-solving skills and teamwork.',
-      'Strong communication skills.'
-    ]
-  };
+  @override
+  void initState() {
+    super.initState();
+    _fetchJobDetails(); // Fetch job details
+  }
+
+  // Fetch the job details based on the id
+  Future<void> _fetchJobDetails() async {
+    final jobData = await _jobRepository.getById(widget.jobId);
+    setState(() {
+      jobpost = jobData;
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildTabs(),
-            _buildTabContent(),
-            _buildApplyButton(),
-          ],
-        ),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : jobpost == null
+              ? const Center(child: Text('Failed to load job details'))
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildHeader(),
+                      _buildTabs(),
+                      _buildTabContent(),
+                      _buildApplyButton(),
+                    ],
+                  ),
+                ),
     );
   }
 
@@ -88,8 +82,10 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const JobseekerHome()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const JobseekerHome()),
+                  );
                 },
               ),
               GestureDetector(
@@ -111,13 +107,13 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.white,
-            child: job['logo'] != null
-                ? Image.asset(job['logo'], fit: BoxFit.cover)
+            child: jobpost!['logo'] != null
+                ? Image.network(jobpost!['logo'], fit: BoxFit.cover)
                 : const Icon(Icons.business, size: 40),
           ),
           const SizedBox(height: 16),
           Text(
-            job['title'] ?? '',
+            jobpost!['title'] ?? '',
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -125,14 +121,14 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             ),
           ),
           Text(
-            job['company'] ?? '',
+            jobpost!['company'] ?? '',
             style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
           const SizedBox(height: 16),
           Wrap(
             spacing: 8,
             children: [
-              ...?job['tags']?.map((tag) => Chip(
+              ...?jobpost!['tags']?.map((tag) => Chip(
                     label: Text(
                       tag,
                       style: const TextStyle(color: AppColors.blueButtonColor),
@@ -149,7 +145,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                job['salary'] ?? '',
+                jobpost!['salary'] ?? '',
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -160,7 +156,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
               const Icon(Icons.location_on, color: AppColors.lightGreenColor),
               const SizedBox(width: 4),
               Text(
-                job['location'] ?? '',
+                jobpost!['location'] ?? '',
                 style: const TextStyle(color: Colors.white),
               ),
             ],
@@ -232,56 +228,16 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(job['description'] ?? '',
+        Text(jobpost!['description'] ?? '',
             style: TextStyle(color: Colors.grey[600])),
-        const SizedBox(height: 24),
+        const SizedBox(height: 16),
         const Text(
           "Responsibilities:",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?job['responsibilities']
+        ...?jobpost!['responsibilities']
             ?.map((responsibility) => _buildListItem(responsibility)),
-        const SizedBox(height: 24),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.location_on, color: AppColors.lightGreenColor),
-            const SizedBox(width: 4),
-            Flexible(
-              child: Text(
-                job['address'] ?? '',
-                style: const TextStyle(color: AppColors.greyTextColor),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Center(
-          child: Container(
-            height: 200,
-            color: Colors.grey[200],
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  "assets/map.png",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-                const Icon(Icons.map, size: 48, color: Colors.red),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        const Text(
-          "Facilities and Others:",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        ...?job['facilities']?.map((facility) => _buildListItem(facility)),
       ],
     );
   }
@@ -295,7 +251,8 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
-        ...?job['requirements']?.map((requirement) => _buildListItem(requirement)),
+        ...?jobpost!['requirements']
+            ?.map((requirement) => _buildListItem(requirement)),
       ],
     );
   }
@@ -329,7 +286,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => JobApplicationPage(job: job),
+                builder: (context) => JobApplicationPage(job: jobpost!),
               ),
             );
           },
