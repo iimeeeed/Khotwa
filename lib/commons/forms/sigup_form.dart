@@ -1,5 +1,7 @@
+// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:khotwa/commons/forms/login_form.dart';
+import 'package:khotwa/services/auth.dart';
 
 import '../../../commons/constants.dart';
 import '../../screens/company/flowSignUp.dart';
@@ -19,6 +21,8 @@ class _SignupFormState extends State<SignupForm> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
+
+  final AuthService _authService = AuthService();
 
   bool _rememberMe = false;
   bool _passwordVisible = false;
@@ -71,16 +75,7 @@ class _SignupFormState extends State<SignupForm> {
           width: 266,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => (widget.isCompany)
-                      ? const FlowCompany()
-                      : const flow_screen.Flow(),
-                ),
-              );
-            },
+            onPressed: _handleSignUp,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.blueButtonColor,
               padding:
@@ -102,6 +97,46 @@ class _SignupFormState extends State<SignupForm> {
       ],
     );
   }
+
+  Future<void> _handleSignUp() async {
+  String email = _emailController.text.trim();
+  String password = _passwordController.text.trim();
+  String confirmPassword = _confirmPasswordController.text.trim();
+  String name = _companyNameController.text.trim();
+
+  if (password != confirmPassword) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Passwords do not match")),
+    );
+    return;
+  }
+
+  Map<String, dynamic> additionalData = {
+    if (widget.isCompany) 'company_name': name else 'full_name': name,
+  };
+
+  bool success = await _authService.signUp(
+    email: email,
+    password: password,
+    isCompany: widget.isCompany,
+    additionalData: additionalData,
+  );
+
+  if (success) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => (widget.isCompany)
+            ? const FlowCompany()
+            : const flow_screen.Flow(),
+      ),
+    );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Failed to sign up. Please try again.")),
+    );
+  }
+}
 
   Widget _buildInputField({
     required String label,
@@ -133,115 +168,37 @@ class _SignupFormState extends State<SignupForm> {
   }
 
   Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Password",
-          style: TextStyle(
-              fontFamily: AppFonts.secondaryFont,
-              fontSize: 14,
-              fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: 317,
-          height: 50,
-          child: Stack(
-            children: [
-              TextFormField(
-                controller: _passwordController,
-                obscureText: !_passwordVisible,
-                textAlign: TextAlign.left,
-                decoration:
-                    AppInputStyles.inputDecoration(hintText: "Password"),
-              ),
-              Positioned(
-                right: 10,
-                top: 12,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
-                  },
-                  child: Icon(
-                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                    color: AppColors.greyTextColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return _buildInputField(
+      label: "Password",
+      controller: _passwordController,
+      hintText: "Enter your password",
     );
   }
 
   Widget _buildConfirmPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Confirm Password",
-          style: TextStyle(
-              fontFamily: AppFonts.secondaryFont,
-              fontSize: 14,
-              fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        SizedBox(
-          width: 317,
-          height: 50,
-          child: Stack(
-            children: [
-              TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: !_confirmPasswordVisible,
-                textAlign: TextAlign.left,
-                decoration: AppInputStyles.inputDecoration(
-                    hintText: "Confirm Password"),
-              ),
-              Positioned(
-                right: 10,
-                top: 12,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _confirmPasswordVisible = !_confirmPasswordVisible;
-                    });
-                  },
-                  child: Icon(
-                    _confirmPasswordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off,
-                    color: AppColors.greyTextColor,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return _buildInputField(
+      label: "Confirm Password",
+      controller: _confirmPasswordController,
+      hintText: "Confirm your password",
     );
   }
 
   Widget _buildSocialSignUpButton() {
-    return GestureDetector(
-      onTap: () {},
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("assets/google.png"),
-          const SizedBox(width: 15),
-          const Text(
-            "SIGN UP WITH GOOGLE",
-            style: TextStyle(
-                fontFamily: AppFonts.secondaryFont,
-                color: AppColors.blueButtonColor,
-                fontWeight: FontWeight.bold),
+    return SizedBox(
+      width: 266,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () {}, // Add social signup logic here
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.secondaryButtonColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-        ],
+        ),
+        child: const Text(
+          'Sign Up with Google',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
@@ -251,34 +208,29 @@ class _SignupFormState extends State<SignupForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          "Already have an account?",
-          style: TextStyle(
-              fontFamily: AppFonts.secondaryFontItalic,
-              color: AppColors.greyTextColor,
-              fontSize: 12),
+          "Already have an account? ",
+          style: TextStyle(color: AppColors.greyTextColor, fontSize: 12),
         ),
-        const SizedBox(width: 5),
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
+              context,
+               MaterialPageRoute(
                     builder: (context) => (widget.isCompany)
                         ? const LoginForm(
                             isCompany: true,
                           )
                         : const LoginForm(
                             isCompany: false,
-                          )));
+                          )),
+            );
           },
           child: const Text(
-            "Sign in",
+            "Sign In",
             style: TextStyle(
-              fontFamily: AppFonts.secondaryFontItalic,
-              color: AppColors.secondaryLinkColor,
+              color: AppColors.blueButtonColor,
               fontSize: 12,
-              decoration: TextDecoration.underline,
-              decorationColor: Color(0xFFFF9228),
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -286,3 +238,4 @@ class _SignupFormState extends State<SignupForm> {
     );
   }
 }
+
