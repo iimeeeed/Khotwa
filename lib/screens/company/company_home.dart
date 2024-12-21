@@ -10,7 +10,7 @@ import '../../widgets/search_bar.dart';
 import '../../widgets/bottom_sheet.dart';
 import '../../widgets/notifications_screen.dart';
 import '../../backend/repository/companies_repository.dart';
-
+import 'dart:convert';
 
 class CompanyHome extends StatefulWidget {
   final int id;
@@ -47,6 +47,13 @@ class _CompanyHomeState extends State<CompanyHome> {
       });
     }
   }
+
+  Widget imageFromBase64String(String base64String) {
+  return Image.memory(
+    base64Decode(base64String),
+    fit: BoxFit.cover,
+  );
+}
 
   Widget buildCard(String title, int index,
       {Color textColor = Colors.white, Color backgroundColor = Colors.blue}) {
@@ -332,11 +339,11 @@ class _CompanyHomeState extends State<CompanyHome> {
                                       isCompany: true,
                                     )));
                       },
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        backgroundImage: AssetImage(
-                          "assets/Sonatrach-Logo.png",
-                        ),
+                        backgroundImage: _company['company_logo'] != null
+                          ? MemoryImage(base64Decode(_company['company_logo']))
+                          : const AssetImage('assets/images/default_logo.png') as ImageProvider,
                         radius: 24,
                       ),
                     ),

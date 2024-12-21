@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import '../../backend/models/company.dart';
 import '../../backend/repository/companies_repository.dart';
+import 'dart:convert';
 
 class CompanyVerificationPage extends StatefulWidget {
   const CompanyVerificationPage({super.key});
@@ -51,51 +52,53 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   }
 
   Future<void> _uploadLogo() async {
-    // Pick an image file
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image, // Ensures only image files are picked
-    );
-    // Check if a file was selected and has a valid path
-    if (result != null && result.files.single.path != null) {
-      final file = File(result.files.single.path!);
-      // Read the file as bytes (Uint8List)
-      _logoBytes = await file.readAsBytes();
-      setState(() {
-        _selectedLogo = file;
-     });
-    }
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.image,
+  );
+  if (result != null && result.files.single.path != null) {
+    final file = File(result.files.single.path!);
+    _logoBytes = await file.readAsBytes(); // Read image as bytes
+    setState(() {
+      _selectedLogo = file;
+    });
   }
+}
 
   // Function to save company data into the database
   Future<void> saveCompanyData() async {
-    // Create the Company object with form data
-    Company company = Company(
-      id : 1, // just for testing
-      companyName: companyNameController.text,
-      companyIndustry: industryController.text,
-      companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
-      companyLocation: locationController.text.isEmpty ? null : locationController.text,
-      companyEmail: emailController.text,
-      companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
-      companyWebsite: websiteController.text.isEmpty ? null : websiteController.text,
-      companyLogo: _logoBytes,
-      companyDescription: companyDescriptionController.text,
-      tradeRegisterNumber: tradeRegisterController.text,
-      taxIdentificationNumber: taxIdentificationController.text,
-      createdAt: '10-10-2004', // for testing
+  String? base64Logo = _logoBytes != null ? base64Encode(_logoBytes!) : null;
+
+  Company company = Company(
+    id: 2, // just for testing
+    companyName: companyNameController.text,
+    companyIndustry: industryController.text,
+    companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
+    companyLocation: locationController.text.isEmpty ? null : locationController.text,
+    companyEmail: emailController.text,
+    companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
+    companyWebsite: websiteController.text.isEmpty ? null : websiteController.text,
+    companyLogo: base64Logo, // Save Base64 string
+    companyDescription: companyDescriptionController.text,
+    tradeRegisterNumber: tradeRegisterController.text,
+    taxIdentificationNumber: taxIdentificationController.text,
+    createdAt: '10-10-2004', // for testing
+  );
+
+  bool success = await _companiesRepository.insert(company);
+  if (success) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CompanyHome(id: 1),
+      ),
     );
-    bool success = await _companiesRepository.insert(company);
-    if (success) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CompanyHome(id: 1,)),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to save company data')),
-      );
-    }
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Failed to save company data')),
+    );
   }
+}
+
 
   Widget _buildInputField(String label, String hint,
       {TextEditingController? controller,
@@ -136,7 +139,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       if (_selectedLogo != null) 
         Image.file(
           _selectedLogo!,
-          height: 40,
+          height: 100,
         )
       else 
         const Column(
@@ -471,7 +474,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                             const SizedBox(height: 30),
                             _buildInputField(
                                 'Logo', 'Drop here to attach or upload',
-                                height: 200),
+                                height: 150),
                             const SizedBox(height: 30),
                             _buildInputField('Company Description',
                                 "Briefly describe your company's mission, vision, and services", controller: companyDescriptionController,
