@@ -80,7 +80,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             ),
             SizedBox(
-              width: AppSizes.getScreenWidth(context)*0.32,
+              width: AppSizes.getScreenWidth(context) * 0.32,
             ),
             const Text(
               'Settings',
@@ -125,7 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
                   items: [
                     _buildSettingsItem(Icons.person_outline, 'Edit profile'),
                     _buildSettingsItem(Icons.security_outlined, 'Security'),
-                    _buildSettingsItem(Icons.notifications_active_outlined,
+                    _buildSettingsItem(
+                        Icons.notifications_active_outlined,
                         'Notifications Preferences'),
                     _buildSettingsItem(Icons.privacy_tip_outlined, 'Privacy'),
                     if (!widget.isCompany)
@@ -162,23 +163,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDragHandle() {
-    return Positioned(
-      top: 110,
-      left: MediaQuery.of(context).size.width / 2 - 17.5,
-      child: Container(
-        height: 4,
-        width: 35,
-        decoration: ShapeDecoration(
-          color: AppColors.greyTextColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
           ),
         ),
       ),
@@ -275,13 +259,22 @@ class _SettingsPageState extends State<SettingsPage> {
         );
         break;
       case 'Log Out':
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const Signup()),
-        );
+        _handleLogout();
         break;
       default:
         break;
     }
+  }
+
+  void _handleLogout() async {
+    // Example: Perform logout actions like FirebaseAuth sign out
+    // await FirebaseAuth.instance.signOut();
+
+    // Navigate to the Signup screen, removing all previous routes
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const Signup()),
+      (Route<dynamic> route) => false, // Remove all previous routes
+    );
   }
 }
