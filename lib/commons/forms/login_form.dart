@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/backend/db/auth.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/commons/forms/sigup_form.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
 import '../../screens/jobSeeker/homePage.dart';
 import '../../commons/constants.dart';
 import '../../screens/company/company_home.dart';
-import '../../services/auth.dart';
 
 class LoginForm extends StatefulWidget {
   final bool isCompany;
