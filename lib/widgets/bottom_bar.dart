@@ -14,7 +14,8 @@ import '../screens/jobSeeker/homePage.dart';
 class BottomBar extends StatefulWidget {
   final bool
       isJobseeker; // if true we get the bottom bar of the jbseeker , else company
-  const BottomBar({super.key, required this.isJobseeker});
+  final int id;
+  const BottomBar({super.key, required this.isJobseeker, required this.id});
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -102,7 +103,7 @@ class _BottomBarState extends State<BottomBar> {
                 MaterialPageRoute(
                   builder: (context) => (widget.isJobseeker)
                       ? const JobseekerHome()
-                      : const CompanyHome(),
+                      : CompanyHome(id: widget.id,),
                 ),
               );
               break;
@@ -132,7 +133,7 @@ class _BottomBarState extends State<BottomBar> {
               break;
 
             case "Create":
-              BottomDialog.show(context, const CreatePost());
+              BottomDialog.show(context, CreatePost(id : widget.id));
               break;
             case "Profile":
               Navigator.push(

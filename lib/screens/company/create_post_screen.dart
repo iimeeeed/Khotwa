@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_home.dart';
 import '../../commons/constants.dart';
 import '../../backend/models/job.dart';
 import '../../backend/repository/jobs_repository.dart';
 
-import '../../screens/jobFlow/job_details.dart';
-
 class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+  final int id;
+  const CreatePost({super.key, required this.id});
 
   @override
   State<CreatePost> createState() => _CreatePostState();
@@ -40,10 +40,10 @@ class _CreatePostState extends State<CreatePost> {
   final TextEditingController responsibilitiesController =
       TextEditingController();
   final TextEditingController requirementsController = TextEditingController();
+  
 
   @override
   void dispose() {
-    // Dispose controllers when the widget is removed from the widget tree
     jobTitleController.dispose();
     jobDescriptionController.dispose();
     addressController.dispose();
@@ -55,34 +55,28 @@ class _CreatePostState extends State<CreatePost> {
 
   // Function to save job post data
   Future<void> saveJobPost() async {
-    // Capture data from form
     Job jobpost = Job(
-      id: 1, // Assuming you will get this dynamically, or set as 1 for testing
-      companyId: 2, // Replace with the company ID associated with the job
+      companyId: widget.id, 
       jobTitle: jobTitleController.text,
       jobDescription: jobDescriptionController.text,
-      jobLocation: selectedItems[
-          "Location"]!, // You can retrieve location from the dropdown
-      jobType:
-          selectedItems["Job Type"], // Optional: e.g., Full-time, Part-time
-      salary: (_currentRangeValues.end + _currentRangeValues.start) /
-          2, // Calculating the average salary as an example
-      skillsRequired:
-          "Skill1, Skill2, Skill3", // You can change this to get dynamic input
-      jobCategory: selectedItems["Job category"], // From dropdown
-      experienceLevel:
-          "Mid", // You can add an experience level dropdown or leave it static
-      applicationDeadline:
-          "2024-12-31", // Example: Static date or dynamic input from the form
+      jobCategory: selectedItems["Job category"],
+      jobSubCategory: selectedItems["Job subcategory"],
+      jobLocation: selectedItems["Location"]!, 
+      jobAddress: addressController.text,
+      jobType: selectedItems["Job Type"],
+      salaryLowerBound: _currentRangeValues.start,
+      salaryUpperBound: _currentRangeValues.end,
+      jobFacilities: facilitiesController.text,
+      jobResponsibilities: responsibilitiesController.text, 
+      requirements: requirementsController.text, 
       createdAt: DateTime.now().toString(),
     );
-    bool success = await _jobRepository
-        .insert(jobpost); // Assuming you have a job repository to insert
+    bool success = await _jobRepository.insert(jobpost); 
     if (success) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const JobDetailsApp(id: 1),
+          builder: (context) => CompanyHome(id: widget.id),
         ),
       );
     } else {
@@ -91,7 +85,7 @@ class _CreatePostState extends State<CreatePost> {
       );
     }
   }
-  //
+  
 
   @override
   Widget build(BuildContext context) {

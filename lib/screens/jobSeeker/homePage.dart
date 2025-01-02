@@ -493,7 +493,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           ),
         ],
       ),
-      bottomNavigationBar: const BottomBar(isJobseeker: true),
+      bottomNavigationBar: const BottomBar(isJobseeker: true, id: 1,),
     );
   }
 }

@@ -1,7 +1,6 @@
 
 
 class JobSeeker {
-  final int id;
   final String fullName;
   final String email;
   final String? phone;
@@ -12,10 +11,9 @@ class JobSeeker {
   final String? interests;
   final String? jobTypes;
   final String? jobPreferences;
-  final String createdAt;
+  final String? createdAt;
 
   JobSeeker({
-    required this.id,
     required this.fullName,
     required this.email,
     this.phone,
@@ -26,13 +24,12 @@ class JobSeeker {
     this.interests,
     this.jobTypes,
     this.jobPreferences,
-    required this.createdAt,
+    this.createdAt,
   });
 
   // Convert a JobSeeker object into a Map object
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'full_name': fullName,
       'job_seeker_email': email,
       'job_seeker_phone': phone,
@@ -50,7 +47,6 @@ class JobSeeker {
   // Convert a Map object into a JobSeeker object
   factory JobSeeker.fromMap(Map<String, dynamic> map) {
     return JobSeeker(
-      id: map['id'],
       fullName: map['full_name'],
       email: map['job_seeker_email'],
       phone: map['job_seeker_phone'],

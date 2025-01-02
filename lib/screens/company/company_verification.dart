@@ -9,7 +9,8 @@ import '../../backend/repository/companies_repository.dart';
 import 'dart:convert';
 
 class CompanyVerificationPage extends StatefulWidget {
-  const CompanyVerificationPage({super.key});
+  final Map<String, dynamic> companyData ;
+  const CompanyVerificationPage({super.key, required this.companyData});
 
   @override
   _CompanyVerificationPageState createState() =>
@@ -74,7 +75,9 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
     String? base64Logo = _logoBytes != null ? base64Encode(_logoBytes!) : null;
 
     Company company = Company(
-      id: 2, // just for testing
+      companyOwnerName: widget.companyData['ownerName'],
+      companyUserEmail:widget.companyData['email'],
+      companyUserPassword: widget.companyData['password'],
       companyName: companyNameController.text,
       companyIndustry: industryController.text,
       companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
@@ -90,11 +93,12 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
     );
 
     bool success = await _companiesRepository.insert(company);
-    if (success) {
+    int? companyId = await _companiesRepository.getIdByEmail(widget.companyData['email']);
+    if (success && companyId!=null) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const CompanyHome(id: 1),
+          builder: (context) => CompanyHome(id: companyId),
         ),
       );
     } else {

@@ -36,4 +36,8 @@ class CompaniesRepository implements RepositoryBase<Company> {
   Future<List<Map<String, dynamic>>> customQuery(String sql, [List<dynamic>? arguments]) async {
     return await company.rawQuery(sql, arguments);
   }
+
+  Future<int?> getIdByEmail(String email) async {
+    return await company.getIdByEmail(email);
+  }
 }

@@ -4,7 +4,8 @@ import '../../../commons/khotwa_logo.dart';
 import '../../../commons/constants.dart';
 
 class FlowCompany extends StatefulWidget {
-  const FlowCompany({super.key});
+  final Map<String, dynamic> companyData ;
+  const FlowCompany({super.key, required this.companyData});
 
   @override
   State<FlowCompany> createState() => _FlowCompanyState();
@@ -204,7 +205,7 @@ class _FlowCompanyState extends State<FlowCompany> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const CompanyVerificationPage()));
+                                    builder: (context) => CompanyVerificationPage(companyData: widget.companyData,)));
                           },
                           child: const Text(
                             "Explore",

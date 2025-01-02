@@ -4,6 +4,9 @@ class DBTables {
   static const String companiesTableSql = '''
     CREATE TABLE companies (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      company_owner_name TEXT NOT NULL,
+      company_user_email TEXT UNIQUE NOT NULL,
+      company_user_password TEXT NOT NULL,
       company_name TEXT NOT NULL,
       company_industry TEXT NOT NULL,
       company_size TEXT,

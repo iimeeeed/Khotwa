@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../commons/khotwa_logo.dart';
 import '../../commons/constants.dart';
-import '../../widgets/bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class CompanyDashboard extends StatefulWidget {
@@ -16,7 +15,6 @@ class _CompanyDashboardState extends State<CompanyDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      bottomNavigationBar: const BottomBar(isJobseeker: false),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

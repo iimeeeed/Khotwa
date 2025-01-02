@@ -90,14 +90,3 @@ class DBBaseTable {
   }
 }
 
-
-
-class UsersTable extends DBBaseTable {
-  @override
-  String get db_table => 'users';
-}
-
-class CompaniesTable extends DBBaseTable {
-  @override
-  String get db_table => 'companies';
-}

@@ -35,4 +35,8 @@ class JobsRepository implements RepositoryBase<Job> {
   Future<List<Map<String, dynamic>>> customQuery(String sql, [List<dynamic>? arguments]) async {
     return await jobs.rawQuery(sql, arguments);
   }
+
+  Future<List<Map<String, dynamic>>> getJobsByCompanyId(int companyId) async {
+    return await jobs.getJobsByCompanyId(companyId);
+  }
 }

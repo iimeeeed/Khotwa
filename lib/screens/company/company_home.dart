@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/backend/repository/jobs_repository.dart';
 import 'package:khotwa/commons/profile.dart';
 import 'package:khotwa/screens/jobSeeker/filter/filter.dart';
 import '../../data/candidates_data.dart';
-import '../../data/jobs_data.dart';
 import '../../commons/constants.dart';
 import 'candidatesDetails.dart';
 import '../../widgets/bottom_bar.dart';
@@ -15,7 +15,7 @@ import 'dart:convert';
 class CompanyHome extends StatefulWidget {
   final int id;
   //id set to 1 just for testing purposes
-  const CompanyHome({Key? key, this.id = 1}) : super(key: key);
+  const CompanyHome({Key? key, required this.id}) : super(key: key);
 
   @override
   _CompanyHomeState createState() => _CompanyHomeState();
@@ -26,13 +26,14 @@ class _CompanyHomeState extends State<CompanyHome> {
   int currentIndex = 0;
   List<List<Map<String, String>>> candidatesList = candidatesData;
   late Map _company; // Store the company information
-
+  final CompaniesRepository _companiesRepository = CompaniesRepository(); 
+  final JobsRepository _jobsRepository = JobsRepository();
   @override
   void initState() {
     super.initState();
     _fetchCompanyData(); // Fetch company data when the widget is initialized
   }
-    final CompaniesRepository _companiesRepository = CompaniesRepository(); 
+    
 
 
   // Fetch the company data based on the id
@@ -306,7 +307,7 @@ class _CompanyHomeState extends State<CompanyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      bottomNavigationBar: const BottomBar(isJobseeker: false),
+      bottomNavigationBar: BottomBar(isJobseeker: false, id : widget.id),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -468,7 +469,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          activeJobPostings(),
+                          activeJobPostings()
                         ],
                       ),
                     ),
@@ -480,16 +481,35 @@ class _CompanyHomeState extends State<CompanyHome> {
   }
 
   Widget activeJobPostings() {
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+      FutureBuilder<List<Map<String, dynamic>>>(
+        future: _jobsRepository.getJobsByCompanyId(widget.id), 
+        builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}')); 
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No job postings available'));
+          }
+          List<Map<String, dynamic>> featuredJobs = snapshot.data!;
+          return SizedBox(
           height: 160,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: featuredJobs.length,
             itemBuilder: (context, index) {
               final job = featuredJobs[index];
+              List<String> jobRequirements = [];
+                if (job['job_requirements'] is String) {
+                  jobRequirements = (job['job_requirements'] as String)
+                      .split(',') // Split by commas
+                      .map((e) => e.trim()) // Remove extra spaces
+                      .toList();
+                }
               return GestureDetector(
                 onTap: () {},
                 child: Container(
@@ -529,7 +549,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    job['title'] ?? 'Job Title',
+                                    job['job_title'] ?? 'Job Title',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -539,7 +559,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    job['company'] ?? 'Company Name',
+                                    job['company_id']?.toString() ?? 'Company Name',
                                     style:
                                         const TextStyle(color: Colors.white70),
                                     overflow: TextOverflow.ellipsis,
@@ -556,24 +576,22 @@ class _CompanyHomeState extends State<CompanyHome> {
                           Center(
                             child: Wrap(
                               spacing: 20,
-                              children: (job['tags'] as List)
-                                  .map<Widget>(
-                                    (tag) => Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white24,
-                                        borderRadius: BorderRadius.circular(12),
+                              children: jobRequirements
+                                    .map<Widget>(
+                                      (tag) => Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white24,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Text(
+                                          tag,
+                                          style: const TextStyle(fontSize: 12, color: Colors.white),
+                                        ),
                                       ),
-                                      child: Text(
-                                        tag ?? 'Tag',
-                                        style: const TextStyle(
-                                            fontSize: 12, color: Colors.white),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
+                                    )
+                                    .toList(),
+                              ),
                           ),
                         ],
                       ),
@@ -581,7 +599,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                       Row(
                         children: [
                           Text(
-                            job['salary'] ?? 'Salary',
+                            job['salary_upper_bound']?.toString() ?? 'Salary',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -589,7 +607,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                           ),
                           const Spacer(),
                           Text(
-                            job['location'] ?? 'Location',
+                            job['job_location'] ?? 'Location',
                             style: const TextStyle(color: Colors.white70),
                           ),
                         ],
@@ -600,6 +618,9 @@ class _CompanyHomeState extends State<CompanyHome> {
               );
             },
           ),
+        );
+        } 
+
         ),
         const SizedBox(height: 20),
         Row(
