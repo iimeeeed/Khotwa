@@ -344,7 +344,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                         backgroundColor: Colors.white,
                         backgroundImage: _company['company_logo'] != null
                           ? MemoryImage(base64Decode(_company['company_logo']))
-                          : const AssetImage('assets/images/default_logo.png') as ImageProvider,
+                          : const AssetImage('assets/icon.png') as ImageProvider,
                         radius: 24,
                       ),
                     ),
@@ -503,13 +503,7 @@ class _CompanyHomeState extends State<CompanyHome> {
             itemCount: featuredJobs.length,
             itemBuilder: (context, index) {
               final job = featuredJobs[index];
-              List<String> jobRequirements = [];
-                if (job['job_requirements'] is String) {
-                  jobRequirements = (job['job_requirements'] as String)
-                      .split(',') // Split by commas
-                      .map((e) => e.trim()) // Remove extra spaces
-                      .toList();
-                }
+              List<String> jobDetails = [job['job_category'], job['job_sub_category'], job['job_type']];
               return GestureDetector(
                 onTap: () {},
                 child: Container(
@@ -535,14 +529,12 @@ class _CompanyHomeState extends State<CompanyHome> {
                         children: [
                           Row(
                             children: [
-                              const CircleAvatar(
-                                backgroundColor:
-                                    Color.fromRGBO(255, 255, 255, 1),
+                              CircleAvatar(
+                                backgroundColor: Colors.white,
+                                backgroundImage: _company['company_logo'] != null
+                                  ? MemoryImage(base64Decode(_company['company_logo']))
+                                  : const AssetImage('assets/icon.png') as ImageProvider,
                                 radius: 22,
-                                child: Image(
-                                  image:
-                                      AssetImage("assets/Sonatrach-Logo.png"),
-                                ),
                               ),
                               const SizedBox(width: 8),
                               Column(
@@ -559,7 +551,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    job['company_id']?.toString() ?? 'Company Name',
+                                    _company['company_name'] ?? 'Company Name',
                                     style:
                                         const TextStyle(color: Colors.white70),
                                     overflow: TextOverflow.ellipsis,
@@ -576,7 +568,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                           Center(
                             child: Wrap(
                               spacing: 20,
-                              children: jobRequirements
+                              children: jobDetails
                                     .map<Widget>(
                                       (tag) => Container(
                                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -599,7 +591,7 @@ class _CompanyHomeState extends State<CompanyHome> {
                       Row(
                         children: [
                           Text(
-                            job['salary_upper_bound']?.toString() ?? 'Salary',
+                            '${job['salary_upper_bound']?.toString() ?? 'Salary'} DZD/month',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

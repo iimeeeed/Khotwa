@@ -98,10 +98,10 @@ class _CreatePostState extends State<CreatePost> {
             child: ListView(
               children: [
                 const SizedBox(height: 20),
-                buildInputField("Job Title", "eg: Business Analyst"),
+                buildInputField("Job Title", "eg: Business Analyst", controller: jobTitleController),
                 const SizedBox(height: 16),
                 buildInputField("Job Description", "eg: Our company offers...",
-                    maxLines: 4),
+                    maxLines: 4, controller: jobDescriptionController),
                 const SizedBox(height: 16),
                 buildDropdownField("Job category", "eg: UI/UX Design"),
                 const SizedBox(height: 16),
@@ -114,7 +114,7 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: buildInputField("Address", "eg: Mahelma, Zeralda"),
+                      child: buildInputField("Address", "eg: Mahelma, Zeralda", controller: addressController),
                     ),
                   ],
                 ),
@@ -130,12 +130,12 @@ class _CreatePostState extends State<CreatePost> {
                     }),
                 const SizedBox(height: 16),
                 buildInputField(
-                    "Facilities", "eg: healthcare, paid time off,..."),
+                    "Facilities", "eg: healthcare, paid time off,...", controller: facilitiesController),
                 const SizedBox(height: 16),
                 buildInputField("Responsibilities", "•\n•\n•\n....",
-                    maxLines: 4),
+                    maxLines: 4, controller: responsibilitiesController),
                 const SizedBox(height: 16),
-                buildInputField("Requirements", "•\n•\n•\n....", maxLines: 4),
+                buildInputField("Requirements", "•\n•\n•\n....", maxLines: 4, controller: requirementsController),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
@@ -169,7 +169,7 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget buildInputField(String label, String hint, {int maxLines = 1}) {
+  Widget buildInputField(String label, String hint, {int maxLines = 1, TextEditingController? controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -185,6 +185,7 @@ class _CreatePostState extends State<CreatePost> {
         const SizedBox(height: 8),
         TextField(
           maxLines: maxLines,
+          controller: controller,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(
