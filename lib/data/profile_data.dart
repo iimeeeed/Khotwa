@@ -50,7 +50,6 @@ final List<Map<String, dynamic>> companyInfo = [
       "Pharmaceuticals",
       "Hospitality",
       "Tourism",
-      "Real Estate"
     ],
     "icon": Icons.account_balance,
   },
@@ -65,9 +64,18 @@ final List<Map<String, dynamic>> companyInfo = [
 final List<Map<String, dynamic>> jobseekerInfo = [
   {
     "label": "About me",
-    "content":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus id commodo egestas metus interdum dolor.",
+    "content": "about_me",
     "icon": Icons.person_4_outlined,
+  },
+  {
+    "label": "Phone Number",
+    "content": "job_seeker_phone",
+    "icon": Icons.phone,
+  },
+  {
+    "label": "Address",
+    "content": "job_seeker_address",
+    "icon": Icons.location_on,
   },
   {
     "label": "Work experience",
@@ -76,7 +84,6 @@ final List<Map<String, dynamic>> jobseekerInfo = [
         "job_title": "Manager",
         "company": "Amazon Inc",
         "duration": "Jan 2015 - Feb 2022",
-        "years": "5 Years"
       },
     ],
     "icon": Icons.work_outline
@@ -87,8 +94,6 @@ final List<Map<String, dynamic>> jobseekerInfo = [
       {
         "degree": "Information Technology",
         "institution": "University of Oxford",
-        "duration": "Sep 2010 - Aug 2013",
-        "years": "3 Years"
       }
     ],
     "icon": Icons.school_outlined
@@ -106,7 +111,7 @@ final List<Map<String, dynamic>> jobseekerInfo = [
   },
   {
     "label": "Languages",
-    "content": ["English (Fluent)", "French (Intermediate)", "Spanish (Basic)"],
+    "content": ["Arabic", "English", "French", "Spanish"],
     "icon": Icons.language
   }
 ];

@@ -186,7 +186,7 @@ class ApplicationDetailsScreen extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const JobseekerHome()),
+            MaterialPageRoute(builder: (context) => const JobseekerHome(id: 1,)),
           );
         },
         child: Container(

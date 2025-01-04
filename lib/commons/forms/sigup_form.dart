@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:khotwa/backend/db/auth.dart';
 import 'package:khotwa/commons/forms/login_form.dart';
 import 'package:khotwa/services/auth.dart';
-
 import '../../../commons/constants.dart';
 import '../../screens/company/flowSignUp.dart';
 import '../../screens/jobSeeker/flowSignUp/flow.dart' as flow_screen;
@@ -21,13 +20,13 @@ class _SignupFormState extends State<SignupForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
 
   final AuthService _authService = AuthService();
 
   bool _rememberMe = false;
-  bool _passwordVisible = false;
-  bool _confirmPasswordVisible = false;
+  final bool _passwordVisible = false;
+  final bool _confirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +34,9 @@ class _SignupFormState extends State<SignupForm> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildInputField(
-          label: (widget.isCompany) ? "Company name" : "Full name",
-          controller: _companyNameController,
-          hintText: (widget.isCompany) ? "Company name" : "Full name",
+          label: (widget.isCompany) ? "Company Owner's name" : "Full name",
+          controller: _nameController,
+          hintText: (widget.isCompany) ? "Company Owner's name" : "Full name",
         ),
         const SizedBox(height: 10),
         _buildInputField(
@@ -103,7 +102,7 @@ class _SignupFormState extends State<SignupForm> {
   String email = _emailController.text.trim();
   String password = _passwordController.text.trim();
   String confirmPassword = _confirmPasswordController.text.trim();
-  String name = _companyNameController.text.trim();
+  String name = _nameController.text.trim();
 
   if (password != confirmPassword) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -112,31 +111,42 @@ class _SignupFormState extends State<SignupForm> {
     return;
   }
 
-  Map<String, dynamic> additionalData = {
-    if (widget.isCompany) 'company_name': name else 'full_name': name,
-  };
-
-  bool success = await _authService.signUp(
-    email: email,
-    password: password,
-    isCompany: widget.isCompany,
-    additionalData: additionalData,
-  );
-
-  if (success) {
+  if(widget.isCompany)
+  {
+    Map<String, dynamic> companyData = {
+      "ownerName": name,
+      "email": email,
+      "password": password,
+    };
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => (widget.isCompany)
-            ? const FlowCompany()
-            : const flow_screen.Flow(),
-      ),
-    );
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Failed to sign up. Please try again.")),
-    );
+          context,
+          MaterialPageRoute(
+            builder: (context) => FlowCompany(companyData: companyData,),
+          ),
+        );
   }
+  else
+  {
+    int? successId = await _authService.signUpJobseeker(
+      fullName: name,
+      email: email,
+      password: password,
+    );
+
+      if (successId! > 0) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => flow_screen.Flow(id: successId,),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to sign up. Please try again.")),
+        );
+      }
+  }
+  
 }
 
   Widget _buildInputField({

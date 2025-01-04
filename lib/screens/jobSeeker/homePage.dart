@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:khotwa/backend/repository/job_seekers_repository.dart';
 import 'package:khotwa/widgets/bottom_sheet.dart';
 import '../../data/jobs_data.dart';
 import '../../widgets/search_bar.dart';
@@ -37,7 +40,8 @@ class StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class JobseekerHome extends StatefulWidget {
-  const JobseekerHome({super.key});
+  final int id;
+  const JobseekerHome({super.key, required this.id});
 
   @override
   _JobseekerHomeState createState() => _JobseekerHomeState();
@@ -59,11 +63,28 @@ class _JobseekerHomeState extends State<JobseekerHome> {
   List<Map<String, dynamic>> filteredJobs = [];
   List<String> activeFilters = [];
 
+  late Map _jobseeker;
+  final JobSeekersRepository jobseekerRepo = JobSeekersRepository();
+
   @override
   void initState() {
     super.initState();
     selectedCategories = List.generate(categories.length, (index) => index == 0);
     filteredJobs = List.from(featuredJobs);
+    _fetchJobseekerData();
+  }
+
+  // Fetch the jobseeker data based on the id
+  Future<void> _fetchJobseekerData() async {
+    final jobseekerData = await jobseekerRepo.getById(widget.id);
+    if (jobseekerData != null) {
+      setState(() {
+        _jobseeker = jobseekerData; 
+      });
+    } else {
+      setState(() {
+      });
+    }
   }
 
   void toggleCategory(int index) {
@@ -209,26 +230,28 @@ class _JobseekerHomeState extends State<JobseekerHome> {
         actions: const [
           KhotwaLogo(),
         ],
-        title: const Row(
+        title:  Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage("assets/zinebPic.png"),
+                  backgroundImage: _jobseeker['profile_picture'] != null
+                          ? MemoryImage(base64Decode(_jobseeker['profile_picture']))
+                          : const AssetImage('assets/icon.png') as ImageProvider,
                   radius: 24,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Welcome Back!",
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     Text(
-                      "Zineb Berrekia",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      _jobseeker['full_name'],
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -493,7 +516,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
           ),
         ],
       ),
-      bottomNavigationBar: const BottomBar(isJobseeker: true),
+      bottomNavigationBar: BottomBar(isJobseeker: true, id: widget.id,),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/backend/db/auth.dart';
+import 'package:khotwa/backend/repository/companies_repository.dart';
+import 'package:khotwa/backend/repository/job_seekers_repository.dart';
 import 'package:khotwa/commons/khotwa_logo.dart';
 import 'package:khotwa/commons/forms/sigup_form.dart';
 import 'package:khotwa/screens/jobSeeker/forgotPassword/forgot_password_page.dart';
@@ -19,6 +21,8 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final AuthService _authService = AuthService(); // Create an AuthService instance
+  final JobSeekersRepository _jobSeekersRepository =  JobSeekersRepository();
+  final CompaniesRepository _companiesRepository = CompaniesRepository();
 
   bool _rememberMe = false;
   bool _obscure = true;
@@ -33,17 +37,17 @@ class _LoginFormState extends State<LoginForm> {
   final String password = _passwordController.text;
 
   final user = await _authService.signIn(email, password, widget.isCompany);
-
+  int? id = (widget.isCompany)? await _companiesRepository.getIdByEmail(email) : await _jobSeekersRepository.getIdByEmail(email);
   setState(() {
     _isLoading = false;
   });
 
-  if (user != null) {
+  if (user != null && id != null) {
     // Navigate to the appropriate home page and clear the navigation stack
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => widget.isCompany ? const CompanyHome() : const JobseekerHome(),
+        builder: (context) => widget.isCompany ? CompanyHome(id: id,) : JobseekerHome(id: id,),
       ),
       (route) => false, // This condition ensures all previous routes are removed
     );

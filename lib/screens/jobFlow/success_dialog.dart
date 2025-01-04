@@ -53,7 +53,7 @@ class SuccessDialog extends StatelessWidget {
                   Navigator.of(context).pop();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (context) => const JobseekerHome(),
+                      builder: (context) => const JobseekerHome(id: 1,),
                     ),
                     (route) => false,
                   );

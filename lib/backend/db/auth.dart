@@ -1,16 +1,22 @@
-import './db_base.dart';
-import './db_helper.dart';
+import 'package:khotwa/backend/models/job_seeker.dart';
+import 'package:khotwa/backend/repository/companies_repository.dart';
+import 'package:khotwa/backend/repository/job_seekers_repository.dart';
+import 'package:khotwa/backend/repository/repository_base.dart';
+
 
 class AuthService {
-  final DBBaseTable _usersTable = UsersTable();
-  final DBBaseTable _companiesTable = CompaniesTable();
+  final JobSeekersRepository _jobSeekersTable =  JobSeekersRepository();
+  final CompaniesRepository _companiesTable = CompaniesRepository();
 
   Future<Map<String, dynamic>?> signIn(String email, String password, bool isCompany) async {
     try {
-      final DBBaseTable table = isCompany ? _companiesTable : _usersTable;
+      final RepositoryBase table = isCompany ? _companiesTable : _jobSeekersTable;
 
-      List<Map<String, dynamic>> result = await table.rawQuery(
-        'SELECT * FROM ${table.db_table} WHERE email = ? AND password = ?',
+      String query = (isCompany)? "SELECT * FROM ${_companiesTable.company.db_table} WHERE company_user_email = ? AND company_user_password = ?" :
+      "SELECT * FROM ${_jobSeekersTable.jobSeeker.db_table} WHERE job_seeker_email = ? AND job_seeker_password = ?" ;
+
+      List<Map<String, dynamic>> result = await table.customQuery(
+        query,
         [email, password],
       );
 
@@ -24,26 +30,21 @@ class AuthService {
     }
   }
 
-  Future<bool> signUp({
+  Future<int?> signUpJobseeker({
+    required String fullName,
     required String email,
     required String password,
-    required bool isCompany,
-    required Map<String, dynamic> additionalData,
   }) async {
     try {
-      final DBBaseTable table = isCompany ? _companiesTable : _usersTable;
-
-      Map<String, dynamic> data = {
-        'email': email,
-        'password': password,
-        ...additionalData,
-      };
-
-      await table.insertRecord(data);
-      return true;
+      JobSeeker jobSeeker = JobSeeker(fullName: fullName, email: email, password: password);
+      
+      await _jobSeekersTable.insert(jobSeeker);
+      int? id = await _jobSeekersTable.getIdByEmail(email);
+      
+      return id;
     } catch (e, stacktrace) {
       print('SignUp Error: $e --> $stacktrace');
-      return false;
+      return -1;
     }
   }
 }

@@ -1,48 +1,56 @@
 
-
 class JobSeeker {
-  final int id;
   final String fullName;
   final String email;
+  final String password;
   final String? phone;
   final String? address;
-  final String password;
-  final String? aboutMe;
   final String? profilePicture;
-  final String? interests;
-  final String? jobTypes;
-  final String? jobPreferences;
-  final String createdAt;
+  final String? aboutMe;
+  final String? workExperience; // Comma-separated values, | separated for multiple entries
+  final String? education; // Comma-separated values, | separated for multiple entries
+  final String? skills; // Comma-separated values
+  final String? languages; // Comma-separated values
+  final String? jobPreferences; // Comma-separated values
+  final String? jobTypePreferences; // Comma-separated values
+  final String? jobLocationPreferences; // Comma-separated values
+  final String? createdAt; // Defaults to current datetime
 
   JobSeeker({
-    required this.id,
     required this.fullName,
     required this.email,
+    required this.password,
     this.phone,
     this.address,
-    required this.password,
-    this.aboutMe,
     this.profilePicture,
-    this.interests,
-    this.jobTypes,
+    this.aboutMe,
+    this.workExperience,
+    this.education,
+    this.skills,
+    this.languages,
     this.jobPreferences,
-    required this.createdAt,
+    this.jobTypePreferences,
+    this.jobLocationPreferences,
+    this.createdAt,
   });
 
   // Convert a JobSeeker object into a Map object
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'full_name': fullName,
       'job_seeker_email': email,
+      'job_seeker_password': password,
       'job_seeker_phone': phone,
       'job_seeker_address': address,
-      'job_seeker_password': password,
-      'about_me': aboutMe,
       'profile_picture': profilePicture,
-      'interests': interests,
-      'job_types': jobTypes,
+      'about_me': aboutMe,
+      'work_experience': workExperience,
+      'education': education,
+      'skills': skills,
+      'languages': languages,
       'job_preferences': jobPreferences,
+      'job_type_preferences': jobTypePreferences,
+      'job_location_preferences': jobLocationPreferences,
       'created_at': createdAt,
     };
   }
@@ -50,18 +58,22 @@ class JobSeeker {
   // Convert a Map object into a JobSeeker object
   factory JobSeeker.fromMap(Map<String, dynamic> map) {
     return JobSeeker(
-      id: map['id'],
       fullName: map['full_name'],
       email: map['job_seeker_email'],
+      password: map['job_seeker_password'],
       phone: map['job_seeker_phone'],
       address: map['job_seeker_address'],
-      password: map['job_seeker_password'],
-      aboutMe: map['about_me'],
       profilePicture: map['profile_picture'],
-      interests: map['interests'],
-      jobTypes: map['job_types'],
+      aboutMe: map['about_me'],
+      workExperience: map['work_experience'],
+      education: map['education'],
+      skills: map['skills'],
+      languages: map['languages'],
       jobPreferences: map['job_preferences'],
+      jobTypePreferences: map['job_type_preferences'],
+      jobLocationPreferences: map['job_location_preferences'],
       createdAt: map['created_at'],
     );
   }
 }
+

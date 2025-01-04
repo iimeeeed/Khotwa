@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/screens/company/company_home.dart';
 import '../../commons/constants.dart';
 import '../../backend/models/job.dart';
 import '../../backend/repository/jobs_repository.dart';
 
-import '../../screens/jobFlow/job_details.dart';
-
 class CreatePost extends StatefulWidget {
-  const CreatePost({super.key});
+  final int id;
+  const CreatePost({super.key, required this.id});
 
   @override
   State<CreatePost> createState() => _CreatePostState();
@@ -40,10 +40,10 @@ class _CreatePostState extends State<CreatePost> {
   final TextEditingController responsibilitiesController =
       TextEditingController();
   final TextEditingController requirementsController = TextEditingController();
+  
 
   @override
   void dispose() {
-    // Dispose controllers when the widget is removed from the widget tree
     jobTitleController.dispose();
     jobDescriptionController.dispose();
     addressController.dispose();
@@ -55,34 +55,28 @@ class _CreatePostState extends State<CreatePost> {
 
   // Function to save job post data
   Future<void> saveJobPost() async {
-    // Capture data from form
     Job jobpost = Job(
-      id: 1, // Assuming you will get this dynamically, or set as 1 for testing
-      companyId: 2, // Replace with the company ID associated with the job
+      companyId: widget.id, 
       jobTitle: jobTitleController.text,
       jobDescription: jobDescriptionController.text,
-      jobLocation: selectedItems[
-          "Location"]!, // You can retrieve location from the dropdown
-      jobType:
-          selectedItems["Job Type"], // Optional: e.g., Full-time, Part-time
-      salary: (_currentRangeValues.end + _currentRangeValues.start) /
-          2, // Calculating the average salary as an example
-      skillsRequired:
-          "Skill1, Skill2, Skill3", // You can change this to get dynamic input
-      jobCategory: selectedItems["Job category"], // From dropdown
-      experienceLevel:
-          "Mid", // You can add an experience level dropdown or leave it static
-      applicationDeadline:
-          "2024-12-31", // Example: Static date or dynamic input from the form
+      jobCategory: selectedItems["Job category"],
+      jobSubCategory: selectedItems["Job subcategory"],
+      jobLocation: selectedItems["Location"]!, 
+      jobAddress: addressController.text,
+      jobType: selectedItems["Job Type"],
+      salaryLowerBound: _currentRangeValues.start,
+      salaryUpperBound: _currentRangeValues.end,
+      jobFacilities: facilitiesController.text,
+      jobResponsibilities: responsibilitiesController.text, 
+      requirements: requirementsController.text, 
       createdAt: DateTime.now().toString(),
     );
-    bool success = await _jobRepository
-        .insert(jobpost); // Assuming you have a job repository to insert
+    bool success = await _jobRepository.insert(jobpost); 
     if (success) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const JobDetailsApp(id: 1),
+          builder: (context) => CompanyHome(id: widget.id),
         ),
       );
     } else {
@@ -91,7 +85,7 @@ class _CreatePostState extends State<CreatePost> {
       );
     }
   }
-  //
+  
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +98,10 @@ class _CreatePostState extends State<CreatePost> {
             child: ListView(
               children: [
                 const SizedBox(height: 20),
-                buildInputField("Job Title", "eg: Business Analyst"),
+                buildInputField("Job Title", "eg: Business Analyst", controller: jobTitleController),
                 const SizedBox(height: 16),
                 buildInputField("Job Description", "eg: Our company offers...",
-                    maxLines: 4),
+                    maxLines: 4, controller: jobDescriptionController),
                 const SizedBox(height: 16),
                 buildDropdownField("Job category", "eg: UI/UX Design"),
                 const SizedBox(height: 16),
@@ -120,7 +114,7 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: buildInputField("Address", "eg: Mahelma, Zeralda"),
+                      child: buildInputField("Address", "eg: Mahelma, Zeralda", controller: addressController),
                     ),
                   ],
                 ),
@@ -136,12 +130,12 @@ class _CreatePostState extends State<CreatePost> {
                     }),
                 const SizedBox(height: 16),
                 buildInputField(
-                    "Facilities", "eg: healthcare, paid time off,..."),
+                    "Facilities", "eg: healthcare, paid time off,...", controller: facilitiesController),
                 const SizedBox(height: 16),
                 buildInputField("Responsibilities", "•\n•\n•\n....",
-                    maxLines: 4),
+                    maxLines: 4, controller: responsibilitiesController),
                 const SizedBox(height: 16),
-                buildInputField("Requirements", "•\n•\n•\n....", maxLines: 4),
+                buildInputField("Requirements", "•\n•\n•\n....", maxLines: 4, controller: requirementsController),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
@@ -175,7 +169,7 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  Widget buildInputField(String label, String hint, {int maxLines = 1}) {
+  Widget buildInputField(String label, String hint, {int maxLines = 1, TextEditingController? controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -191,6 +185,7 @@ class _CreatePostState extends State<CreatePost> {
         const SizedBox(height: 8),
         TextField(
           maxLines: maxLines,
+          controller: controller,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(

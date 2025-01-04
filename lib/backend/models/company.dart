@@ -1,5 +1,7 @@
 class Company {
-  final int id;
+  final String companyOwnerName;
+  final String companyUserEmail;
+  final String companyUserPassword;
   final String companyName;
   final String companyIndustry;
   final String? companySize;
@@ -14,7 +16,9 @@ class Company {
   final String createdAt;
 
   Company({
-    required this.id,
+    required this.companyOwnerName,
+    required this.companyUserEmail,
+    required this.companyUserPassword,
     required this.companyName,
     required this.companyIndustry,
     this.companySize,
@@ -32,7 +36,9 @@ class Company {
   // Convert a Company object into a Map object
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      'company_owner_name' : companyOwnerName,
+      'company_user_email': companyUserEmail,
+      'company_user_password': companyUserPassword,
       'company_name': companyName,
       'company_industry': companyIndustry,
       'company_size': companySize,
@@ -51,7 +57,9 @@ class Company {
   // Convert a Map object into a Company object
   factory Company.fromMap(Map<String, dynamic> map) {
     return Company(
-      id: map['id'],
+      companyOwnerName: map['company_owner_name'],
+      companyUserEmail: map['company_user_email'],
+      companyUserPassword: map['company_user_password'],
       companyName: map['company_name'],
       companyIndustry: map['company_industry'],
       companySize: map['company_size'],

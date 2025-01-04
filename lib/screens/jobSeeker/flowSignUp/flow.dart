@@ -4,7 +4,8 @@ import '../../../commons/constants.dart';
 import '../preferences/prefs.dart';
 
 class Flow extends StatefulWidget {
-  const Flow({super.key});
+  final int id;
+  const Flow({super.key, required this.id});
 
   @override
   State<Flow> createState() => _FlowState();
@@ -205,7 +206,7 @@ class _FlowState extends State<Flow> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Prefs()));
+                                    builder: (context) => Prefs(id: widget.id,)));
                           },
                           child: const Text(
                             "Explore",

@@ -84,7 +84,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                 onPressed: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const JobseekerHome()),
+                    MaterialPageRoute(builder: (context) => const JobseekerHome(id: 1,)),
                   );
                 },
               ),

@@ -15,7 +15,7 @@ class _JobseekerApplicationsState extends State<JobseekerApplications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(isJobseeker: true),
+      bottomNavigationBar: const BottomBar(isJobseeker: true, id: 1,),
       backgroundColor: AppColors.primaryBackgroundColor,
       body: Column(
         children: [
