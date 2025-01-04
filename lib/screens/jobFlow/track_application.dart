@@ -129,7 +129,7 @@ class TrackApplicationPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const JobseekerHome()),
+      MaterialPageRoute(builder: (context) => const JobseekerHome(id: 1,)),
     );
                 },
                 style: OutlinedButton.styleFrom(

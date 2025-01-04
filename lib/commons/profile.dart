@@ -1,12 +1,88 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:khotwa/backend/repository/companies_repository.dart';
+import 'package:khotwa/backend/repository/job_seekers_repository.dart';
 import 'package:khotwa/commons/constants.dart';
 import '../data/profile_data.dart';
 import 'package:khotwa/screens/company/settings/main_settings.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  final int id;
   final bool isCompany;
 
-  const Profile({super.key, required this.isCompany});
+  const Profile({super.key, required this.isCompany, required this.id});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final JobSeekersRepository _jobSeekersRepository = JobSeekersRepository();
+
+  final CompaniesRepository _companiesRepository = CompaniesRepository();
+
+  late Map _user ;
+
+  File? _profilePic;
+  Uint8List? _picBytes;
+
+  Future<void> _uploadPic() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+    if (result != null && result.files.single.path != null) {
+      final file = File(result.files.single.path!);
+      _picBytes = await file.readAsBytes(); // Read image as bytes
+      setState(() {
+        _profilePic = file;
+      });
+    }
+  }
+
+  Future<void> saveProfilePic() async {
+    String? base64Logo = _picBytes != null ? base64Encode(_picBytes!) : null;
+    String whereClause = 'id = ?';
+    List<dynamic> whereArgs = [widget.id];
+    Map<String, dynamic> updateData = widget.isCompany
+        ? {'company_logo': base64Logo}
+        : {'profile_picture': base64Logo};
+
+    bool success = widget.isCompany
+        ? await _companiesRepository.update(updateData, whereClause, whereArgs)
+        : await _jobSeekersRepository.update(updateData, whereClause, whereArgs);
+
+    if (success) {
+      setState(() {
+        _user[widget.isCompany ? 'company_logo' : 'profile_picture'] = base64Logo;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to update profile picture')),
+      );
+    }
+  }
+
+  // Fetch the user data based on the id
+  Future<void> _fetchUserData() async {
+    final user = (widget.isCompany)? await _companiesRepository.getById(widget.id) : await _jobSeekersRepository.getById(widget.id);
+    if (user != null) {
+      setState(() {
+        _user = user; 
+      });
+    } else {
+      setState(() {
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +93,6 @@ class Profile extends StatelessWidget {
           children: [
             // Profile Header Section
             Container(
-              
               width: double.infinity,
               height: AppSizes.getScreenHeight(context) * 0.3,
               decoration: const BoxDecoration(
@@ -78,29 +153,48 @@ class Profile extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 25,
-                              child: ClipOval(
-                                child: Image(
-                                  image: isCompany
-                                      ? const AssetImage(
-                                          "assets/Sonatrach-Logo.png")
-                                      : const NetworkImage(
-                                          "https://blogeral.com.br/wp-content/uploads/2023/02/imagem-profissional.png",
-                                        ) as ImageProvider,
-                                  fit: BoxFit.cover,
-                                  width: 50,
-                                  height: 50,
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: _profilePic != null
+                                      ? FileImage(_profilePic!)
+                                      : _user[(widget.isCompany) ? 'company_logo' : 'profile_picture'] != null
+                                          ? MemoryImage(base64Decode(_user[(widget.isCompany) ? 'company_logo' : 'profile_picture']))
+                                          : const AssetImage('assets/icon.png') as ImageProvider,
+                                  radius: 35, 
                                 ),
-                              ),
+                                Positioned(
+                                  bottom: -2,
+                                  right: -2,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      if (_profilePic == null) {
+                                        await _uploadPic(); 
+                                        setState(() {});
+                                      } else {
+                                        await saveProfilePic(); 
+                                        setState(() {
+                                          _profilePic = null;
+                                        });
+                                      }
+                                    },
+                                    child: Icon(
+                                      _profilePic == null ? Icons.edit : Icons.check,
+                                      size: 15,
+                                      color: AppColors.lightGreenColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+
                             const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  isCompany ? 'SONATRACH' : "Zineb Berrekia",
+                                  widget.isCompany ? _user['company_name'] : _user['full_name'],
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -110,7 +204,7 @@ class Profile extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  isCompany ? "Industry" : 'Media, Algeria',
+                                  widget.isCompany ? "Industry" : 'Media, Algeria',
                                   style: const TextStyle(color: Colors.white70),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -129,7 +223,8 @@ class Profile extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SettingsPage(
-                                  isCompany: (isCompany) ? true : false,
+                                  isCompany: (widget.isCompany) ? true : false,
+                                  id: widget.id,
                                 ),
                               ),
                             );
@@ -149,10 +244,10 @@ class Profile extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount:
-                    (isCompany) ? companyInfo.length : jobseekerInfo.length,
+                    (widget.isCompany) ? companyInfo.length : jobseekerInfo.length,
                 itemBuilder: (context, index) {
                   final item =
-                      (isCompany) ? companyInfo[index] : jobseekerInfo[index];
+                      (widget.isCompany) ? companyInfo[index] : jobseekerInfo[index];
                   return DetailTile(
                     label: item["label"],
                     content: item["content"],
@@ -162,7 +257,6 @@ class Profile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             const SizedBox(height: 20),
           ],
         ),

@@ -159,8 +159,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   Widget _buildInputField(String label, String hint,
       {TextEditingController? controller,
       FormFieldValidator<String>? validator,
-      double height = 90,
-      double width = 120}) {
+      double height = 90}) {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

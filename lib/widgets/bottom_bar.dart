@@ -102,7 +102,7 @@ class _BottomBarState extends State<BottomBar> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => (widget.isJobseeker)
-                      ? const JobseekerHome()
+                      ? JobseekerHome(id: widget.id,)
                       : CompanyHome(id: widget.id,),
                 ),
               );
@@ -140,7 +140,7 @@ class _BottomBarState extends State<BottomBar> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      Profile(isCompany: (widget.isJobseeker) ? false : true),
+                      Profile(isCompany: (widget.isJobseeker) ? false : true, id: widget.id,),
                 ),
               );
               break;
@@ -159,6 +159,7 @@ class _BottomBarState extends State<BottomBar> {
                   context,
                   SettingsPage(
                     isCompany: (widget.isJobseeker) ? false : true,
+                    id: widget.id,
                   ));
               break;
           }

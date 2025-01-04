@@ -11,9 +11,10 @@ import 'About.dart';
 import 'help_support.dart';
 
 class SettingsPage extends StatefulWidget {
+  final int id;
   final bool isCompany;
 
-  const SettingsPage({super.key, required this.isCompany});
+  const SettingsPage({super.key, required this.isCompany, required this.id});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -217,7 +218,7 @@ class _SettingsPageState extends State<SettingsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Profile(isCompany: widget.isCompany),
+            builder: (context) => Profile(isCompany: widget.isCompany, id: widget.id),
           ),
         );
         break;

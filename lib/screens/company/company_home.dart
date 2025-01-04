@@ -15,7 +15,7 @@ import 'dart:convert';
 class CompanyHome extends StatefulWidget {
   final int id;
   //id set to 1 just for testing purposes
-  const CompanyHome({Key? key, required this.id}) : super(key: key);
+  const CompanyHome({super.key, required this.id});
 
   @override
   _CompanyHomeState createState() => _CompanyHomeState();
@@ -336,8 +336,8 @@ class _CompanyHomeState extends State<CompanyHome> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Profile(
-                                      isCompany: true,
+                                builder: (context) => Profile(
+                                      isCompany: true, id: widget.id,
                                     )));
                       },
                       child: CircleAvatar(

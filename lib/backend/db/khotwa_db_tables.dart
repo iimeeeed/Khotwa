@@ -28,14 +28,18 @@ class DBTables {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         full_name TEXT NOT NULL,
         job_seeker_email TEXT UNIQUE NOT NULL,
-        job_seeker_phone TEXT,
-        job_seeker_address TEXT,
         job_seeker_password TEXT NOT NULL,
-        about_me TEXT,
+        job_seeker_phone TEXT, 
+        job_seeker_address TEXT,
         profile_picture TEXT,
-        interests TEXT,
-        job_types TEXT,
-        job_preferences TEXT,
+        about_me TEXT,
+        work_experience TEXT, -- [jobtitle, company, duration] comma separated values , and | separated if more than one experience
+        education TEXT, --[degree, istitution] comma separated values , and | separated if more than one education
+        skills TEXT, --comma separated values
+        languages TEXT, --comma separated values
+        job_preferences TEXT, --comma separated values
+        job_type_preferences TEXT, --comma separated values
+        job_location_preferences TEXT, --comma separated values
         created_at TEXT DEFAULT (datetime('now'))
       );
   ''';

@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:khotwa/backend/repository/job_seekers_repository.dart';
 import '../../../commons/constants.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../homePage.dart';
 
 class Prefs extends StatefulWidget {
-  const Prefs({super.key});
+  final int id ;
+  const Prefs({super.key, required this.id});
 
   @override
   State<Prefs> createState() => _PrefsState();
 }
 
 class _PrefsState extends State<Prefs> {
+  final JobSeekersRepository jobseekerRepo = JobSeekersRepository();
+  Map<String, bool> prefsChecked = {};
+
+  @override
+  void initState() {
+    super.initState();
+    prefsChecked = {for (var entry in _prefsMap.values) entry: false};
+  }
+
   final Map<Icon, String> _prefsMap = {
     const Icon(Icons.design_services_outlined,
         color: AppColors.blueButtonColor): "Designer",
@@ -29,20 +40,10 @@ class _PrefsState extends State<Prefs> {
   };
 
   final List<Map<String, dynamic>> _tags = [
-    {"name": "Product Designer", "selected": false},
-    {"name": "Business Analyst", "selected": false},
-    {"name": "UX Designer", "selected": false},
-    {"name": "Graphics Designer", "selected": false},
-    {"name": "Developer", "selected": false},
-    {"name": "Engineer", "selected": false},
-    {"name": "Architect", "selected": false},
-    {"name": "Product Designer", "selected": false},
-    {"name": "Business Analyst", "selected": false},
-    {"name": "UX Designer", "selected": false},
-    {"name": "Graphics Designer", "selected": false},
-    {"name": "Developer", "selected": false},
-    {"name": "Engineer", "selected": false},
-    {"name": "Architect", "selected": false},
+    {"name": "Full-time", "selected": false},
+    {"name": "Part-time", "selected": false},
+    {"name": "Remote", "selected": false},
+    {"name": "Internship", "selected": false},
   ];
 
   final List<Map<String, dynamic>> _locations = [
@@ -59,6 +60,48 @@ class _PrefsState extends State<Prefs> {
   bool _showAllLocations = false;
 
   bool _others = false;
+
+  Future<void> collectFormData() async{
+    // Collect selected job preferences as comma-separated values
+    String selectedPreferences = prefsChecked.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .join(", ");
+
+    // Collect selected job types (tags) as comma-separated values
+    String selectedTags = _tags
+        .where((tag) => tag["selected"] == true)
+        .map((tag) => tag["name"] as String)
+        .join(", ");
+
+    // Collect selected locations as comma-separated values
+    String selectedLocations = _locations
+        .where((location) => location["selected"] == true)
+        .map((location) => location["name"] as String)
+        .join(", ");
+        
+    Map<String, dynamic> updateData = {
+    'job_preferences': selectedPreferences,
+    'job_type_preferences': selectedTags,
+    'job_location_preferences': selectedLocations,
+    };
+    String whereClause = 'id = ?';
+    List<dynamic> whereArgs = [widget.id];
+
+    bool success = await jobseekerRepo.update(updateData, whereClause, whereArgs);
+
+    if (success) {
+      Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => JobseekerHome(id: widget.id)));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to add jobseeker preferences')),
+      );
+    }
+  }
+
 
   Widget buildTile(Icon icon, String str) {
     return GestureDetector(
@@ -112,14 +155,6 @@ class _PrefsState extends State<Prefs> {
     );
   }
 
-  Map<String, bool> prefsChecked = {};
-
-  @override
-  void initState() {
-    super.initState();
-    prefsChecked = {for (var entry in _prefsMap.values) entry: false};
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +180,7 @@ class _PrefsState extends State<Prefs> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "What type of job you are looking for?",
+                      "What are the jobs you are looking for?",
                       style: TextStyle(
                         fontFamily: AppFonts.secondaryFont,
                         color: AppColors.blueButtonColor,
@@ -226,7 +261,7 @@ class _PrefsState extends State<Prefs> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Job Roles",
+                  "Job Types",
                   style: TextStyle(
                     fontFamily: AppFonts.secondaryFont,
                     color: AppColors.blueButtonColor,
@@ -360,10 +395,7 @@ class _PrefsState extends State<Prefs> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const JobseekerHome()));
+                  collectFormData();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.lightGreenColor,

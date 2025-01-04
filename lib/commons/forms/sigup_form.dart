@@ -25,8 +25,8 @@ class _SignupFormState extends State<SignupForm> {
   final AuthService _authService = AuthService();
 
   bool _rememberMe = false;
-  bool _passwordVisible = false;
-  bool _confirmPasswordVisible = false;
+  final bool _passwordVisible = false;
+  final bool _confirmPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -127,17 +127,17 @@ class _SignupFormState extends State<SignupForm> {
   }
   else
   {
-    bool success = await _authService.signUpJobseeker(
+    int? successId = await _authService.signUpJobseeker(
       fullName: name,
       email: email,
       password: password,
     );
 
-      if (success) {
+      if (successId! > 0) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) =>  const flow_screen.Flow(),
+            builder: (context) => flow_screen.Flow(id: successId,),
           ),
         );
       } else {

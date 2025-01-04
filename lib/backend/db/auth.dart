@@ -30,20 +30,21 @@ class AuthService {
     }
   }
 
-  Future<bool> signUpJobseeker({
+  Future<int?> signUpJobseeker({
     required String fullName,
     required String email,
     required String password,
   }) async {
     try {
-
       JobSeeker jobSeeker = JobSeeker(fullName: fullName, email: email, password: password);
-
+      
       await _jobSeekersTable.insert(jobSeeker);
-      return true;
+      int? id = await _jobSeekersTable.getIdByEmail(email);
+      
+      return id;
     } catch (e, stacktrace) {
       print('SignUp Error: $e --> $stacktrace');
-      return false;
+      return -1;
     }
   }
 }
