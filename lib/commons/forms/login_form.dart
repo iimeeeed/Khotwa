@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
     _isLoading = false;
   });
 
-  if (user != null && id != null) {
+  if (user != null) {
     // Navigate to the appropriate home page and clear the navigation stack
     Navigator.pushAndRemoveUntil(
       context,

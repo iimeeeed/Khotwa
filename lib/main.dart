@@ -1,8 +1,24 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:khotwa/commons/constants.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
 
-void main() {
+void main() async{
+  // Initialize Awesome Notifications
+  await AwesomeNotifications().initialize(
+    'resource://assets/khotwaLogo.png',
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic Notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: AppColors.blueButtonColor,
+        ledColor: Colors.white,
+        importance: NotificationImportance.High,
+      )
+    ],
+  );
   runApp(const MainApp());
 }
 
@@ -22,6 +38,11 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    if (!isAllowed) {
+      AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+    });
 
     Future.delayed(const Duration(milliseconds: 2000), () { 
       setState(() {

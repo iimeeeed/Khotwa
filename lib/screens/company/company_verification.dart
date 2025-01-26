@@ -20,6 +20,7 @@ class CompanyVerificationPage extends StatefulWidget {
 class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   int currentStep = 0;
   bool isSelected = false;
+  String? _selectedCompanySize ;
   File? _selectedLogo;
   Uint8List? _logoBytes;
   final PageController _pageController = PageController();
@@ -32,7 +33,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
   // Controllers for TextFields
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController industryController = TextEditingController();
-  final TextEditingController companySizeController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -46,7 +46,6 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
     // Dispose controllers when the widget is removed from the widget tree
     companyNameController.dispose();
     industryController.dispose();
-    companySizeController.dispose();
     emailController.dispose();
     phoneController.dispose();
     locationController.dispose();
@@ -80,7 +79,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       companyUserPassword: widget.companyData['password'],
       companyName: companyNameController.text,
       companyIndustry: industryController.text,
-      companySize: companySizeController.text.isEmpty ? null : companySizeController.text,
+      companySize: _selectedCompanySize,
       companyLocation: locationController.text.isEmpty ? null : locationController.text,
       companyEmail: emailController.text,
       companyPhone: phoneController.text.isEmpty ? null : phoneController.text,
@@ -91,7 +90,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
       taxIdentificationNumber: taxIdentificationController.text,
       createdAt: '10-10-2004', // for testing
     );
-
+    
     bool success = await _companiesRepository.insert(company);
     int? companyId = await _companiesRepository.getIdByEmail(widget.companyData['email']);
     if (success && companyId!=null) {
@@ -245,6 +244,30 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                         ],
                       ),
                     )
+                  :(label == "Company Size")?
+                  DropdownButtonFormField<String>(
+                    value: _selectedCompanySize,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedCompanySize = newValue;
+                      });
+                    },
+                    dropdownColor: AppColors.primaryBackgroundColor,
+                    items: <String>[
+                      'Small Business',
+                      'Medium-Sized Business',
+                      'Large Business',
+                      'Enterprise',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                        ),),
+                      );
+                    }).toList(),
+                  )
                   :TextFormField(
                         validator: validator,
                         controller: controller,
@@ -494,7 +517,7 @@ class _CompanyVerificationPageState extends State<CompanyVerificationPage> {
                                       'Industry', 'Select your Industry', controller: industryController, validator: (value) => _validateField(value, 'Industry'),),
                                   const SizedBox(height: 30),
                                   _buildInputField(
-                                      'Company Size', 'Select your Company Size', controller: companySizeController, validator: (value) => _validateField(value, 'Company Size'),),
+                                      'Company Size', 'Select your Company Size', validator: (value) => _validateField(value, 'Company Size'),),
                                   const SizedBox(height: 20),
                                 ], 
                               ),

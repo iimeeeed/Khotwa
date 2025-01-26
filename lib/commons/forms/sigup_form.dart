@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/backend/db/auth.dart';
 import 'package:khotwa/commons/forms/login_form.dart';
-import 'package:khotwa/services/auth.dart';
 import '../../../commons/constants.dart';
 import '../../screens/company/flowSignUp.dart';
 import '../../screens/jobSeeker/flowSignUp/flow.dart' as flow_screen;
@@ -133,7 +132,7 @@ class _SignupFormState extends State<SignupForm> {
       password: password,
     );
 
-      if (successId! > 0) {
+      if (successId > 0) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

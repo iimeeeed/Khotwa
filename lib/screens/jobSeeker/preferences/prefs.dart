@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:khotwa/backend/repository/job_seekers_repository.dart';
 import '../../../commons/constants.dart';
 import '../../../commons/khotwa_logo.dart';
@@ -89,12 +90,22 @@ class _PrefsState extends State<Prefs> {
     List<dynamic> whereArgs = [widget.id];
 
     bool success = await jobseekerRepo.update(updateData, whereClause, whereArgs);
+    Map<String, dynamic>? jobseeker = await jobseekerRepo.getById(widget.id);
 
-    if (success) {
+    if (success || jobseeker != null) {
       Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => JobseekerHome(id: widget.id)));
+      AwesomeNotifications().createNotification(
+              content: NotificationContent(
+                id: 10,
+                channelKey: 'basic_channel',
+                title: 'Hello ${jobseeker["full_name"]}!',
+                body: 'You can now fill your profile with your details.',
+                notificationLayout: NotificationLayout.Default,
+              ),
+            );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Failed to add jobseeker preferences')),
