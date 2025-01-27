@@ -47,7 +47,7 @@ class _LoginFormState extends State<LoginForm> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => widget.isCompany ? CompanyHome(id: id,) : JobseekerHome(id: id,),
+        builder: (context) => widget.isCompany ? CompanyHome(id: id!,) : JobseekerHome(id: id!,),
       ),
       (route) => false, // This condition ensures all previous routes are removed
     );

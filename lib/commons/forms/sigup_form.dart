@@ -132,7 +132,7 @@ class _SignupFormState extends State<SignupForm> {
       password: password,
     );
 
-      if (successId > 0) {
+      if (successId! > 0) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

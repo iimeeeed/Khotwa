@@ -101,7 +101,7 @@ class _PrefsState extends State<Prefs> {
               content: NotificationContent(
                 id: 10,
                 channelKey: 'basic_channel',
-                title: 'Hello ${jobseeker["full_name"]}!',
+                title: 'Hello ${jobseeker!["full_name"]}!',
                 body: 'You can now fill your profile with your details.',
                 notificationLayout: NotificationLayout.Default,
               ),
