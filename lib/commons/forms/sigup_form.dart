@@ -99,55 +99,58 @@ class _SignupFormState extends State<SignupForm> {
   }
 
   Future<void> _handleSignUp() async {
-  String email = _emailController.text.trim();
-  String password = _passwordController.text.trim();
-  String confirmPassword = _confirmPasswordController.text.trim();
-  String name = _nameController.text.trim();
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+    String confirmPassword = _confirmPasswordController.text.trim();
+    String name = _nameController.text.trim();
 
-  if (password != confirmPassword) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Passwords do not match")),
-    );
-    return;
-  }
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match")),
+      );
+      return;
+    }
 
-  if(widget.isCompany)
-  {
-    Map<String, dynamic> companyData = {
-      "ownerName": name,
-      "email": email,
-      "password": password,
-    };
-    Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FlowCompany(companyData: companyData,),
-          ),
-        );
-  }
-  else
-  {
-    int? successId = await _authService.signUpJobseeker(
-      fullName: name,
-      email: email,
-      password: password,
-    );
+    if (widget.isCompany) {
+      Map<String, dynamic> companyData = {
+        "ownerName": name,
+        "email": email,
+        "password": password,
+      };
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FlowCompany(companyData: companyData,),
+        ),
+      );
+    } else {
+      int? successId = await _authService.signUpJobseeker(
+        fullName: name,
+        email: email,
+        password: password,
+      );
 
-      if (successId! > 0) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => flow_screen.Flow(id: successId,),
-          ),
-        );
+      if (successId != null && successId != -1) {
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => flow_screen.Flow(
+                id: successId,
+                email: email,
+              ),
+            ),
+          );
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Failed to sign up. Please try again.")),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to sign up. Please try again.")),
+          );
+        }
       }
+    }
   }
-  
-}
 
   Widget _buildInputField({
     required String label,

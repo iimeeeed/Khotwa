@@ -18,50 +18,73 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService(); // Create an AuthService instance
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  final AuthService authService = AuthService();
   final JobSeekersRepository _jobSeekersRepository =  JobSeekersRepository();
   final CompaniesRepository _companiesRepository = CompaniesRepository();
 
   bool _rememberMe = false;
   bool _obscure = true;
-  bool _isLoading = false;
 
- void _handleLogin() async {
-  setState(() {
-    _isLoading = true;
-  });
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
 
-  final String email = _emailController.text;
-  final String password = _passwordController.text;
+      try {
+        print('Starting login process...'); // Debug print
+        final user = await authService.signIn(
+          _emailController.text,
+          _passwordController.text,
+          widget.isCompany,
+        );
 
-  final user = await _authService.signIn(email, password, widget.isCompany);
-  int? id = (widget.isCompany)? await _companiesRepository.getIdByEmail(email) : await _jobSeekersRepository.getIdByEmail(email);
-  setState(() {
-    _isLoading = false;
-  });
+        print('Login response: $user'); // Debug print
 
-  if (user != null && id != null) {
-    // Navigate to the appropriate home page and clear the navigation stack
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget.isCompany ? CompanyHome(id: id,) : JobseekerHome(id: id,),
-      ),
-      (route) => false, // This condition ensures all previous routes are removed
-    );
-  } else {
-    // Show an error message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Invalid email or password. Please try again.'),
-        backgroundColor: Colors.red,
-      ),
-    );
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (user != null && mounted) {
+          print('Navigating to home screen with ID: ${user['id']}'); // Debug print
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JobseekerHome(
+                id: user['id'],
+              ),
+            ),
+          );
+        } else {
+          print('User is null, showing error'); // Debug print
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Invalid email or password'),
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        print('Login error: $e'); // Debug print
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error during sign in: $e'),
+            ),
+          );
+        }
+      }
+    }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             const Text(
-              "We’re glad to see you again! Log in to your account.",
+              "We're glad to see you again! Log in to your account.",
               style: TextStyle(fontFamily: AppFonts.secondaryFont),
             ),
             const SizedBox(height: 30),
@@ -237,7 +260,7 @@ class _LoginFormState extends State<LoginForm> {
               width: 266,
               height: 50,
               child: ElevatedButton(
-                onPressed: _isLoading ? null : _handleLogin,
+                onPressed: _isLoading ? null : _submitForm,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.blueButtonColor,
                   padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),

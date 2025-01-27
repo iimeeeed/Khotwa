@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'screens/welcome.dart';
 import 'screens/Signup.dart';
+import 'backend/supabase/supabase_config.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseConfig.initialize();
   runApp(const MainApp());
 }
 

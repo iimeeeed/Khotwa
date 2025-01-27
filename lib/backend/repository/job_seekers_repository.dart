@@ -1,9 +1,11 @@
 import '../db/job_seekers_table.dart';
 import 'repository_base.dart';
 import '../models/job_seeker.dart';
+import '../supabase/job_seekers_service.dart';
 
 class JobSeekersRepository implements RepositoryBase<JobSeeker> {
   final JobSeekersTable jobSeeker = JobSeekersTable();
+  final JobSeekersService _jobSeekersService = JobSeekersService();
 
   @override
   Future<bool> insert(JobSeeker data) async {
@@ -38,5 +40,13 @@ class JobSeekersRepository implements RepositoryBase<JobSeeker> {
 
   Future<int?> getIdByEmail(String email) async {
     return await jobSeeker.getIdByEmail(email);
+  }
+
+  Future<Map<String, dynamic>?> getJobseekerById(int id) async {
+    return await _jobSeekersService.getJobseekerById(id);
+  }
+
+  Future<Map<String, dynamic>?> getJobseekerByEmail(String email) async {
+    return await _jobSeekersService.getJobseekerByEmail(email);
   }
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:khotwa/backend/repository/job_seekers_repository.dart';
+import 'package:khotwa/backend/repository/job_preferences_repository.dart';
 import '../../../commons/constants.dart';
 import '../../../commons/khotwa_logo.dart';
 import '../homePage.dart';
 
 class Prefs extends StatefulWidget {
-  final int id ;
-  const Prefs({super.key, required this.id});
+  final int id;
+  final String email;
+  const Prefs({super.key, required this.id, required this.email});
 
   @override
   State<Prefs> createState() => _PrefsState();
@@ -14,12 +16,14 @@ class Prefs extends StatefulWidget {
 
 class _PrefsState extends State<Prefs> {
   final JobSeekersRepository jobseekerRepo = JobSeekersRepository();
+  final JobPreferencesRepository jobPreferencesRepo = JobPreferencesRepository();
   Map<String, bool> prefsChecked = {};
 
   @override
   void initState() {
     super.initState();
     prefsChecked = {for (var entry in _prefsMap.values) entry: false};
+    loadExistingPreferences();
   }
 
   final Map<Icon, String> _prefsMap = {
@@ -61,47 +65,72 @@ class _PrefsState extends State<Prefs> {
 
   bool _others = false;
 
-  Future<void> collectFormData() async{
-    // Collect selected job preferences as comma-separated values
-    String selectedPreferences = prefsChecked.entries
+  Future<void> collectFormData() async {
+    // Collect selected job preferences
+    List<String> selectedPreferences = prefsChecked.entries
         .where((entry) => entry.value)
         .map((entry) => entry.key)
-        .join(", ");
+        .toList();
 
-    // Collect selected job types (tags) as comma-separated values
-    String selectedTags = _tags
+    // Collect selected job types (tags)
+    List<String> selectedTags = _tags
         .where((tag) => tag["selected"] == true)
         .map((tag) => tag["name"] as String)
-        .join(", ");
+        .toList();
 
-    // Collect selected locations as comma-separated values
-    String selectedLocations = _locations
+    // Collect selected locations
+    List<String> selectedLocations = _locations
         .where((location) => location["selected"] == true)
         .map((location) => location["name"] as String)
-        .join(", ");
+        .toList();
         
-    Map<String, dynamic> updateData = {
-    'job_preferences': selectedPreferences,
-    'job_type_preferences': selectedTags,
-    'job_location_preferences': selectedLocations,
-    };
-    String whereClause = 'id = ?';
-    List<dynamic> whereArgs = [widget.id];
-
-    bool success = await jobseekerRepo.update(updateData, whereClause, whereArgs);
+    bool success = await jobPreferencesRepo.updatePreferences(
+      email: widget.email,
+      jobPreferences: selectedPreferences,
+      jobTypePreferences: selectedTags,
+      jobLocationPreferences: selectedLocations,
+    );
 
     if (success) {
       Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => JobseekerHome(id: widget.id)));
+        context,
+        MaterialPageRoute(
+          builder: (context) => JobseekerHome(id: widget.id)
+        )
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to add jobseeker preferences')),
+        const SnackBar(content: Text('Failed to update preferences')),
       );
     }
   }
 
+  Future<void> loadExistingPreferences() async {
+    final preferences = await jobPreferencesRepo.getPreferences(widget.email);
+    if (preferences != null) {
+      setState(() {
+        // Update job preferences
+        final jobPrefs = preferences['jobPreferences'];
+        for (var pref in jobPrefs!) {
+          if (prefsChecked.containsKey(pref)) {
+            prefsChecked[pref] = true;
+          }
+        }
+
+        // Update job type preferences
+        final jobTypePrefs = preferences['jobTypePreferences'];
+        for (var tag in _tags) {
+          tag["selected"] = jobTypePrefs!.contains(tag["name"]);
+        }
+
+        // Update location preferences
+        final locationPrefs = preferences['jobLocationPreferences'];
+        for (var location in _locations) {
+          location["selected"] = locationPrefs!.contains(location["name"]);
+        }
+      });
+    }
+  }
 
   Widget buildTile(Icon icon, String str) {
     return GestureDetector(

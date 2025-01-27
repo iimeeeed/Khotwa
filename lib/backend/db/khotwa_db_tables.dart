@@ -1,4 +1,3 @@
-
 class DBTables {
   // Companies Table
   static const String companiesTableSql = '''
@@ -24,24 +23,24 @@ class DBTables {
 
   // Job Seekers Table
   static const String jobSeekersTableSql = '''
-    CREATE TABLE job_seekers (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        full_name TEXT NOT NULL,
-        job_seeker_email TEXT UNIQUE NOT NULL,
-        job_seeker_password TEXT NOT NULL,
-        job_seeker_phone TEXT, 
-        job_seeker_address TEXT,
-        profile_picture TEXT,
-        about_me TEXT,
-        work_experience TEXT, -- [jobtitle, company, duration] comma separated values , and | separated if more than one experience
-        education TEXT, --[degree, istitution] comma separated values , and | separated if more than one education
-        skills TEXT, --comma separated values
-        languages TEXT, --comma separated values
-        job_preferences TEXT, --comma separated values
-        job_type_preferences TEXT, --comma separated values
-        job_location_preferences TEXT, --comma separated values
-        created_at TEXT DEFAULT (datetime('now'))
-      );
+    CREATE TABLE IF NOT EXISTS job_seekers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      full_name TEXT NOT NULL,
+      job_seeker_email TEXT UNIQUE NOT NULL,
+      job_seeker_password TEXT NOT NULL,
+      job_seeker_phone TEXT, 
+      job_seeker_address TEXT,
+      profile_picture TEXT,
+      about_me TEXT,
+      work_experience TEXT, -- [jobtitle, company, duration] comma separated values , and | separated if more than one experience
+      education TEXT, --[degree, istitution] comma separated values , and | separated if more than one education
+      skills TEXT, --comma separated values
+      languages TEXT, --comma separated values
+      job_preferences TEXT,
+      job_type_preferences TEXT,
+      job_location_preferences TEXT,
+      created_at TEXT DEFAULT (datetime('now'))
+    );
   ''';
 
   // Education Experiences Table
@@ -106,5 +105,18 @@ class DBTables {
         FOREIGN KEY (job_seeker_id) REFERENCES job_seekers (id) ON DELETE CASCADE
       );
   ''';
-}
 
+  // Interviews Table
+  static const String interviewsTableSql = '''
+    CREATE TABLE interviews (
+        interview_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        interview_date TEXT NOT NULL,
+        interview_title TEXT NOT NULL,
+        interview_description TEXT,
+        interview_time TEXT NOT NULL,
+        interview_type TEXT NOT NULL,
+        interview_state TEXT NOT NULL,
+        FOREIGN KEY (application_id) REFERENCES applications (id) ON DELETE CASCADE
+    );
+  ''';
+}

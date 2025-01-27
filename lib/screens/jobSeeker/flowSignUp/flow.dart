@@ -5,7 +5,8 @@ import '../preferences/prefs.dart';
 
 class Flow extends StatefulWidget {
   final int id;
-  const Flow({super.key, required this.id});
+  final String email;
+  const Flow({super.key, required this.id, required this.email});
 
   @override
   State<Flow> createState() => _FlowState();
@@ -204,9 +205,14 @@ class _FlowState extends State<Flow> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Prefs(id: widget.id,)));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Prefs(
+                                  id: widget.id,
+                                  email: widget.email,
+                                ),
+                              ),
+                            );
                           },
                           child: const Text(
                             "Explore",

@@ -44,7 +44,7 @@ class JobseekerHome extends StatefulWidget {
   const JobseekerHome({super.key, required this.id});
 
   @override
-  _JobseekerHomeState createState() => _JobseekerHomeState();
+  State<JobseekerHome> createState() => _JobseekerHomeState();
 }
 
 class _JobseekerHomeState extends State<JobseekerHome> {
@@ -63,26 +63,29 @@ class _JobseekerHomeState extends State<JobseekerHome> {
   List<Map<String, dynamic>> filteredJobs = [];
   List<String> activeFilters = [];
 
-  late Map _jobseeker;
   final JobSeekersRepository jobseekerRepo = JobSeekersRepository();
+  Map<String, dynamic>? _jobseeker;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     selectedCategories = List.generate(categories.length, (index) => index == 0);
     filteredJobs = List.from(featuredJobs);
-    _fetchJobseekerData();
+    _loadJobseeker();
   }
 
-  // Fetch the jobseeker data based on the id
-  Future<void> _fetchJobseekerData() async {
-    final jobseekerData = await jobseekerRepo.getById(widget.id);
-    if (jobseekerData != null) {
+  Future<void> _loadJobseeker() async {
+    try {
+      final jobseeker = await jobseekerRepo.getJobseekerById(widget.id);
       setState(() {
-        _jobseeker = jobseekerData; 
+        _jobseeker = jobseeker;
+        _isLoading = false;
       });
-    } else {
+    } catch (e) {
+      print('Error loading jobseeker: $e');
       setState(() {
+        _isLoading = false;
       });
     }
   }
@@ -219,6 +222,22 @@ class _JobseekerHomeState extends State<JobseekerHome> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    if (_jobseeker == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('Error loading user data'),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
@@ -236,8 +255,8 @@ class _JobseekerHomeState extends State<JobseekerHome> {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: _jobseeker['profile_picture'] != null
-                          ? MemoryImage(base64Decode(_jobseeker['profile_picture']))
+                  backgroundImage: _jobseeker!['profile_picture'] != null
+                          ? MemoryImage(base64Decode(_jobseeker!['profile_picture']))
                           : const AssetImage('assets/icon.png') as ImageProvider,
                   radius: 24,
                 ),
@@ -250,7 +269,7 @@ class _JobseekerHomeState extends State<JobseekerHome> {
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                     Text(
-                      _jobseeker['full_name'],
+                      _jobseeker!['full_name'],
                       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ],

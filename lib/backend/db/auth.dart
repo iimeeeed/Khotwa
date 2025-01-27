@@ -1,32 +1,16 @@
-import 'package:khotwa/backend/models/job_seeker.dart';
-import 'package:khotwa/backend/repository/companies_repository.dart';
-import 'package:khotwa/backend/repository/job_seekers_repository.dart';
-import 'package:khotwa/backend/repository/repository_base.dart';
-
+import '../supabase/auth_service.dart';
 
 class AuthService {
-  final JobSeekersRepository _jobSeekersTable =  JobSeekersRepository();
-  final CompaniesRepository _companiesTable = CompaniesRepository();
+  final SupabaseAuthService _supabaseAuth = SupabaseAuthService();
 
   Future<Map<String, dynamic>?> signIn(String email, String password, bool isCompany) async {
     try {
-      final RepositoryBase table = isCompany ? _companiesTable : _jobSeekersTable;
-
-      String query = (isCompany)? "SELECT * FROM ${_companiesTable.company.db_table} WHERE company_user_email = ? AND company_user_password = ?" :
-      "SELECT * FROM ${_jobSeekersTable.jobSeeker.db_table} WHERE job_seeker_email = ? AND job_seeker_password = ?" ;
-
-      List<Map<String, dynamic>> result = await table.customQuery(
-        query,
-        [email, password],
-      );
-
-      if (result.isNotEmpty) {
-        return result.first;
-      }
-      return null;
-    } catch (e, stacktrace) {
-      print('SignIn Error: $e --> $stacktrace');
-      return null;
+      final result = await _supabaseAuth.signIn(email, password, isCompany);
+      print('AuthService signIn result: $result'); // Debug print
+      return result;
+    } catch (e) {
+      print('AuthService signIn error: $e'); // Debug print
+      rethrow;
     }
   }
 
@@ -34,17 +18,31 @@ class AuthService {
     required String fullName,
     required String email,
     required String password,
+    String? jobPreferences,
+    String? jobTypePreferences,
+    String? jobLocationPreferences,
   }) async {
-    try {
-      JobSeeker jobSeeker = JobSeeker(fullName: fullName, email: email, password: password);
-      
-      await _jobSeekersTable.insert(jobSeeker);
-      int? id = await _jobSeekersTable.getIdByEmail(email);
-      
-      return id;
-    } catch (e, stacktrace) {
-      print('SignUp Error: $e --> $stacktrace');
-      return -1;
-    }
+    return await _supabaseAuth.signUpJobseeker(
+      fullName: fullName,
+      email: email,
+      password: password,
+      jobPreferences: jobPreferences,
+      jobTypePreferences: jobTypePreferences,
+      jobLocationPreferences: jobLocationPreferences,
+    );
+  }
+
+  Future<bool> updateJobSeekerPreferences({
+    required String email,
+    required String jobPreferences,
+    required String jobTypePreferences,
+    required String jobLocationPreferences,
+  }) async {
+    return await _supabaseAuth.updateJobSeekerPreferences(
+      email: email,
+      jobPreferences: jobPreferences,
+      jobTypePreferences: jobTypePreferences,
+      jobLocationPreferences: jobLocationPreferences,
+    );
   }
 }
