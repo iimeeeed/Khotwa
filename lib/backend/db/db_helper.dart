@@ -5,8 +5,8 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'khotwa_db_tables.dart';
 
 class DBHelper {
-  static const _database_name = 'khotwa.db';  
-  static const _database_version = 56;
+  static const _database_name = 'khotwa2.db';  
+  static const _database_version = 57;
   static Future<Database>? database;
 
   // Add SQL table creation codes to the list
@@ -16,7 +16,8 @@ class DBHelper {
     DBTables.educationExperiencesTableSql,
     DBTables.professionalExperiencesTableSql,
     DBTables.jobsTableSql,
-    DBTables.applicationsTableSql
+    DBTables.applicationsTableSql,
+    DBTables.seekerApplicationTableSql
   ];
 
   // Singleton instance for DBHelper

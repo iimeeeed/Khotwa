@@ -31,7 +31,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
   Map<String, dynamic>? jobpost; // Store job data
   bool isDescriptionTab = true; // Tab state
   bool isSaved = false; // Bookmark state
-  bool _isLoading = true; // Loading state
+  bool _isLoading = false; // Loading state
 
   @override
   void initState() {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:khotwa/screens/jobFlow/success_dialog.dart';
 import 'package:khotwa/screens/jobFlow/track_application.dart';
+import 'package:khotwa/backend/models/seeker_application.dart';
+import 'package:khotwa/backend/repository/seeker_application_repository.dart';
 
 class JobApplicationPage extends StatefulWidget {
   final Map<String, dynamic> job;
@@ -12,10 +14,13 @@ class JobApplicationPage extends StatefulWidget {
   State<JobApplicationPage> createState() => _JobApplicationPageState();
 }
 
+
 class _JobApplicationPageState extends State<JobApplicationPage> {
   String? cvPath;
   String? motivationPath;
   final portfolioController = TextEditingController();
+  final SeekerApplicationRepository seekerApplicationRepository =
+      SeekerApplicationRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -136,31 +141,55 @@ class _JobApplicationPageState extends State<JobApplicationPage> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Show the success dialog
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return SuccessDialog(
-                          onClose: () {
-                            // Navigate to home and clear the stack
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/home', // Replace with your home route name
-                              (Route<dynamic> route) => false,
-                            );
-                          },
-                          onTrackApplication: () {
-                            // Navigate to track application page
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) => TrackApplicationPage(),
-                              ),
+                  onPressed: () async {
+                    if (cvPath != null && motivationPath != null) {
+                      // Create a SeekerApplication object
+                      final seekerApplication = SeekerApplication(
+                        id: 0, // Assuming auto-increment is handled by the database
+                        jobId: widget.job['id'],
+                        jobSeekerId: 1, // Replace with the actual job seeker ID
+                        cvFile: cvPath!,
+                        motivationFile: motivationPath!,
+                        portfolioLink: portfolioController.text.isNotEmpty
+                            ? portfolioController.text
+                            : null,
+                        applicationStatus: 'pending',
+                        createdAt: DateTime.now().toString(),
+                      );
+
+                      // Insert the application
+                      bool success = await seekerApplicationRepository.insert(seekerApplication);
+
+                      if (success) {
+                        // Show the success dialog
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return SuccessDialog(
+                              onClose: () {
+                                // Navigate to home and clear the stack
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/home', // Replace with your home route name
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              onTrackApplication: () {
+                                // Navigate to track application page
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => TrackApplicationPage(),
+                                  ),
+                                );
+                              },
                             );
                           },
                         );
-                      },
-                    );
+                      } else {
+                        // Show an error if insertion fails
+                        print('Error inserting application');
+                      }
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF002D62),

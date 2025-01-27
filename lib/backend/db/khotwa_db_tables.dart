@@ -1,4 +1,3 @@
-
 class DBTables {
   // Companies Table
   static const String companiesTableSql = '''
@@ -106,5 +105,20 @@ class DBTables {
         FOREIGN KEY (job_seeker_id) REFERENCES job_seekers (id) ON DELETE CASCADE
       );
   ''';
-}
 
+  // Seeker Application Table
+  static const String seekerApplicationTableSql = '''
+    CREATE TABLE seeker_application (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        job_id INTEGER NOT NULL,
+        job_seeker_id INTEGER NOT NULL,
+        cv_file TEXT NOT NULL, -- File path for the CV
+        motivation_file TEXT NOT NULL, -- File path for the motivation letter
+        portfolio_link TEXT, -- Optional field
+        application_status TEXT DEFAULT 'pending',
+        created_at TEXT DEFAULT (datetime('now')),
+        FOREIGN KEY (job_id) REFERENCES jobs (id) ON DELETE CASCADE,
+        FOREIGN KEY (job_seeker_id) REFERENCES job_seekers (id) ON DELETE CASCADE
+      );
+  ''';
+}
